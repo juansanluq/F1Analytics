@@ -1,0 +1,71 @@
+@font-face {
+  font-family: 'F1-Black';
+  src: url("../fonts/Formula1-Black.ttf") format("truetype"); }
+
+@font-face {
+  font-family: 'F1-Bold';
+  src: url("../fonts/Formula1-Bold.ttf") format("truetype"); }
+
+@font-face {
+  font-family: 'F1-Regular';
+  src: url("../fonts/Formula1-Regular.ttf") format("truetype"); }
+
+@font-face {
+  font-family: 'F1-Wide';
+  src: url("../fonts/Formula1-Wide.ttf") format("truetype"); }
+
+* {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box; }
+
+body {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0;
+  max-width: 100%;
+  margin: 0 auto; }
+
+nav {
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  background-color: #e10600;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex; }
+  nav img {
+    width: 10rem;
+    height: 4rem;
+    padding: 1rem;
+    margin-right: 2rem; }
+
+nav ul {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0; }
+
+nav ul li {
+  height: 100%;
+  padding: 20px; }
+
+nav ul li:hover {
+  background-color: #15151e; }
+
+nav ul a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.2rem; }
+
+.main-navbar ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: flex-start; }
+  .main-navbar ul li {
+    text-align: center;
+    font-family: 'F1-Regular'; }
