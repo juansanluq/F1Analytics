@@ -26,6 +26,7 @@ body {
   margin: 0 auto; }
 
 nav {
+  margin-top: 1rem;
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   justify-content: center;
@@ -57,7 +58,7 @@ nav ul li:hover {
 nav ul a {
   color: white;
   text-decoration: none;
-  font-size: 1.2rem; }
+  font-size: 1rem; }
 
 .main-navbar ul {
   display: -webkit-box;
@@ -69,3 +70,5 @@ nav ul a {
   .main-navbar ul li {
     text-align: center;
     font-family: 'F1-Regular'; }
+    .main-navbar ul li .drivers-list {
+      display: none; }
