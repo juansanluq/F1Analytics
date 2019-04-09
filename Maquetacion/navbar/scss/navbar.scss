@@ -1,5 +1,6 @@
 @import 'variables';
 @import 'mixins';
+
 @font-face {
     font-family: 'F1-Black';
     src: url('../fonts/Formula1-Black.ttf') format('truetype');
@@ -20,51 +21,60 @@
     src: url('../fonts/Formula1-Wide.ttf') format('truetype');
 }
 
-* {
-    box-sizing: border-box;
+html {
+    @include box-sizing(border-box);
+    height: 100%;
+}
+
+*,
+*:after,
+*:before {
+    @include box-sizing(inherit);
 }
 
 body {
     box-sizing: border-box;
-    margin: 0;
     max-width: 100%;
     margin: 0 auto;
+    background-color: #FFEEE4;
+}
+
+img {
+    max-width: 100%;
 }
 
 nav {
-    margin-top: 1rem;
-    justify-content: center;
-    background-color: $rojo;
     display: flex;
+    flex-direction: column;
+    flex: 1 0 100%;
+    background-color: $naranja;
+
     img {
-        width: 10rem;
-        height: 4rem;
-        padding: 1rem;
-        margin-right: 2rem;
+        padding: 1.4rem;
+    }
+
+    ul {
+        display: flex;
+        flex-direction: column;
+        list-style: none;
+        padding: 0;
+        align-items: center;
+        li {
+            padding: 1rem;
+            width: 100%;
+
+            &:hover{
+                background-color: $gris_background;
+            }
+            
+            a {
+                text-decoration: none;
+                color: #FFEEE4;
+            }
+        }
     }
 }
 
-nav ul {
-    align-items: center;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-nav ul li {
-    height: 100%;
-    padding: 20px;
-}
-
-nav ul li:hover {
-    background-color: $gris_background;
-}
-
-nav ul a {
-    color: white;
-    text-decoration: none;
-    font-size: 1rem;
-}
 
 .main-navbar ul {
     display: flex;
