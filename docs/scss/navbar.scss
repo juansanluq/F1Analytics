@@ -1,0 +1,172 @@
+@import 'variables';
+@import 'mixins';
+@font-face {
+    font-family: 'F1-Black';
+    src: url('../fonts/Formula1-Black.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'F1-Bold';
+    src: url('../fonts/Formula1-Bold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'F1-Regular';
+    src: url('../fonts/Formula1-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'F1-Wide';
+    src: url('../fonts/Formula1-Wide.ttf') format('truetype');
+}
+
+html {
+    @include box-sizing(border-box);
+    height: 100%;
+}
+
+*,
+*:after,
+*:before {
+    @include box-sizing(inherit);
+}
+
+body {
+    box-sizing: inherit;
+    max-width: 100%;
+    margin: 0 auto;
+    background-color: $blanco;
+}
+
+img {
+    max-width: 100%;
+}
+
+nav {
+    display: flex;
+    flex-direction: column;
+    background-color: $naranja;
+    @include for-desktop-up {
+        margin-top: 0.3rem;
+        flex-direction: row;
+        justify-content: center;
+        max-height: 75px;
+        img {
+            max-width: 200px;
+            padding: 0;
+        }
+    }
+    img {
+        padding: 1.4rem;
+    }
+    ul {
+        display: flex;
+        flex-direction: column;
+        list-style: none;
+        padding: 0;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+        @include for-desktop-up {
+            flex-direction: row;
+        }
+        li {
+            padding: 0;
+            width: 100%;
+            padding: 1rem;
+            text-align: center;
+            font-family: 'F1-Regular';
+            @include for-desktop-up {
+                padding: 1.7rem;
+            }
+            &:hover {
+                background-color: $naranja_oscuro;
+            }
+            a {
+                text-decoration: none;
+                color: #FFEEE4;
+            }
+            ul {
+                display: none;
+                li {
+                    background-color: $beige;
+                }
+            }
+        }
+    }
+}
+
+nav ul li:hover ul {
+    @include for-desktop-up {
+        animation: fadein 1.5s;
+        position: absolute;
+        top: 4.9rem;
+        max-height: 350px;
+        left: 0;
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        flex-wrap: wrap;
+        width: 20%;
+        li {
+            text-align: start;
+            a {
+                color: $negro;
+                font-size: 0.7rem;
+                span {
+                    padding: .2rem;
+                    margin: .5rem;
+                }
+            }
+        }
+    }
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.toro-rosso {
+    @include fondo($toro_rosso);
+}
+
+.mercedes {
+    @include fondo($mercedes);
+}
+
+.redbull {
+    @include fondo($redbull);
+}
+
+.alfa-romeo {
+    @include fondo($alfa_romeo);
+}
+
+.haas {
+    @include fondo($haas);
+}
+
+.renault {
+    @include fondo($renault);
+}
+
+.ferrari {
+    @include fondo($ferrari);
+}
+
+.mclaren {
+    @include fondo($mclaren);
+}
+
+.racing-point {
+    @include fondo($racing_point);
+}
+
+.williams {
+    @include fondo($blanco);
+}
