@@ -1,6 +1,5 @@
 @import 'variables';
 @import 'mixins';
-
 @font-face {
     font-family: 'F1-Black';
     src: url('../fonts/Formula1-Black.ttf') format('truetype');
@@ -33,10 +32,10 @@ html {
 }
 
 body {
-    box-sizing: border-box;
+    box-sizing: inherit;
     max-width: 100%;
     margin: 0 auto;
-    background-color: #FFEEE4;
+    background-color: $beige;
 }
 
 img {
@@ -46,27 +45,42 @@ img {
 nav {
     display: flex;
     flex-direction: column;
-    flex: 1 0 100%;
     background-color: $naranja;
-
+    @include for-desktop-up {
+        margin-top: 1rem;
+        flex-direction: row;
+        justify-content: center;
+        max-height: 75px;
+        img {
+            max-width: 200px;
+            padding: 0;
+        }
+    }
     img {
         padding: 1.4rem;
     }
-
     ul {
         display: flex;
         flex-direction: column;
         list-style: none;
         padding: 0;
         align-items: center;
+        justify-content: center;
+        margin: 0;
+        @include for-desktop-up {
+            flex-direction: row;
+        }
         li {
-            padding: 1rem;
+            padding: 0;
             width: 100%;
-
-            &:hover{
-                background-color: $gris_background;
+            padding: 1rem;
+            @include for-desktop-up {
+                padding: 1.7rem;
             }
-            
+            &:hover {
+                background-color: $naranja_oscuro;
+                cursor: pointer;
+            }
             a {
                 text-decoration: none;
                 color: #FFEEE4;
@@ -74,7 +88,6 @@ nav {
         }
     }
 }
-
 
 .main-navbar ul {
     display: flex;
