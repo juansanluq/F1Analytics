@@ -2,6 +2,10 @@
     box-sizing: $box-model;
 }
 
+@mixin fondo($color) {
+    background-color: $color;
+}
+
 @mixin for-phone-only {
     @media (max-width: 599px) {
         @content;

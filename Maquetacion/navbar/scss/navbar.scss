@@ -35,7 +35,7 @@ body {
     box-sizing: inherit;
     max-width: 100%;
     margin: 0 auto;
-    background-color: $beige;
+    background-color: $blanco;
 }
 
 img {
@@ -47,7 +47,7 @@ nav {
     flex-direction: column;
     background-color: $naranja;
     @include for-desktop-up {
-        margin-top: 1rem;
+        margin-top: 0.3rem;
         flex-direction: row;
         justify-content: center;
         max-height: 75px;
@@ -74,29 +74,99 @@ nav {
             padding: 0;
             width: 100%;
             padding: 1rem;
+            text-align: center;
+            font-family: 'F1-Regular';
             @include for-desktop-up {
                 padding: 1.7rem;
             }
             &:hover {
                 background-color: $naranja_oscuro;
-                cursor: pointer;
             }
             a {
                 text-decoration: none;
                 color: #FFEEE4;
             }
+            ul {
+                display: none;
+                li {
+                    background-color: $beige;
+                }
+            }
         }
     }
 }
 
-.main-navbar ul {
-    display: flex;
-    justify-content: flex-start;
-    li {
-        text-align: center;
-        font-family: 'F1-Regular';
-        .drivers-list {
-            display: none;
+nav ul li:hover ul {
+    @include for-desktop-up {
+        animation: fadein 1.5s;
+        position: absolute;
+        top: 4.9rem;
+        max-height: 350px;
+        left: 0;
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        flex-wrap: wrap;
+        width: 20%;
+        li {
+            text-align: start;
+            a {
+                color: $negro;
+                font-size: 0.7rem;
+                span {
+                    padding: .2rem;
+                    margin: .5rem;
+                }
+            }
         }
     }
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.toro-rosso {
+    @include fondo($toro_rosso);
+}
+
+.mercedes {
+    @include fondo($mercedes);
+}
+
+.redbull {
+    @include fondo($redbull);
+}
+
+.alfa-romeo {
+    @include fondo($alfa_romeo);
+}
+
+.haas {
+    @include fondo($haas);
+}
+
+.renault {
+    @include fondo($renault);
+}
+
+.ferrari {
+    @include fondo($ferrari);
+}
+
+.mclaren {
+    @include fondo($mclaren);
+}
+
+.racing-point {
+    @include fondo($racing_point);
+}
+
+.williams {
+    @include fondo($blanco);
 }
