@@ -126,24 +126,62 @@ nav ul li:hover ul {
             }
         }
     }
+    @include for-phone-only {
+        animation: fadein 1.5s;
+        position: absolute;
+        top: 39.8rem;
+        max-height: 375px;
+        left: 0;
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        width: 100%;
+        li {
+            text-align: start;
+            a {
+                color: $negro;
+                font-size: 0.7rem;
+                span {
+                    padding: .2rem;
+                    margin: .5rem;
+                }
+            }
+        }
+    }
 }
 
 
 /* Cabecera de "Temporada 2019" */
 
 nav ul li:hover {
-    .contenedor-flex .header {
-        animation: fadein 1.5s;
-        display: flex;
-        padding: 1rem;
-        padding-left: 3rem;
-        position: absolute;
-        left: 0;
-        background-color: darken($beige, 10);
-        top: 5rem;
-        width: 100%;
-        text-align: start;
-        border-bottom: 2px solid $naranja_oscuro;
+    @include for-desktop-up {
+        .contenedor-flex .header {
+            animation: fadein 1.5s;
+            display: flex;
+            padding: 1rem;
+            padding-left: 3rem;
+            position: absolute;
+            left: 0;
+            background-color: darken($beige, 10);
+            top: 5rem;
+            width: 100%;
+            text-align: start;
+            border-bottom: 2px solid $naranja_oscuro;
+        }
+    }
+    @include for-phone-only {
+        .contenedor-flex .header {
+            animation: fadein 1.5s;
+            display: flex;
+            padding: 1rem;
+            position: absolute;
+            left: 0;
+            background-color: darken($beige, 10);
+            top: 17rem;
+            width: 100%;
+            text-align: start;
+            border-bottom: 2px solid $naranja_oscuro;
+        }
     }
 }
 
