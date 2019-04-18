@@ -1,0 +1,29 @@
+/* You can add global styles to this file, and also import other style files */
+
+@font-face {
+  font-family: 'F1-Black';
+  src: url('../src/assets/fonts/Formula1-Black.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'F1-Bold';
+  src: url('../src/assets/fonts/Formula1-Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'F1-Regular';
+  src: url('../src/assets/fonts/Formula1-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'F1-Wide';
+  src: url('../src/assets/fonts/Formula1-Wide.ttf') format('truetype');
+}
+
+@import 'app/scss_utils/mixins';
+@import 'app/scss_utils/variables';
+
+html {
+  @include box-sizing(border-box);
+  height: 100%;
+}

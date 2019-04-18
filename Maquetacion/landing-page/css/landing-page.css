@@ -1,0 +1,457 @@
+@font-face {
+  font-family: 'F1-Black';
+  src: url("../fonts/Formula1-Black.ttf") format("truetype"); }
+
+@font-face {
+  font-family: 'F1-Bold';
+  src: url("../fonts/Formula1-Bold.ttf") format("truetype"); }
+
+@font-face {
+  font-family: 'F1-Regular';
+  src: url("../fonts/Formula1-Regular.ttf") format("truetype"); }
+
+@font-face {
+  font-family: 'F1-Wide';
+  src: url("../fonts/Formula1-Wide.ttf") format("truetype"); }
+
+html {
+  box-sizing: border-box;
+  height: 100%; }
+
+*,
+*:after,
+*:before {
+  box-sizing: inherit; }
+
+body {
+  -webkit-box-sizing: inherit;
+  box-sizing: inherit;
+  max-width: 100%;
+  margin: 0 auto;
+  background-color: #f4f2f0; }
+
+img {
+  max-width: 100%; }
+
+nav {
+  z-index: 1;
+  -webkit-animation: fadein 1.5s;
+  animation: fadein 1.5s;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  background-color: #F17F42; }
+  @media (min-width: 1200px) {
+    nav {
+      margin-top: 0.3rem;
+      -webkit-box-orient: horizontal;
+      -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+      flex-direction: row;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      justify-content: center;
+      max-height: 75px; }
+      nav img {
+        max-width: 200px;
+        padding: 0; } }
+  nav .nav-header {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: distribute;
+    justify-content: space-around;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center; }
+    nav .nav-header img {
+      padding: 1rem;
+      max-width: 70%; }
+    nav .nav-header i {
+      font-size: 2rem;
+      margin-right: 1rem;
+      border: 2px solid #CE6D39;
+      padding: .2rem; }
+    @media (min-width: 1200px) {
+      nav .nav-header {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex; }
+        nav .nav-header i {
+          display: none; } }
+  nav ul {
+    -webkit-animation: fadein 1.5s;
+    animation: fadein 1.5s;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    list-style: none;
+    padding: 0;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    margin: 0; }
+    @media (min-width: 1200px) {
+      nav ul {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+        flex-direction: row; } }
+    nav ul li {
+      padding: 0;
+      width: 100%;
+      padding: 1rem;
+      text-align: center;
+      font-family: 'F1-Regular'; }
+      @media (min-width: 1200px) {
+        nav ul li {
+          padding: 1.7rem; } }
+      nav ul li:hover {
+        background-color: #CE6D39; }
+      nav ul li a {
+        text-decoration: none;
+        color: #FFEEE4; }
+      nav ul li .contenedor-flex .header {
+        display: none; }
+      nav ul li ul {
+        display: none; }
+        nav ul li ul li {
+          background-color: #ffceb1; }
+
+/* Lista de pilotos */
+@media (min-width: 1200px) {
+  nav ul li:hover ul {
+    -webkit-animation: fadein 1.5s;
+    animation: fadein 1.5s;
+    position: absolute;
+    top: 8.2rem;
+    max-height: 375px;
+    left: 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    width: 25%; }
+    nav ul li:hover ul li {
+      text-align: start; }
+      nav ul li:hover ul li a {
+        color: #000000;
+        font-size: 0.7rem;
+        padding: 1.9rem 6.5rem 1.9rem 1rem; }
+        nav ul li:hover ul li a span {
+          padding: .2rem;
+          margin: .5rem; } }
+
+@media (max-width: 599px) {
+  nav ul li:hover ul {
+    -webkit-animation: fadein 1.5s;
+    animation: fadein 1.5s;
+    position: absolute;
+    top: 39.8rem;
+    max-height: 375px;
+    left: 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    width: 100%; }
+    nav ul li:hover ul li {
+      text-align: start; }
+      nav ul li:hover ul li a {
+        color: #000000;
+        font-size: 0.7rem;
+        padding: 1.9rem 6.5rem 1.9rem 1rem; }
+        nav ul li:hover ul li a span {
+          padding: .2rem;
+          margin: .5rem; } }
+
+/* Cabecera de "Temporada 2019" */
+@media (min-width: 1200px) {
+  nav ul li:hover .contenedor-flex .header {
+    -webkit-animation: fadein 1.5s;
+    animation: fadein 1.5s;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    padding: 1rem;
+    padding-left: 3rem;
+    position: absolute;
+    left: 0;
+    background-color: #ffceb1;
+    top: 5rem;
+    width: 100%;
+    text-align: start;
+    border-bottom: 2px solid #CE6D39; } }
+
+@media (max-width: 599px) {
+  nav ul li:hover .contenedor-flex .header {
+    -webkit-animation: fadein 1.5s;
+    animation: fadein 1.5s;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    padding: 1rem;
+    position: absolute;
+    left: 0;
+    background-color: #ffceb1;
+    top: 17rem;
+    width: 100%;
+    text-align: start;
+    border-bottom: 2px solid #CE6D39; } }
+
+@-webkit-keyframes fadein {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 1; } }
+
+@keyframes fadein {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 1; } }
+
+.toro-rosso {
+  background-color: #469bff; }
+
+.mercedes {
+  background-color: #00d2be; }
+
+.redbull {
+  background-color: #1e41ff; }
+
+.alfa-romeo {
+  background-color: #9b0000; }
+
+.haas {
+  background-color: #bd9e57; }
+
+.renault {
+  background-color: #fff500; }
+
+.ferrari {
+  background-color: #dc0000; }
+
+.mclaren {
+  background-color: #ff8700; }
+
+.racing-point {
+  background-color: #f596c8; }
+
+.williams {
+  background-color: #ffffff; }
+
+h1, h3 {
+  font-family: 'F1-Bold'; }
+
+.contenedor {
+  max-width: 1500px;
+  margin: 0 auto; }
+
+.boton {
+  text-decoration: none;
+  background-color: #F17F42;
+  padding: .5rem;
+  border: 3px solid #CE6D39;
+  color: #ffffff;
+  border-radius: 10px;
+  font-family: 'F1-Regular'; }
+
+.hero {
+  height: 100vh;
+  background-image: url(../images/hero.jpg);
+  background-size: cover;
+  background-position: center center;
+  background-attachment: fixed;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  color: #ffffff; }
+  .hero .contenido-hero {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    padding: 2rem; }
+    .hero .contenido-hero h1 {
+      width: 100%;
+      text-align: center;
+      font-size: 3rem; }
+    .hero .contenido-hero .slogan {
+      position: relative;
+      margin-bottom: 1.5rem;
+      z-index: 0; }
+      .hero .contenido-hero .slogan .slogan-author {
+        color: #F17F42; }
+      @media (min-width: 1200px) {
+        .hero .contenido-hero .slogan .slogan-author {
+          position: absolute;
+          top: 1.5rem;
+          right: 0; } }
+
+.box-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  padding: 2rem 1rem 1rem 1rem; }
+  .box-container .box {
+    -webkit-box-shadow: 10px 10px 51px -10px rgba(0, 0, 0, 0.39);
+    box-shadow: 10px 10px 51px -10px rgba(0, 0, 0, 0.39);
+    border: 3px solid #F17F42;
+    border-radius: 10px;
+    padding: 1rem;
+    margin: .5rem 0 1rem 0;
+    background-color: #ffffff; }
+    @media (min-width: 1200px) {
+      .box-container .box {
+        margin: .5rem 1rem 1rem 1rem; } }
+    .box-container .box .gp-name {
+      font-family: 'F1-Bold';
+      font-size: 1.6rem;
+      margin: .2rem; }
+    .box-container .box .circuit-container {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      margin: .2rem; }
+      .box-container .box .circuit-container img {
+        margin-right: .5rem; }
+    .box-container .box .circuit-name {
+      font-family: 'F1-Regular';
+      font-size: 1rem; }
+    .box-container .box .round {
+      font-family: 'F1-Regular';
+      font-size: .8rem;
+      margin-top: .5rem;
+      padding-bottom: .2rem;
+      border-bottom: 1px solid #f8bfa1; }
+    .box-container .box .results {
+      font-family: 'F1-Regular';
+      margin-top: 1.5rem; }
+      .box-container .box .results table {
+        margin-top: 1rem;
+        margin-left: auto;
+        margin-right: auto; }
+      .box-container .box .results table, .box-container .box .results td {
+        padding: .3rem;
+        border: 2px solid #f8bfa1;
+        border-collapse: collapse; }
+        .box-container .box .results table a, .box-container .box .results td a {
+          color: #000000;
+          text-decoration: none; }
+        .box-container .box .results table a:hover, .box-container .box .results td a:hover {
+          color: #F17F42;
+          text-decoration: underline; }
+    .box-container .box .boton-container {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+      flex-direction: column;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      justify-content: center;
+      margin: 1rem 0 0 0;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center; }
+  .box-container .info {
+    background-color: #fdf0e8;
+    -webkit-box-flex: 1;
+    -ms-flex: 1 0 50%;
+    flex: 1 0 50%; }
+    .box-container .info .gp-name {
+      font-family: 'F1-Bold'; }
+    .box-container .info .contenido p {
+      font-family: 'F1-Regular';
+      line-height: 1.5rem; }
+      .box-container .info .contenido p span {
+        margin-left: .5rem;
+        text-transform: uppercase;
+        color: #CE6D39; }
+    .box-container .info .contenido {
+      border-bottom: 2px solid #CE6D39; }
+    .box-container .info .next-gp-container span {
+      text-transform: uppercase; }
+    .box-container .info .next-gp-container .countdown {
+      display: grid;
+      grid-template-columns: repeat(4, 25%);
+      justify-items: center;
+      font-family: 'F1-Bold'; }
+      .box-container .info .next-gp-container .countdown .label {
+        padding: .2rem;
+        margin-top: .5rem;
+        border-top: 1px solid #CE6D39; }
+      .box-container .info .next-gp-container .countdown .counter {
+        font-size: 2rem; }
+  @media (min-width: 1200px) {
+    .box-container {
+      -webkit-box-flex: 1;
+      -ms-flex: 1;
+      flex: 1;
+      -webkit-box-orient: horizontal;
+      -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+      flex-direction: row;
+      -ms-flex-pack: distribute;
+      justify-content: space-around; }
+      .box-container .gp-name {
+        text-transform: uppercase; }
+      .box-container .circuit-name {
+        text-transform: uppercase; } }
+  @media (max-width: 599px) {
+    .box-container .secundary {
+      display: none; } }
