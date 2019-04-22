@@ -27,3 +27,16 @@ html {
   @include box-sizing(border-box);
   height: 100%;
 }
+
+*,
+*:after,
+*:before {
+  @include box-sizing(inherit);
+}
+
+body {
+  box-sizing: inherit;
+  width: 100%;
+  margin: 0 auto;
+  background-color: #f4f2f0;
+}
