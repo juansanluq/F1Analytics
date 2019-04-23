@@ -9,13 +9,15 @@ import { LandingComponent } from './components/landing/landing.component';
 import { DeviceDetectorModule } from 'ngx-device-detector';
 
 import { HttpClientModule } from '@angular/common/http';
+import { DotdComponent } from './components/dotd/dotd.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    LandingComponent
+    LandingComponent,
+    DotdComponent
   ],
   imports: [
     BrowserModule,

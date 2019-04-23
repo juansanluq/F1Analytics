@@ -1,0 +1,87 @@
+@import '../../scss_utils/variables';
+@import '../../scss_utils/mixins';
+.dotd-container {
+    display: flex;
+    flex-direction: column;
+    font-family: 'F1-Bold';
+    .slogan {
+        font-size: 1.6rem;
+        text-align: center;
+        text-transform: uppercase;
+        border-bottom: 2px solid $naranja;
+        padding-bottom: .5rem;
+        margin-bottom: 1rem;
+    }
+    .driver-name {
+        font-size: 1.6rem;
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+    img {
+        width: 10rem;
+        margin: 0 auto;
+        border: 2px solid $naranja_oscuro;
+        border-radius: 10px;
+        padding: 0;
+    }
+    .statistics-container {
+        margin-top: 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        flex: 1 0 100%;
+        .row {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 1rem;
+            font-size: 1.6rem;
+            i {
+                font-size: 2rem;
+                align-self: center;
+                margin-right: .5rem;
+                margin-bottom: .5rem;
+            }
+        }
+    }
+    .info p {
+        margin: 0;
+        margin-top: 1rem;
+        padding: 1rem;
+        font-family: 'F1-Regular';
+        text-align: center;
+        line-height: 2rem;
+    }
+    @include for-desktop-up {
+        display: grid;
+        grid-template-areas: "titulo titulo titulo" "foto nombre nombre" "foto stat stat" "foto stat stat" "foto info info";
+        grid-gap: 1rem;
+        .slogan {
+            grid-area: titulo;
+        }
+        .driver-name {
+            grid-area: nombre;
+        }
+        img {
+            grid-area: foto;
+            align-self: center;
+            margin-left: 2rem;
+            width: 20rem;
+        }
+        .statistics-container {
+            grid-area: stat;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            .row {
+                text-align: center;
+            }
+        }
+        .info {
+            grid-area: info;
+            text-align: justify;
+            padding-top: 0;
+            line-height: 2rem;
+            margin: 0 1rem 0 1rem;
+        }
+    }
+}

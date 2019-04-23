@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { DriversService } from '../../services/drivers/drivers.service';
 
 @Component({
   selector: 'app-navbar',
@@ -11,8 +12,9 @@ export class NavbarComponent implements OnInit {
   esMovil = false;
   esOrdenador = false;
   displayed = false;
+  currentDrivers;
 
-  constructor(private deviceService: DeviceDetectorService) { }
+  constructor(private deviceService: DeviceDetectorService, private driversService: DriversService) { }
 
   ngOnInit() {
     let ul = document.getElementById('main-ul');
@@ -26,14 +28,14 @@ export class NavbarComponent implements OnInit {
     }
 
     toggle.addEventListener('click', e => {
-      if(!this.displayed) {
-          ul.style.display = 'flex';
-          this.displayed = true;
+      if (!this.displayed) {
+        ul.style.display = 'flex';
+        this.displayed = true;
       } else if (this.displayed) {
-          ul.style.display = 'none';
-          this.displayed = false;
+        ul.style.display = 'none';
+        this.displayed = false;
       }
-  });
+    });
   }
 
 }
