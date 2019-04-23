@@ -43,13 +43,17 @@
             }
         }
     }
-    .info p {
-        margin: 0;
-        margin-top: 1rem;
-        padding: 1rem;
-        font-family: 'F1-Regular';
-        text-align: center;
-        line-height: 2rem;
+    .info {
+        align-self: center;
+        justify-content: center;
+        p {
+            margin: 0;
+            margin-top: 1rem;
+            padding: 1rem;
+            font-family: 'F1-Regular';
+            text-align: center;
+            line-height: 2rem;
+        }
     }
     @include for-desktop-up {
         display: grid;
@@ -84,4 +88,8 @@
             margin: 0 1rem 0 1rem;
         }
     }
+}
+
+.loading {
+    filter: blur(20px);
 }

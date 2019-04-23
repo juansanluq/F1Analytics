@@ -58,9 +58,6 @@ export class LandingComponent implements OnInit {
 
                 this.lastGPready = true;
             });
-        this.driversService.getDriverOfTheDay()
-            .subscribe(driver => console.log('Driver of the Day:', driver));
-        //TODO Terminar la sección Driver of The Day
     }
 
     startGPCountdown() {
