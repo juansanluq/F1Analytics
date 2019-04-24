@@ -1,10 +1,10 @@
 <div class="dotd-container">
     <div class="slogan"> Driver of the Day </div>
-    <div *ngIf="this.driverOTD else noName" class="driver-name"> {{this.driverOTD.givenName}} {{this.driverOTD.familyName}} </div>
+    <div *ngIf="this.driverOTD else noName" class="driver-name"> {{this.driverOTD.givenName}} {{this.driverOTD.familyName}} <img src="https://www.countryflags.io/{{this.countryCode}}/shiny/32.png"></div>
     <ng-template #noName>
         <div class="driver-name"> NO DATA </div>
     </ng-template>
-    <img src="{{this.image}}" alt="">
+    <img class="driverImage" src="{{this.image}}" alt="">
     <div *ngIf="this.driverOTD else noData" class="statistics-container">
         <div class="row"><i class="fas fa-crown"></i> {{this.championshipsCount}} campeonatos </div>
         <div class="row"><i class="fas fa-trophy"></i> {{this.winsCount}} victorias </div>

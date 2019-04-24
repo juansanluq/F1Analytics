@@ -3,6 +3,7 @@ import { DriversService } from '../../services/drivers/drivers.service';
 import { driver } from '../../services/utils';
 import { Subject, Observable, of } from 'rxjs';
 import wiki from 'wikijs';
+import { DemonymsService } from '../../services/demonyms/demonyms.service';
 
 @Component({
   selector: 'app-dotd',
@@ -17,14 +18,18 @@ export class DotdComponent implements OnInit {
   podiumsCount;
   polesCount;
   info;
+  countryCode;
   image: any = '../../../assets/images/image_placeholder.png';
 
-  constructor(private driversService: DriversService) { }
+  constructor(private driversService: DriversService, private demonymsService: DemonymsService) { }
 
   ngOnInit() {
     this.driversService.getDriverOfTheDay()
       .subscribe(driver => {
         this.driverOTD = driver;
+
+        this.countryCode = this.demonymsService.getCountryCode(this.driverOTD.nationality);
+        console.log(this.countryCode);
 
         this.driversService.getChampionshipsbyDriverId(this.driverOTD.driverId)
           .subscribe(championships => {

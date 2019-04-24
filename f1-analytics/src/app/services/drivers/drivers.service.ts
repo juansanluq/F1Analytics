@@ -22,8 +22,8 @@ export class DriversService {
   getDriverOfTheDay() {
     let subject = new Subject<string>();
     let randomNumber;
-    randomNumber = this.currentDate.getDay() + this.currentDate.getMonth() + (this.currentDate.getFullYear() - 1812);
-
+    randomNumber = this.currentDate.getDay() + this.currentDate.getMonth() + (this.currentDate.getFullYear() - 1911);
+    console.log(randomNumber);
     this.getAllDrivers()
       .subscribe((data: any) => {
         const drivers = data.MRData.DriverTable.Drivers;

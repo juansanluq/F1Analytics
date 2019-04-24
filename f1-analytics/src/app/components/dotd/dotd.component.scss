@@ -16,8 +16,13 @@
         font-size: 1.6rem;
         text-align: center;
         margin-bottom: 1rem;
+        display: flex;
+        justify-content: center;
+        img {
+            margin-left: 1rem;
+        }
     }
-    img {
+    .driverImage {
         width: 10rem;
         margin: 0 auto;
         border: 2px solid $naranja_oscuro;
@@ -65,7 +70,7 @@
         .driver-name {
             grid-area: nombre;
         }
-        img {
+        .driverImage {
             grid-area: foto;
             align-self: center;
             margin-left: 2rem;
