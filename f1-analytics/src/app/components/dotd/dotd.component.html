@@ -1,10 +1,10 @@
-<div class="this.dataLoaded | async ? dotd-container : dotd-container loading">
+<div class="dotd-container">
     <div class="slogan"> Driver of the Day </div>
     <div *ngIf="this.driverOTD else noName" class="driver-name"> {{this.driverOTD.givenName}} {{this.driverOTD.familyName}} </div>
     <ng-template #noName>
         <div class="driver-name"> NO DATA </div>
     </ng-template>
-    <img src="../../../assets/images/vettel.jpg" alt="">
+    <img src="{{this.image}}" alt="">
     <div *ngIf="this.driverOTD else noData" class="statistics-container">
         <div class="row"><i class="fas fa-crown"></i> {{this.championshipsCount}} campeonatos </div>
         <div class="row"><i class="fas fa-trophy"></i> {{this.winsCount}} victorias </div>
@@ -18,8 +18,6 @@
         <div class="row"><i class="fas fa-flag-checkered"></i> NULL poles </div>
     </ng-template>
     <div class="info">
-        <p>Sebastian Vettel (Heppenheim, Hesse, Alemania; 3 de julio de 1987) es un piloto alemán de automovilismo de velocidad. Llegó formando parte del Equipo Júnior de Red Bull desde los 11 años. Ha ganado cuatro títulos mundiales de Fórmula 1 con el
-            equipo Red Bull en 2010, 2011, 2012 y 2013, más tres subcampeonatos en 2009, 2017 y 2018 estos dos últimos con el equipo Ferrari. Debutó en 2007 con el equipo BMW Sauber y participó en 2008 con el equipo Toro Rosso logrando su primera victoria
-            en el Gran Premio de Italia de 2008.</p>
+        <p>{{this.info}}</p>
     </div>
 </div>

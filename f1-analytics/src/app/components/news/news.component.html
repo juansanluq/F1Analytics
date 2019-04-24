@@ -1,0 +1,11 @@
+<div class="news-container">
+    <div class="slogan">Últimas Noticias</div>
+    <div class="entries-container">
+        <div class="entry-container" *ngFor="let article of articles">
+            <div class="titulo"> {{article.title}} </div>
+            <img src="{{article.urlToImage}}" alt="">
+            <div class="text">{{article.description}}</div>
+            <a href="{{article.url}}" target="_blank"></a>
+        </div>
+    </div>
+</div>

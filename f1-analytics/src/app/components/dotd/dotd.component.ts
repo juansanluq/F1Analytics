@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DriversService } from '../../services/drivers/drivers.service';
 import { driver } from '../../services/utils';
 import { Subject, Observable, of } from 'rxjs';
+import wiki from 'wikijs';
 
 @Component({
   selector: 'app-dotd',
@@ -15,7 +16,8 @@ export class DotdComponent implements OnInit {
   winsCount;
   podiumsCount;
   polesCount;
-  dataLoaded: Observable<boolean> = of(false);
+  info;
+  image: any = '../../../assets/images/image_placeholder.png';
 
   constructor(private driversService: DriversService) { }
 
@@ -24,35 +26,34 @@ export class DotdComponent implements OnInit {
       .subscribe(driver => {
         this.driverOTD = driver;
 
-        this.driversService.getChampionshipsbyDriverId('alonso')
+        this.driversService.getChampionshipsbyDriverId(this.driverOTD.driverId)
           .subscribe(championships => {
             this.championshipsCount = championships;
           });
 
-        this.driversService.getVictoriesbyDriverId('alonso')
+        this.driversService.getVictoriesbyDriverId(this.driverOTD.driverId)
           .subscribe(wins => {
             this.winsCount = wins;
           });
 
-        this.driversService.getPodiumsbyDriverId('alonso')
+        this.driversService.getPodiumsbyDriverId(this.driverOTD.driverId)
           .subscribe(podiums => {
             this.podiumsCount = podiums;
           });
         console.log(this.driverOTD);
-        this.driversService.getPolesbyDriverId('alonso')
+        this.driversService.getPolesbyDriverId(this.driverOTD.driverId)
           .subscribe(poles => this.polesCount = poles);
-      });
-    this.dataIsLoaded()
-      .subscribe((isloaded: boolean) => this.dataLoaded = of(isloaded));
-  }
 
-  dataIsLoaded() {
-    const subject = new Subject();
-    if (this.driverOTD != null && this.championshipsCount != null && this.winsCount != null
-      && this.podiumsCount != null && this.polesCount != null) {
-      subject.next(true);
-    }
-    return subject.asObservable();
+        this.driversService.getInfo(this.driverOTD)
+          .subscribe(info => this.info = info);
+
+        this.driversService.getImage(this.driverOTD)
+          .subscribe(image => {
+            if (image != null) {
+              this.image = image;
+            }
+          });
+      });
   }
 
 }

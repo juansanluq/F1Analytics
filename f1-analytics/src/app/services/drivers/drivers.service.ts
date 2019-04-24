@@ -28,6 +28,7 @@ export class DriversService {
       .subscribe((data: any) => {
         const drivers = data.MRData.DriverTable.Drivers;
         subject.next(drivers[randomNumber]);
+        // subject.next(drivers[9]);
       });
     return subject.asObservable();
   }
@@ -83,5 +84,28 @@ export class DriversService {
         subject.next(res.MRData.RaceTable.Races.length);
       });
     return subject.asObservable();
+  }
+
+  getInfo(driver: any) {
+    const subject = new Subject();
+    const searchTerm = driver.givenName.replace(' ', '_') + '_' + driver.familyName.replace(' ', '_');
+    this.http.get('https://es.wikipedia.org/api/rest_v1/page/summary/' + searchTerm)
+      .subscribe((res: any) => subject.next(res.extract));
+    return subject;
+  }
+
+  getImage(driver: any) {
+    const subject = new Subject();
+    const searchTerm = driver.givenName.replace(' ', '_') + '_' + driver.familyName.replace(' ', '_');
+    this.http.get('https://es.wikipedia.org/api/rest_v1/page/media/' + searchTerm)
+      .subscribe((res: any) => {
+
+        try {
+          subject.next(res.items[0].thumbnail.source);
+        } catch (TypeError) {
+          subject.next(null);
+        }
+      });
+    return subject;
   }
 }

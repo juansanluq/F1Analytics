@@ -1,0 +1,71 @@
+@import '../../scss_utils/variables';
+@import '../../scss_utils/mixins';
+.news-container {
+    font-family: 'F1-Bold';
+    max-width: 100%;
+    .slogan {
+        text-align: center;
+        font-size: 1.7rem;
+        margin-bottom: 1.5rem;
+        border-bottom: 2px solid $naranja;
+        padding-bottom: .5rem;
+    }
+    .entry-container {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        justify-content: center;
+        background-color: $blanco;
+        padding: 1rem;
+        padding-bottom: .2rem;
+        border: 2px solid $naranja;
+        border-radius: 10px;
+        margin-bottom: 1.5rem;
+        .titulo {
+            font-size: 1.2rem;
+            text-align: center;
+        }
+        img {
+            height: auto;
+            max-height: 12rem;
+            padding: 1rem 1.5rem 0 1.5rem;
+            margin: 0 auto;
+            width: auto;
+            max-width: 100%;
+        }
+        .text {
+            font-family: 'F1-Regular';
+            padding: 1.5rem;
+            text-align: center;
+            line-height: 1.6rem;
+        }
+        a {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            left: 0;
+            top: 0;
+            cursor: pointer;
+            padding: 2rem;
+        }
+    }
+    @include for-desktop-up {
+        .entries-container {
+            display: flex;
+            flex-wrap: wrap;
+            .entry-container {
+                flex: 1 0 20%;
+                margin: 1rem;
+                img {
+                    width: auto;
+                    max-width: 200px;
+                    height: auto;
+                    max-height: 150px;
+                    padding: 0;
+                    margin-top: 1rem;
+                }
+            }
+        }
+    }
+}
