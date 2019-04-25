@@ -1,6 +1,6 @@
 import { Type } from '@angular/compiler';
 
-export const API_URL = 'http://ergast.com/api/f1';
+export const API_URL = 'https://ergast.com/api/f1';
 
 export interface Location {
   lat: string;

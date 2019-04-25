@@ -107,5 +107,9 @@
         font-family: 'F1-Bold';
         color: $blanco;
         font-size: .7rem;
+        a {
+            text-decoration: none;
+            color: $blanco;
+        }
     }
 }
