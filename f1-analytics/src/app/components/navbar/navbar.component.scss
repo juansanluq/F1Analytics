@@ -1,6 +1,5 @@
 @import '../../scss_utils/variables';
 @import '../../scss_utils/mixins';
-
 img {
     max-width: 100%;
 }
@@ -31,14 +30,13 @@ nav {
             padding: 1rem;
             max-width: 70%;
         }
-
         i {
             font-size: 2rem;
             margin-right: 1rem;
             border: 2px solid $naranja_oscuro;
             padding: .2rem;
+            border-radius: 5px;
         }
-
         @include for-desktop-up {
             display: flex;
             i {
@@ -105,19 +103,17 @@ nav ul li:hover ul {
         width: 25%;
         li {
             text-align: start;
-
             &:hover {
-              background-color: $naranja_oscuro;
+                background-color: $naranja_oscuro;
             }
             a {
                 color: $negro;
                 font-size: 0.7rem;
                 padding: 1.9rem 6.5rem 1.9rem 1rem;
-
                 span {
-                  padding: .2rem;
-                  margin: .5rem;
-              }
+                    padding: .2rem;
+                    margin: .5rem;
+                }
             }
         }
     }

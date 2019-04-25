@@ -14,7 +14,7 @@ export class DemonymsService {
   getCountryCode(demonym: string) {
     let countryCode;
     for (let i = 0; i < this.countries.length; i++) {
-      if(demonym === this.countries[i][3]) {
+      if (demonym === this.countries[i][3]) {
         countryCode = this.countries[i][0];
         break;
       }
@@ -25,7 +25,7 @@ export class DemonymsService {
   getCountryCodeByCountryName(countryName: string) {
     let countryCode;
     for (let i = 0; i < this.countries.length; i++) {
-      if(countryName === this.countries[i][1]) {
+      if (countryName === this.countries[i][1]) {
         countryCode = this.countries[i][0];
         break;
       }

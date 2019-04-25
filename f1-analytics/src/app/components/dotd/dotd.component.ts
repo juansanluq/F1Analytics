@@ -3,6 +3,9 @@ import { DriversService } from '../../services/drivers/drivers.service';
 import { Subject, Observable, of } from 'rxjs';
 import wiki from 'wikijs';
 import { DemonymsService } from '../../services/demonyms/demonyms.service';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/store/app.reducer';
+import { LoadDriverOTDAction } from '../../store/actions/drivers.actions';
 
 @Component({
   selector: 'app-dotd',
@@ -20,12 +23,14 @@ export class DotdComponent implements OnInit {
   countryCode;
   image: any = '../../../assets/images/image_placeholder.png';
 
-  constructor(private driversService: DriversService, private demonymsService: DemonymsService) { }
+  constructor(private driversService: DriversService, private demonymsService: DemonymsService,
+    private store: Store<AppState>) { }
 
   ngOnInit() {
     this.driversService.getDriverOfTheDay()
       .subscribe(driver => {
         this.driverOTD = driver;
+        this.store.dispatch(new LoadDriverOTDAction(this.driverOTD));
 
         this.countryCode = this.demonymsService.getCountryCode(this.driverOTD.nationality);
 

@@ -21,6 +21,7 @@ h3 {
 }
 
 .hero {
+    position: relative;
     height: 100vh;
     background-image: url(../../../assets/images/hero.jpg);
     background-size: cover;
@@ -31,12 +32,18 @@ h3 {
     flex: 1;
     color: $blanco;
     .contenido-hero {
+        position: absolute;
+        top: 5rem;
+        left: 0;
+        right: 0;
+        margin: auto;
         display: flex;
         flex-direction: column;
-        flex: 1;
+        flex: 1 0 100%;
         align-items: center;
         justify-content: space-between;
         padding: 2rem;
+        height: calc(100vh - 5rem);
         h1 {
             width: 100%;
             text-align: center;

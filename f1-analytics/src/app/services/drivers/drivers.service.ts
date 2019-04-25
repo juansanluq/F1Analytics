@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { API_URL } from '../utils';
 import { Subject } from 'rxjs';
+import { AppState } from 'src/app/store/app.reducer';
+import { Store } from '@ngrx/store';
+import { LoadDriversAction } from 'src/app/store/actions';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +14,7 @@ export class DriversService {
   currentDate = new Date();
   podiumCount;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private store: Store<AppState>) { }
 
 
   getAllDrivers() {
@@ -26,6 +29,7 @@ export class DriversService {
     this.getAllDrivers()
       .subscribe((data: any) => {
         const drivers = data.MRData.DriverTable.Drivers;
+        this.store.dispatch(new LoadDriversAction(drivers));
         subject.next(drivers[randomNumber]);
         // subject.next(drivers[9]);
       });

@@ -6,6 +6,10 @@ import { HttpClient } from '@angular/common/http';
 import { DemonymsService } from 'src/app/services/demonyms/demonyms.service';
 import { DriversService } from 'src/app/services/drivers/drivers.service';
 import { GP } from 'src/app/services/utils';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/store/app.reducer';
+import { SetLastGPAction } from 'src/app/store/actions/gp.actions';
+import { SetNextGPAction } from '../../store/actions/gp.actions';
 
 @Component({
     selector: 'app-landing',
@@ -26,12 +30,14 @@ export class LandingComponent implements OnInit {
     currentDrivers;
 
     constructor(private scheduleService: ScheduleService, private http: HttpClient,
-        private demonymService: DemonymsService, private driversService: DriversService) { }
+        private demonymService: DemonymsService, private driversService: DriversService,
+        private store: Store<AppState>) { }
 
     ngOnInit() {
         this.scheduleService.getNextGP()
             .subscribe(nextGP => {
                 this.nextGP = nextGP;
+                this.store.dispatch(new SetNextGPAction(this.nextGP));
                 this.nextGPready = true;
 
                 this.startGPCountdown();
@@ -56,6 +62,7 @@ export class LandingComponent implements OnInit {
                 }
                 console.log(this.lastGP);
                 this.lastGPready = true;
+                this.store.dispatch(new SetLastGPAction(this.lastGP));
             });
     }
 
