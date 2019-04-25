@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { DriversService } from '../../services/drivers/drivers.service';
-import { driver } from '../../services/utils';
 import { Subject, Observable, of } from 'rxjs';
 import wiki from 'wikijs';
 import { DemonymsService } from '../../services/demonyms/demonyms.service';
@@ -17,7 +16,7 @@ export class DotdComponent implements OnInit {
   winsCount;
   podiumsCount;
   polesCount;
-  info;
+  info = 'Lamentablemente no se ha podido obtener información de este piloto';
   countryCode;
   image: any = '../../../assets/images/image_placeholder.png';
 
@@ -29,7 +28,6 @@ export class DotdComponent implements OnInit {
         this.driverOTD = driver;
 
         this.countryCode = this.demonymsService.getCountryCode(this.driverOTD.nationality);
-        console.log(this.countryCode);
 
         this.driversService.getChampionshipsbyDriverId(this.driverOTD.driverId)
           .subscribe(championships => {
@@ -45,12 +43,11 @@ export class DotdComponent implements OnInit {
           .subscribe(podiums => {
             this.podiumsCount = podiums;
           });
-        console.log(this.driverOTD);
         this.driversService.getPolesbyDriverId(this.driverOTD.driverId)
           .subscribe(poles => this.polesCount = poles);
 
         this.driversService.getInfo(this.driverOTD)
-          .subscribe(info => this.info = info);
+          .subscribe((info: any) => this.info = info);
 
         this.driversService.getImage(this.driverOTD)
           .subscribe(image => {

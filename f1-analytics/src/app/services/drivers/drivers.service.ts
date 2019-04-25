@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { API_URL, driver } from '../utils';
+import { API_URL } from '../utils';
 import { Subject } from 'rxjs';
 
 @Injectable({
@@ -22,8 +22,7 @@ export class DriversService {
   getDriverOfTheDay() {
     let subject = new Subject<string>();
     let randomNumber;
-    randomNumber = this.currentDate.getDay() + this.currentDate.getMonth() + (this.currentDate.getFullYear() - 1911);
-    console.log(randomNumber);
+    randomNumber = this.currentDate.getDay() + this.currentDate.getMonth() + (this.currentDate.getFullYear() - 1905);
     this.getAllDrivers()
       .subscribe((data: any) => {
         const drivers = data.MRData.DriverTable.Drivers;

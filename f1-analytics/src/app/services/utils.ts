@@ -2,71 +2,85 @@ import { Type } from '@angular/compiler';
 
 export const API_URL = 'http://ergast.com/api/f1';
 
-export type gp = {
-  circuit: circuit;
-  results: gp_result[];
-  date: string;
-  raceName: string;
-  round: string;
-  season: string;
-  time: string;
+export interface Location {
+  lat: string;
+  long: string;
+  locality: string;
+  country: string;
+  countryCode: string;
+}
+
+export interface Circuit {
+  circuitId: string;
   url: string;
-  real_date: Date;
+  circuitName: string;
+  Location: Location;
 }
 
-export type gp_result = {
-  constructor: constructor;
-  driver: driver;
-  fastest_lap: fastestLap;
-  time: string;
-  grid: string;
-  laps: string;
-  number: string;
-  points: string;
-  position: string;
-  positionText: string;
-
-}
-
-export type driver = {
-  code: string,
-  dateOfBirth: string,
+export interface Driver {
   driverId: string;
-  familyName: string;
-  givenName: string;
-  nationality: string;
   permanentNumber: string;
+  code: string;
   url: string;
-  flag?: string;
+  givenName: string;
+  familyName: string;
+  dateOfBirth: string;
+  nationality: string;
+  countryCode: string;
 }
 
-export type constructor = {
+export interface Constructor {
   constructorId: string;
+  url: string;
   name: string;
   nationality: string;
-  url: string;
 }
 
-export type fastestLap = {
-  speed: string;
+export interface Time {
+  millis: string;
   time: string;
-  lap: string;
+}
+
+export interface Time2 {
+  time: string;
+}
+
+export interface AverageSpeed {
+  units: string;
+  speed: string;
+}
+
+export interface FastestLap {
   rank: string;
+  lap: string;
+  Time: Time2;
+  AverageSpeed: AverageSpeed;
 }
 
-export type circuit = {
-  circuitId: string;
-  circuitName: string;
+export interface Result {
+  number: string;
+  position: string;
+  positionText: string;
+  points: string;
+  Driver: Driver;
+  Constructor: Constructor;
+  grid: string;
+  laps: string;
+  status: string;
+  Time: Time;
+  FastestLap: FastestLap;
+}
+
+export interface GP {
+  season: string;
+  round: string;
   url: string;
-  location: location;
-}
-
-export type location = {
-  country: string;
-  lat: string;
-  locality: string;
-  long: string;
-  countryCode: string;
+  raceName: string;
+  Circuit: Circuit;
+  date: string;
+  time: string;
+  Results: Result[];
+  real_date?: Date;
 }
 
 export const countryList = [

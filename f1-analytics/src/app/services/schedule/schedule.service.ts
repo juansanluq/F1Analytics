@@ -1,6 +1,6 @@
 import { Injectable, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { API_URL, gp } from '../utils';
+import { API_URL, GP } from '../utils';
 import { Subject } from 'rxjs';
 
 @Injectable({
@@ -57,10 +57,10 @@ export class ScheduleService {
   }
 
   getLastGP() {
-    let subject = new Subject<gp>();
+    let subject = new Subject<GP>();
     this.http.get(API_URL + '/current/last/results.json')
       .subscribe((res: any) => {
-        let last_GP = res.MRData.RaceTable.Races[0];
+        let last_GP = res.MRData.RaceTable.Races[0] as GP;
         subject.next(last_GP);
       });
     return subject.asObservable();

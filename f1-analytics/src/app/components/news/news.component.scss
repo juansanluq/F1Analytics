@@ -57,6 +57,8 @@
             .entry-container {
                 flex: 1 0 20%;
                 margin: 1rem;
+                transition: background-color .2s ease-in-out;
+                transition: color .4s ease-in-out;
                 img {
                     width: auto;
                     max-width: 200px;
@@ -64,6 +66,10 @@
                     max-height: 150px;
                     padding: 0;
                     margin-top: 1rem;
+                }
+                &:hover {
+                    background-color: lighten($naranja_oscuro, 10);
+                    color: $blanco;
                 }
             }
         }

@@ -11,6 +11,7 @@ import { DeviceDetectorModule } from 'ngx-device-detector';
 import { HttpClientModule } from '@angular/common/http';
 import { DotdComponent } from './components/dotd/dotd.component';
 import { NewsComponent } from './components/news/news.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { NewsComponent } from './components/news/news.component';
     NavbarComponent,
     LandingComponent,
     DotdComponent,
-    NewsComponent
+    NewsComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

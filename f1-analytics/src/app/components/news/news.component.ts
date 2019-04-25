@@ -16,7 +16,6 @@ export class NewsComponent implements OnInit {
     this.newsService.getLatestNews()
       .subscribe((articles: any) => {
         this.articles = articles;
-        console.log(this.articles);
       });
   }
 
