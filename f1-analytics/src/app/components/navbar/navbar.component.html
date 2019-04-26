@@ -1,10 +1,10 @@
 <nav class="main-navbar">
     <div class="nav-header">
-        <img src="../../assets/images/logo.png" alt="">
+        <img (click)="goToIndex()" src="../../assets/images/logo.png" alt="">
         <i id="toggle" class="fas fa-bars"></i>
     </div>
     <ul id="main-ul">
-        <li><a href="#">Circuitos</a></li>
+        <li (click)="goToCircuits()"><a (click)="goToCircuits()">Circuitos</a></li>
         <li><a href="#">Constructores</a></li>
         <li><a href="#">Pilotos</a>
             <div class="contenedor-flex">
@@ -78,4 +78,5 @@
         <li><a href="#">Temporadas</a></li>
         <li><a href="#">Ránkings</a></li>
     </ul>
-</nav> <!-- Fin de navbar -->
+</nav>
+<!-- Fin de navbar -->

@@ -1,7 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { LandingComponent } from './components/landing/landing.component';
+import { CircuitsIndexComponent } from './components/circuits-index/circuits-index.component';
+import { AppComponent } from './app.component';
 
-const routes: Routes = [];
+const routes: Routes = [
+  { path: '', pathMatch: 'full', component: LandingComponent },
+  { path: 'circuitos', component: CircuitsIndexComponent }
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

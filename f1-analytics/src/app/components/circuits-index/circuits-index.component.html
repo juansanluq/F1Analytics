@@ -1,0 +1,22 @@
+<div class="hero">
+    <app-navbar></app-navbar>
+    <div class="titulo">
+        <h1>Circuitos de Fórmula 1</h1>
+    </div>
+</div>
+<div class="contenedor">
+    <div class="cards-container">
+        <h1 class="titulo">Todos los circuitos</h1>
+        <ng-container *ngFor="let letra of letras">
+            <div class="card">
+                <div class="letra"> {{letra}} </div>
+                <ng-container *ngFor="let circuit of circuits">
+                    <div class="circuit" *ngIf="circuit.circuitName.charAt(0) === letra">
+                        <img src="https://www.countryflags.io/{{circuit.countryCode}}/shiny/64.png">
+                        <div class="circuit-name"> <a href="#">{{circuit.circuitName}}</a> </div>
+                    </div>
+                </ng-container>
+            </div>
+        </ng-container>
+    </div>
+</div>

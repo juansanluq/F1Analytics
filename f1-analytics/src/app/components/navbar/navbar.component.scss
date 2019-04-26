@@ -7,7 +7,7 @@ img {
 nav {
     position: relative;
     z-index: 1;
-    animation: fadein 1.5s;
+    // animation: fadein 1.5s;
     display: flex;
     flex-direction: column;
     background-color: $naranja;
@@ -19,6 +19,9 @@ nav {
         img {
             max-width: 200px;
             padding: 0;
+            &:hover {
+                cursor: pointer;
+            }
         }
     }
     .nav-header {
@@ -67,10 +70,12 @@ nav {
             }
             &:hover {
                 background-color: $naranja_oscuro;
+                cursor: pointer;
             }
             a {
                 text-decoration: none;
                 color: #FFEEE4;
+                cursor: pointer;
             }
             .contenedor-flex .header {
                 display: none;

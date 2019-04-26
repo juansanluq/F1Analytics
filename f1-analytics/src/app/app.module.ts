@@ -16,6 +16,8 @@ import { StoreModule } from '@ngrx/store';
 import { appReducers } from './store/app.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
+import { CircuitsIndexComponent } from './components/circuits-index/circuits-index.component';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -25,7 +27,8 @@ import { environment } from '../environments/environment';
     LandingComponent,
     DotdComponent,
     NewsComponent,
-    FooterComponent
+    FooterComponent,
+    CircuitsIndexComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +39,7 @@ import { environment } from '../environments/environment';
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production,
-    })
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]

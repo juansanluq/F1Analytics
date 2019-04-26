@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { DriversService } from '../../services/drivers/drivers.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -14,7 +15,8 @@ export class NavbarComponent implements OnInit {
   displayed = false;
   currentDrivers;
 
-  constructor(private deviceService: DeviceDetectorService, private driversService: DriversService) { }
+  constructor(private deviceService: DeviceDetectorService, private driversService: DriversService,
+    private router: Router) { }
 
   ngOnInit() {
     let ul = document.getElementById('main-ul');
@@ -36,6 +38,14 @@ export class NavbarComponent implements OnInit {
         this.displayed = false;
       }
     });
+  }
+
+  goToCircuits() {
+    this.router.navigateByUrl('/circuitos');
+  }
+
+  goToIndex() {
+    this.router.navigateByUrl('');
   }
 
 }
