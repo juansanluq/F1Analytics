@@ -1,0 +1,158 @@
+@import '../../scss_utils/variables';
+@import '../../scss_utils/mixins';
+@mixin margen {
+    margin: 1rem 1rem;
+}
+
+.contenedor {
+    max-width: 1500px;
+    margin: 0 auto;
+}
+
+.hero {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 100%;
+    background-image: url(https://s3-eu-west-1.amazonaws.com/bwinnewsprod/en/uploads/2017/05/australia.jpg);
+    background-position: bottom;
+    background-size: cover;
+    background-attachment: fixed;
+    .titulo {
+        top: calc(50% - 3rem);
+        position: absolute;
+        text-align: center;
+        color: $blanco;
+        font-family: 'F1-Bold';
+        align-self: center;
+        font-size: 1.3rem;
+        padding: 1rem;
+        width: 100%;
+    }
+}
+
+.header {
+    margin: 1rem .5rem;
+    border: 3px solid $naranja;
+    border-radius: 10px;
+    background-color: lighten($naranja, 35);
+    box-shadow: 10px 10px 51px -10px rgba(0, 0, 0, 0.39);
+    text-align: center;
+    .circuit-name {
+        font-family: 'F1-Bold';
+        @include margen();
+        border-bottom: 2px solid $naranja;
+        padding-bottom: .5rem;
+    }
+    .circuit-image {
+        width: 90%;
+        @include margen();
+        border: 2px solid $naranja_oscuro;
+        border-radius: 10px;
+        max-height: 50%;
+    }
+    .country {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        @include margen();
+        font-family: 'F1-Bold';
+        font-size: 1.3rem;
+        margin-bottom: 1.5rem;
+        img {
+            margin-right: 2rem;
+        }
+    }
+    .extended-description {
+        margin: 1rem auto;
+        width: 90%;
+        align-self: center;
+        justify-self: center;
+        font-family: 'F1-Regular';
+        line-height: 2rem;
+    }
+    .description {
+        @include margen();
+        font-family: 'F1-Regular';
+        line-height: 1.5rem;
+        margin-bottom: 1.5rem;
+        text-align: left;
+        margin: 1rem auto;
+        width: 90%;
+        text-align: center;
+        border-bottom: 1px solid $naranja;
+    }
+    @include for-desktop-up {
+        padding: 1rem;
+        max-width: 90%;
+        margin: 1rem auto;
+        display: grid;
+        grid-template-areas: "name name" "image country" "image info" "extended extended";
+        .circuit-name {
+            grid-area: name;
+        }
+        .circuit-image {
+            grid-area: image;
+            align-self: center;
+            justify-self: center;
+        }
+        .extended-description {
+            grid-area: extended;
+        }
+        .description {
+            border: 0;
+        }
+    }
+}
+
+.events {
+    background-color: $blanco;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    .titulo {
+        font-family: 'F1-Bold';
+        border-bottom: 2px solid $naranja;
+        padding-bottom: .2rem;
+        h1 {
+            margin: 0;
+            padding: 0;
+        }
+    }
+    table {
+        border-collapse: collapse;
+        margin-top: 1rem;
+        width: 95%;
+        align-self: center;
+        th {
+            font-family: 'F1-Bold';
+            border: 1px solid $naranja;
+            padding: .5rem;
+        }
+        td {
+            font-family: 'F1-Regular';
+            border: 1px solid $naranja;
+            padding: .5rem;
+            a {
+                color: $negro;
+                border-bottom: 2px dotted $naranja;
+                padding-bottom: .5px;
+                text-decoration: none;
+            }
+        }
+        .main-titles {
+            background-color: lighten($naranja, 10);
+        }
+        .row:hover {
+            background-color: lighten($naranja, 30);
+            a {
+                border-bottom: 2px dotted $negro;
+                &:hover {
+                    border-bottom: 3px dotted $negro;
+                }
+            }
+        }
+    }
+}

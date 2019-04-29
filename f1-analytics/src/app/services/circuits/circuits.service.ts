@@ -39,4 +39,34 @@ export class CircuitsService {
     }
     return letras;
   }
+
+  getCircuitById(id: string) {
+    let subject = new Subject();
+    this.http.get(API_URL + '/circuits/' + id + '.json')
+      .subscribe((res: any) => subject.next(res.MRData.CircuitTable.Circuits[0]));
+    return subject.asObservable();
+  }
+
+  getCircuitImage(circuit: Circuit) {
+    const searchTerm = circuit.url.split('/');
+    let subject = new Subject();
+    this.http.get('https://en.wikipedia.org/api/rest_v1/page/media/' + searchTerm[searchTerm.length - 1])
+      .subscribe((res: any) => {
+        subject.next(res.items[0].original.source);
+      });
+    return subject.asObservable();
+  }
+
+  getRacesByCircuit(circuit: Circuit) {
+    return this.http.get(API_URL + '/circuits/' + circuit.circuitId + '/races.json?limit=1000');
+  }
+
+  getWinnersByCircuit(circuit: Circuit) {
+    return this.http.get(API_URL + '/circuits/' + circuit.circuitId + '/results/1.json?limit=1000');
+  }
+
+  getInfo(circuit: Circuit) {
+    const searchTerm = circuit.url.split('/');
+    return this.http.get('https://es.wikipedia.org/api/rest_v1/page/summary/' + searchTerm[searchTerm.length - 1]);
+  }
 }

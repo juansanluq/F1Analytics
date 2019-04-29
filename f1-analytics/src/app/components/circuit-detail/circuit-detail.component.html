@@ -1,0 +1,102 @@
+<div *ngIf="circuit && MostSuccesfullDriver else noData" class="contenedor">
+    <div class="hero">
+        <app-navbar></app-navbar>
+        <div class="titulo">
+            <h1>{{circuit.circuitName}}</h1>
+        </div>
+    </div>
+    <div class="header">
+        <h1 class="circuit-name">{{circuit.circuitName}}</h1>
+        <img class="circuit-image" src="{{circuitImage}}">
+        <div class="country">
+            <img class="flag" src="https://www.countryflags.io/{{circuit.countryCode}}/shiny/64.png">
+            <div class="name"> {{circuit.Location.locality}}, {{circuit.Location.country}}</div>
+        </div>
+        <div class="description" *ngIf="gpCount > 1 else onlyOneGP">
+            <p>El {{circuit.circuitName}} en {{circuit.Location.locality}} ha albergado {{gpCount}} Grandes Premios entre {{firstYear}} y {{lastYear}}.</p>
+            <ng-container *ngIf="gpCount >= 7">
+                <p>Con {{MostSuccesfullDriver.count}} victorias, {{MostSuccesfullDriver.driver.givenName}} {{MostSuccesfullDriver.driver.familyName}} es el piloto más exitoso en este circuito. El mejor constructor ha sido {{MostSuccesfullConstructor.constructor.name}}
+                    con un total de {{MostSuccesfullConstructor.count}} victorias en este trazado.</p>
+            </ng-container>
+        </div>
+        <div class="extended-description">
+            <p>{{extendedInfo}}</p>
+        </div>
+        <ng-template #onlyOneGP>
+            <div class="description">
+                <p>El {{circuit.circuitName}} en {{circuit.Location.locality}} organizó {{gpCount}} Gran Premio en {{firstYear}}.</p>
+            </div>
+        </ng-template>
+
+    </div>
+    <div class="events header">
+        <div class="titulo">
+            <h1>Eventos</h1>
+        </div>
+        <table>
+            <tr class="main-titles">
+                <th>#</th>
+                <th colspan="2 ">Evento</th>
+                <th colspan="4 ">Ganador</th>
+                <th colspan="3 ">Pole Position</th>
+            </tr>
+            <tr class="row">
+                <td>1</td>
+                <td><a href="">2016 European Grand Prix</a></td>
+                <td>19 June</td>
+                <td><img src="https://www.countryflags.io/cn/shiny/32.png " alt=" "></td>
+                <td><a href="#">Nico Rosberg</a></td>
+                <td><a href="#">Mercedes</a></td>
+                <td>1:32:52:366</td>
+                <td><img src="https://www.countryflags.io/cn/shiny/32.png " alt=" "></td>
+                <td><a href="#">Nico Rosberg</a></td>
+                <td><a href="#">Mercedes</a></td>
+            </tr>
+            <tr class="row">
+                <td>1</td>
+                <td><a href="">2016 European Grand Prix</a></td>
+                <td>19 June</td>
+                <td><img src="https://www.countryflags.io/cn/shiny/32.png " alt=" "></td>
+                <td><a href="#">Nico Rosberg</a></td>
+                <td><a href="#">Mercedes</a></td>
+                <td>1:32:52:366</td>
+                <td><img src="https://www.countryflags.io/cn/shiny/32.png " alt=" "></td>
+                <td><a href="#">Nico Rosberg</a></td>
+                <td><a href="#">Mercedes</a></td>
+            </tr>
+            <tr class="row">
+                <td>1</td>
+                <td><a href="">2016 European Grand Prix</a></td>
+                <td>19 June</td>
+                <td><img src="https://www.countryflags.io/cn/shiny/32.png " alt=" "></td>
+                <td><a href="#">Nico Rosberg</a></td>
+                <td><a href="#">Mercedes</a></td>
+                <td>1:32:52:366</td>
+                <td><img src="https://www.countryflags.io/cn/shiny/32.png " alt=" "></td>
+                <td><a href="#">Nico Rosberg</a></td>
+                <td><a href="#">Mercedes</a></td>
+            </tr>
+            <tr class="row">
+                <td>1</td>
+                <td><a href="">2016 European Grand Prix</a></td>
+                <td>19 June</td>
+                <td><img src="https://www.countryflags.io/cn/shiny/32.png " alt=" "></td>
+                <td><a href="#">Nico Rosberg</a></td>
+                <td><a href="#">Mercedes</a></td>
+                <td>1:32:52:366</td>
+                <td><img src="https://www.countryflags.io/cn/shiny/32.png " alt=" "></td>
+                <td><a href="#">Nico Rosberg</a></td>
+                <td><a href="#">Mercedes</a></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<ng-template #noData>
+    <div class="hero ">
+        <app-navbar></app-navbar>
+        <div class="titulo ">
+            <h1>Circuitos de Fórmula 1</h1>
+        </div>
+    </div>
+</ng-template>

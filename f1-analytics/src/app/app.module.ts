@@ -18,6 +18,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { CircuitsIndexComponent } from './components/circuits-index/circuits-index.component';
 import { RouterModule } from '@angular/router';
+import { CircuitDetailComponent } from './components/circuit-detail/circuit-detail.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { RouterModule } from '@angular/router';
     DotdComponent,
     NewsComponent,
     FooterComponent,
-    CircuitsIndexComponent
+    CircuitsIndexComponent,
+    CircuitDetailComponent
   ],
   imports: [
     BrowserModule,

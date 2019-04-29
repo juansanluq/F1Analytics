@@ -25,10 +25,8 @@ export class CircuitsIndexComponent implements OnInit {
             countryCode: this.demonymsService.getCountryCodeByCountryName(circuit.Location.country),
           }
           this.circuits.push(circuitWithCountryCode);
-          console.log(circuitWithCountryCode);
         }
         this.letras = this.circuitsService.getFirtCharacterOfCircuitsArray(circuits);
-        console.log(this.letras);
       });
   }
 
