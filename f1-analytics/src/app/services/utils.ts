@@ -83,6 +83,35 @@ export interface GP {
   real_date?: Date;
 }
 
+export function getMes(numeroMes: string) {
+  switch (numeroMes) {
+    case '00':
+      return 'Enero';
+    case '02':
+      return 'Febrero';
+    case '03':
+      return 'Marzo';
+    case '04':
+      return 'Abril';
+    case '05':
+      return 'Mayo';
+    case '06':
+      return 'Junio';
+    case '07':
+      return 'Julio';
+    case '08':
+      return 'Agosto';
+    case '09':
+      return 'Septiembre';
+    case '10':
+      return 'Octubre';
+    case '11':
+      return 'Noviembre';
+    case '12':
+      return 'Diciembre';
+  }
+}
+
 export const countryList = [
   ["AE", "United Arab Emirates", "12-02", "Emirati", "+4"],
   ["AE", "UAE", "12-02", "Emirati", "+4"],

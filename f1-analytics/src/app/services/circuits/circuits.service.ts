@@ -69,4 +69,18 @@ export class CircuitsService {
     const searchTerm = circuit.url.split('/');
     return this.http.get('https://es.wikipedia.org/api/rest_v1/page/summary/' + searchTerm[searchTerm.length - 1]);
   }
+
+  getWinnersAtThisCircuit(circuit: Circuit) {
+    let subject = new Subject();
+    let results = new Array();
+    this.http.get(API_URL + '/circuits/' + circuit.circuitId + '/results/1.json?limit=1000')
+      .subscribe((data: any) => {
+        let races = data.MRData.RaceTable.Races;
+        for (const race of races) {
+          results.push(race);
+        }
+        subject.next(results);
+      });
+    return subject.asObservable();
+  }
 }

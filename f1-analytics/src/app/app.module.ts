@@ -20,6 +20,8 @@ import { CircuitsIndexComponent } from './components/circuits-index/circuits-ind
 import { RouterModule } from '@angular/router';
 import { CircuitDetailComponent } from './components/circuit-detail/circuit-detail.component';
 
+import { AgmCoreModule } from '@agm/core';
+
 
 @NgModule({
   declarations: [
@@ -42,6 +44,9 @@ import { CircuitDetailComponent } from './components/circuit-detail/circuit-deta
       maxAge: 25,
       logOnly: environment.production,
     }),
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyDfMmKqfiQop5i6H_ZpXCRGuULlxyYJD94'
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

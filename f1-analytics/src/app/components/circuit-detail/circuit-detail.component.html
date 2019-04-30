@@ -31,6 +31,13 @@
     </div>
     <div class="events header">
         <div class="titulo">
+            <h1>Ubicación</h1>
+        </div>
+        <iframe width="600" height="450" frameborder="0" style="border:0" [src]="src" allowfullscreen>
+        </iframe>
+    </div>
+    <div class="events header">
+        <div class="titulo">
             <h1>Eventos</h1>
         </div>
         <table>
@@ -38,58 +45,23 @@
                 <th>#</th>
                 <th colspan="2 ">Evento</th>
                 <th colspan="4 ">Ganador</th>
-                <th colspan="3 ">Pole Position</th>
+                <th colspan="3 " class="pole">Pole Position</th>
             </tr>
-            <tr class="row">
-                <td>1</td>
-                <td><a href="">2016 European Grand Prix</a></td>
-                <td>19 June</td>
-                <td><img src="https://www.countryflags.io/cn/shiny/32.png " alt=" "></td>
-                <td><a href="#">Nico Rosberg</a></td>
-                <td><a href="#">Mercedes</a></td>
-                <td>1:32:52:366</td>
-                <td><img src="https://www.countryflags.io/cn/shiny/32.png " alt=" "></td>
-                <td><a href="#">Nico Rosberg</a></td>
-                <td><a href="#">Mercedes</a></td>
-            </tr>
-            <tr class="row">
-                <td>1</td>
-                <td><a href="">2016 European Grand Prix</a></td>
-                <td>19 June</td>
-                <td><img src="https://www.countryflags.io/cn/shiny/32.png " alt=" "></td>
-                <td><a href="#">Nico Rosberg</a></td>
-                <td><a href="#">Mercedes</a></td>
-                <td>1:32:52:366</td>
-                <td><img src="https://www.countryflags.io/cn/shiny/32.png " alt=" "></td>
-                <td><a href="#">Nico Rosberg</a></td>
-                <td><a href="#">Mercedes</a></td>
-            </tr>
-            <tr class="row">
-                <td>1</td>
-                <td><a href="">2016 European Grand Prix</a></td>
-                <td>19 June</td>
-                <td><img src="https://www.countryflags.io/cn/shiny/32.png " alt=" "></td>
-                <td><a href="#">Nico Rosberg</a></td>
-                <td><a href="#">Mercedes</a></td>
-                <td>1:32:52:366</td>
-                <td><img src="https://www.countryflags.io/cn/shiny/32.png " alt=" "></td>
-                <td><a href="#">Nico Rosberg</a></td>
-                <td><a href="#">Mercedes</a></td>
-            </tr>
-            <tr class="row">
-                <td>1</td>
-                <td><a href="">2016 European Grand Prix</a></td>
-                <td>19 June</td>
-                <td><img src="https://www.countryflags.io/cn/shiny/32.png " alt=" "></td>
-                <td><a href="#">Nico Rosberg</a></td>
-                <td><a href="#">Mercedes</a></td>
-                <td>1:32:52:366</td>
-                <td><img src="https://www.countryflags.io/cn/shiny/32.png " alt=" "></td>
-                <td><a href="#">Nico Rosberg</a></td>
-                <td><a href="#">Mercedes</a></td>
+            <tr class="row" *ngFor="let result of results">
+                <td>{{results.indexOf(result) + 1}}</td>
+                <td><a href="">{{result.season}} {{result.raceName}}</a></td>
+                <td>{{result.formattedDate}}</td>
+                <td><img src="https://www.countryflags.io/{{result.Results[0].Driver.countryCode}}/shiny/32.png" title="{{result.Results[0].Driver.nationality}}"></td>
+                <td><a href="#">{{result.Results[0].Driver.givenName}} {{result.Results[0].Driver.familyName}}</a></td>
+                <td><a href="#">{{result.Results[0].Constructor.name}}</a></td>
+                <td class="pole">{{result.Results[0].Time.time}}</td>
+                <td class="pole"><img src="https://www.countryflags.io/cn/shiny/32.png " alt=" "></td>
+                <td class="pole"><a href="#">Nico Rosberg</a></td>
+                <td class="pole"><a href="#">Mercedes</a></td>
             </tr>
         </table>
     </div>
+    <app-footer></app-footer>
 </div>
 
 <ng-template #noData>

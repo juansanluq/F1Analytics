@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, Sanitizer } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { API_URL, Circuit, Result } from '../../services/utils';
+import { API_URL, Circuit, Result, getMes } from '../../services/utils';
 import { CircuitsService } from '../../services/circuits/circuits.service';
 import { ActivatedRoute } from '@angular/router';
 import { DemonymsService } from '../../services/demonyms/demonyms.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-circuit-detail',
@@ -20,9 +21,11 @@ export class CircuitDetailComponent implements OnInit {
   MostSuccesfullDriver;
   MostSuccesfullConstructor;
   extendedInfo;
+  results;
+  src;
 
   constructor(private route: ActivatedRoute, private circuitsService: CircuitsService,
-    private demonymsService: DemonymsService) { }
+    private demonymsService: DemonymsService, private domSanitizer: DomSanitizer) { }
 
   ngOnInit() {
     this.circuitsService.getCircuitById(this.route.snapshot.paramMap.get('id'))
@@ -31,6 +34,9 @@ export class CircuitDetailComponent implements OnInit {
           ...circuit,
           countryCode: this.demonymsService.getCountryCodeByCountryName(circuit.Location.country),
         };
+
+        this.src = this.domSanitizer.bypassSecurityTrustResourceUrl(`https://www.google.com/maps/embed/v1/view?key=AIzaSyDfMmKqfiQop5i6H_ZpXCRGuULlxyYJD94&center=${this.circuit.Location.lat},${this.circuit.Location.long}&zoom=15&maptype=satellite`);
+
         this.circuitsService.getCircuitImage(this.circuit)
           .subscribe(image => {
             this.circuitImage = image;
@@ -44,6 +50,31 @@ export class CircuitDetailComponent implements OnInit {
         this.setMostSuccesfullDriverAndConstructor();
         this.circuitsService.getInfo(circuit)
           .subscribe((res: any) => this.extendedInfo = res.extract);
+        this.circuitsService.getWinnersAtThisCircuit(this.circuit)
+          .subscribe(results => {
+            this.results = results;
+            for (const result of this.results) {
+              result.Results[0].Driver = {
+                ...result.Results[0].Driver,
+                countryCode: this.demonymsService.getCountryCode(result.Results[0].Driver.nationality),
+              }
+            }
+
+            let gp_complete_date;
+            // Añadimos el objecto Date a las carreras que nos traemos de la API
+            for (let i = 0; i < this.results.length; i++) {
+              let gp_date = this.results[i].date.split("-");
+              let gp_year = gp_date[0];
+              let gp_month = gp_date[1];
+              let gp_day = gp_date[2];
+
+              // Hay que restarle 1 al mes, ya que al tipo Date los meses se le indican como un array index,
+              // Por lo que por ejemplo Diciembre correspondería con el índice 11
+              gp_complete_date = gp_day + ' ' + getMes(gp_month);
+              this.results[i].formattedDate = gp_complete_date;
+            }
+            console.log(this.results);
+          });
       });
   }
 
@@ -73,19 +104,15 @@ export class CircuitDetailComponent implements OnInit {
             maxEl = WinsDrivers[i];
             maxCount = modeMap[el];
           }
-          else if (modeMap[el] == maxCount) {
-            maxEl += '&' + el;
-            maxCount = modeMap[el];
-          }
         }
         this.MostSuccesfullDriver = {
           driver: maxEl,
           count: maxCount,
         }
 
-        // Reiniciamos las variables
-        maxEl = ConstructorWins[0];
-        maxCount = 1;
+
+        maxEl = ConstructorWins[0],
+          maxCount = 1;
 
         for (var i = 0; i < ConstructorWins.length; i++) {
           var el = ConstructorWins[i].name;
@@ -99,18 +126,16 @@ export class CircuitDetailComponent implements OnInit {
             maxEl = ConstructorWins[i];
             maxCount = modeMap[el];
           }
-          else if (modeMap[el] == maxCount) {
-            maxEl += '&' + el;
-            maxCount = modeMap[el];
-          }
         }
 
         this.MostSuccesfullConstructor = {
           constructor: maxEl,
           count: maxCount,
         }
-
-        console.log(maxEl);
       });
+  }
+
+  setMapUrl() {
+    return `https://www.google.com/maps/embed/v1/view?key=AIzaSyDfMmKqfiQop5i6H_ZpXCRGuULlxyYJD94&center=${this.circuit.Location.lat},${this.circuit.Location.long}&zoom=18&maptype=satellite`;
   }
 }
