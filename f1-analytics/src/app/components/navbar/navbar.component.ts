@@ -48,4 +48,8 @@ export class NavbarComponent implements OnInit {
     this.router.navigateByUrl('');
   }
 
+  goToConstructors() {
+    this.router.navigateByUrl('/constructores');
+  }
+
 }

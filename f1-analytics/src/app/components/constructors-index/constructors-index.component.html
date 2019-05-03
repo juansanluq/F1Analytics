@@ -1,0 +1,50 @@
+<div class="hero">
+    <app-navbar></app-navbar>
+    <div class="titulo">
+        <h1>Constructores de la Fórmula 1</h1>
+    </div>
+    <video loop id="video">
+      <source src="../../../assets/images/hero.mp4" type="video/mp4">
+      Your browser does not support HTML5 video.
+    </video>
+</div>
+<div class="contenedor-header">
+    <div class="current-constructors">
+        <div class="titulo">Constructores Temporada 2019</div>
+        <div class="constructors-table">
+            <table>
+                <tr>
+                    <th>#</th>
+                    <th>Constructor</th>
+                    <th>Puntos</th>
+                </tr>
+                <tr *ngFor="let const of currentConstructors | async">
+                    <td>{{const.position}}</td>
+                    <td><span id="badge" class="{{const.Constructor.constructorId}}"></span> <a href="#">{{const.Constructor.name}}</a> </td>
+                    <td>{{const.points}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="current-constructors video">
+        <iframe allowFullScreen="allowfullscreen" src="https://motorsport.tv/embed/eSFC7snQ" frameBorder="0"></iframe>
+    </div>
+</div>
+<div class="contenedor">
+    <div class="cards-container">
+        <h1 class="titulo">Lista de constructores</h1>
+        <ng-container *ngFor="let letra of iniciales">
+            <div class="card">
+                <div class="letra"> {{letra}} </div>
+                <ng-container *ngFor="let constructor of constructors">
+                    <div class="circuit" *ngIf="constructor.name.charAt(0) === letra">
+                        <img src="https://www.countryflags.io/{{constructor.countryCode}}/shiny/64.png">
+                        <div class="circuit-name"> <a [routerLink]="[ '/circuitos', constructor,constructorId ]">{{constructor.name}}</a>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </ng-container>
+    </div>
+</div>
+<app-footer></app-footer>

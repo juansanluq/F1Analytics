@@ -1,0 +1,199 @@
+@import '../../scss_utils/variables';
+@import '../../scss_utils/mixins';
+.contenedor-header {
+    max-width: 100%;
+    margin: 0 auto;
+    @include for-desktop-up {
+        display: grid;
+        grid-template-columns: 30% 70%;
+        iframe {
+            display: flex;
+            flex: 1;
+            border-radius: 10px;
+        }
+    }
+}
+
+.contenedor {
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.hero {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 100%;
+    @include for-phone-only {
+        background-image: url(http://i.imgur.com/4kporth.jpg);
+        background-position: bottom center;
+        background-size: cover;
+        background-attachment: fixed;
+    }
+    .titulo {
+        position: absolute;
+        top: calc(50% - 3rem);
+        text-align: center;
+        color: $blanco;
+        font-family: 'F1-Bold';
+        align-self: center;
+        font-size: 1.2rem;
+        width: 100%;
+        @include for-desktop-up {
+            font-size: 1.7rem;
+        }
+    }
+}
+
+.current-constructors {
+    font-family: 'F1-Regular';
+    margin: 1.5rem;
+    border: 3px solid $naranja;
+    border-radius: 10px;
+    background-color: lighten($naranja, 35);
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    flex: 1 0 100%;
+    .titulo {
+        margin: 1rem;
+        text-align: center;
+        font-family: 'F1-Bold';
+        text-transform: uppercase;
+        padding-bottom: .5rem;
+        border-bottom: 2px solid $naranja;
+        font-size: 1.3rem;
+    }
+    .constructors-table {
+        margin: 1rem;
+        margin-bottom: 1rem;
+        table {
+            margin: 0 auto;
+            text-align: left;
+            border-collapse: collapse;
+            th {
+                font-family: 'F1-Bold';
+                border: 1px solid $naranja;
+                padding: .5rem;
+                background-color: lighten($naranja, 10);
+            }
+            td {
+                font-size: .6rem;
+                @include for-desktop-up {
+                    font-size: .8rem;
+                }
+                font-family: 'F1-Regular';
+                border: 1px solid $naranja;
+                padding: .7rem;
+                span {
+                    padding: .2rem;
+                    margin: .5rem;
+                }
+                a {
+                    color: $negro;
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+}
+
+.cards-container {
+    margin: 1rem .5rem;
+    border: 3px solid $naranja;
+    border-radius: 10px;
+    background-color: lighten($naranja, 35);
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    box-shadow: 10px 10px 51px -10px rgba(0, 0, 0, 0.39);
+    .titulo {
+        font-family: 'F1-Bold';
+        text-align: center;
+        text-transform: uppercase;
+        font-size: 1.3rem;
+        width: 90%;
+        align-self: center;
+        border-bottom: 2px solid $naranja;
+        padding-bottom: .2rem;
+    }
+    @include for-desktop-up {
+        margin: 2rem;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 1rem;
+        .titulo {
+            grid-column: 1 / 4;
+            grid-row: 1 / 2;
+            justify-self: center;
+        }
+    }
+}
+
+.card {
+    font-family: 'F1-Bold';
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    width: 90%;
+    align-self: center;
+    background-color: $blanco;
+    border-radius: 10px;
+    border: 2px solid $naranja;
+    margin-bottom: 1rem;
+    @include for-desktop-up {
+        align-self: flex-start;
+        justify-self: center;
+    }
+    .letra {
+        text-align: center;
+        text-transform: uppercase;
+        font-size: 1.6rem;
+        width: 90%;
+        align-self: center;
+        border-bottom: 2px solid $naranja;
+        padding-bottom: .2rem;
+        margin-bottom: .5rem;
+    }
+    .circuit {
+        display: grid;
+        grid-template-columns: 1fr 3fr;
+        width: 90%;
+        margin: .2rem 0;
+        text-align: center;
+        margin: 0 auto;
+        img {
+            align-self: center;
+            justify-self: center;
+        }
+        .circuit-name {
+            align-self: center;
+            margin: 0;
+            padding: 0;
+            a {
+                text-decoration: none;
+                color: $negro;
+                &:hover {
+                    color: $naranja;
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+}
+
+#video {
+    z-index: -99;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100vh;
+    object-fit: fill;
+    @include for-phone-only {
+        display: none;
+    }
+}

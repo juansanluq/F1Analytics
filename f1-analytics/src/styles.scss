@@ -41,3 +41,43 @@ body {
     background-color: #f4f2f0;
     max-width: 1500px;
 }
+
+.toro_rosso {
+    @include fondo($toro_rosso);
+}
+
+.mercedes {
+    @include fondo($mercedes);
+}
+
+.red_bull {
+    @include fondo($redbull);
+}
+
+.alfa {
+    @include fondo($alfa_romeo);
+}
+
+.haas {
+    @include fondo($haas);
+}
+
+.renault {
+    @include fondo($renault);
+}
+
+.ferrari {
+    @include fondo($ferrari);
+}
+
+.mclaren {
+    @include fondo($mclaren);
+}
+
+.racing_point {
+    @include fondo($racing_point);
+}
+
+.williams {
+    @include fondo($blanco);
+}

@@ -134,6 +134,7 @@ export const countryList = [
   ["BB", "Barbados", "11-30", "Barbadian", "-4"],
   ["BD", "Bangladesh", "03-26", "Bangladeshi", "+6"],
   ["BE", "Belgium", "07-21", "Belgian", "+1"],
+  ["BE", "Belgium", "07-21", "Belgium", "+1"],
   ["BF", "Burkina Faso", "08-05", "Burkinabé", "0"],
   ["BG", "Bulgaria", "09-22", "Bulgarian", "+2"],
   ["BH", "Bahrain", "08-15", "Bahraini", "+3"],
@@ -168,6 +169,7 @@ export const countryList = [
   ["CX", "Christmas Island", "01-26", "Christmas Island", "+7"],
   ["CY", "Cyprus", "10-01", "Cypriot", "+2"],
   ["CZ", "Czech Republic", "10-28", "Czech", "+1"],
+  ["DE", "Germany", "10-03", "East German", "+1"],
   ["DE", "Germany", "10-03", "German", "+1"],
   ["DJ", "Djibouti", "06-27", "Djiboutian", "+3"],
   ["DK", "Denmark", "06-05", "Danish", "+1"],
@@ -206,6 +208,7 @@ export const countryList = [
   ["GW", "Guinea-Bissau", "09-24", "Guinean", "0"],
   ["GY", "Guyana", "05-26", "Guyanese", "-4"],
   ["HK", "Hong Kong", "07-01", "Hongkonger", "+8"],
+  ["HK", "Hong Kong", "07-01", "Hong Kong", "+8"],
   ["HM", "Heard Island and Mcdonald Islands", "", "", "0"],
   ["HN", "Honduras", "09-15", "Honduran", "-6"],
   ["HR", "Croatia", "10-08", "Croat", "+1"],
@@ -282,6 +285,7 @@ export const countryList = [
   ["NT", "Neutral Zone", "", "", ""],
   ["NU", "Niue", "02-06", "Niuean", "-11"],
   ["NZ", "New Zealand", "02-06", "New Zealander", "+12"],
+  ["NZ", "New Zealand", "02-06", "New Zealand", "+12"],
   ["OM", "Oman", "11-18", "Omani", "+4"],
   ["PA", "Panama", "11-28", "Panamanian", "-5"],
   ["PE", "Peru", "07-28", "Peruvian", "-5"],
@@ -361,5 +365,6 @@ export const countryList = [
   ["YU", "Yugoslavia", "", "", ""],
   ["ZA", "South Africa", "12-11", "South African", "+2"],
   ["ZM", "Zambia", "10-24", "Zambian", "+2"],
-  ["ZW", "Zimbabwe", "04-18", "Zimbabwean", "+2"]
+  ["ZW", "Zimbabwe", "04-18", "Zimbabwean", "+2"],
+  ["ZW", "Zimbabwe", "04-18", "Rhodesian", "+2"]
 ];

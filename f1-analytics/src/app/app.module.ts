@@ -21,6 +21,7 @@ import { RouterModule } from '@angular/router';
 import { CircuitDetailComponent } from './components/circuit-detail/circuit-detail.component';
 
 import { AgmCoreModule } from '@agm/core';
+import { ConstructorsIndexComponent } from './components/constructors-index/constructors-index.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { AgmCoreModule } from '@agm/core';
     NewsComponent,
     FooterComponent,
     CircuitsIndexComponent,
-    CircuitDetailComponent
+    CircuitDetailComponent,
+    ConstructorsIndexComponent
   ],
   imports: [
     BrowserModule,

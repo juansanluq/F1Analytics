@@ -38,7 +38,7 @@ export class CircuitDetailComponent implements OnInit {
           countryCode: this.demonymsService.getCountryCodeByCountryName(circuit.Location.country),
         };
 
-        this.src = this.domSanitizer.bypassSecurityTrustResourceUrl(`https://www.google.com/maps/embed/v1/view?key=AIzaSyDfMmKqfiQop5i6H_ZpXCRGuULlxyYJD94&center=${this.circuit.Location.lat},${this.circuit.Location.long}&zoom=15&maptype=satellite`);
+        this.src = this.domSanitizer.bypassSecurityTrustResourceUrl(`https://www.google.com/maps/embed/v1/view?key=AIzaSyDfMmKqfiQop5i6H_ZpXCRGuULlxyYJD94&center=${this.circuit.Location.lat},${this.circuit.Location.long}&zoom=14`);
 
         this.circuitsService.getCircuitImage(this.circuit)
           .subscribe(image => {
@@ -152,11 +152,7 @@ export class CircuitDetailComponent implements OnInit {
         this.MostSuccesfullConstructor = {
           constructor: maxEl,
           count: maxCount,
-        }
+        };
       });
-  }
-
-  setMapUrl() {
-    return `https://www.google.com/maps/embed/v1/view?key=AIzaSyDfMmKqfiQop5i6H_ZpXCRGuULlxyYJD94&center=${this.circuit.Location.lat},${this.circuit.Location.long}&zoom=18&maptype=satellite`;
   }
 }
