@@ -5,6 +5,7 @@ import { CircuitsService } from '../../services/circuits/circuits.service';
 import { ActivatedRoute } from '@angular/router';
 import { DemonymsService } from '../../services/demonyms/demonyms.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: 'app-circuit-detail',
@@ -23,6 +24,8 @@ export class CircuitDetailComponent implements OnInit {
   extendedInfo;
   results;
   src;
+  polemans;
+  polemansReady = false;
 
   constructor(private route: ActivatedRoute, private circuitsService: CircuitsService,
     private demonymsService: DemonymsService, private domSanitizer: DomSanitizer) { }
@@ -47,15 +50,22 @@ export class CircuitDetailComponent implements OnInit {
             this.firstYear = res.MRData.RaceTable.Races[0].season;
             this.lastYear = res.MRData.RaceTable.Races[res.MRData.RaceTable.Races.length - 1].season;
           });
+
+
         this.setMostSuccesfullDriverAndConstructor();
+
+
         this.circuitsService.getInfo(circuit)
           .subscribe((res: any) => this.extendedInfo = res.extract);
+
+
         this.circuitsService.getWinnersAtThisCircuit(this.circuit)
           .subscribe(results => {
             this.results = results;
             for (const result of this.results) {
               result.Results[0].Driver = {
                 ...result.Results[0].Driver,
+                givenName: result.Results[0].Driver.givenName.charAt(0) + '.',
                 countryCode: this.demonymsService.getCountryCode(result.Results[0].Driver.nationality),
               }
             }
@@ -73,7 +83,18 @@ export class CircuitDetailComponent implements OnInit {
               gp_complete_date = gp_day + ' ' + getMes(gp_month);
               this.results[i].formattedDate = gp_complete_date;
             }
-            console.log(this.results);
+          });
+        this.circuitsService.getPolemansAtThisCircuit(this.circuit)
+          .subscribe(res => {
+            this.polemans = res;
+            for (const result of this.polemans) {
+              result.Results[0].Driver = {
+                ...result.Results[0].Driver,
+                givenName: result.Results[0].Driver.givenName.charAt(0) + '.',
+                countryCode: this.demonymsService.getCountryCode(result.Results[0].Driver.nationality),
+              }
+            }
+            this.polemansReady = true;
           });
       });
   }

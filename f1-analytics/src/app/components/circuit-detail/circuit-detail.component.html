@@ -47,17 +47,25 @@
                 <th colspan="4 ">Ganador</th>
                 <th colspan="3 " class="pole">Pole Position</th>
             </tr>
-            <tr class="row" *ngFor="let result of results">
-                <td>{{results.indexOf(result) + 1}}</td>
+            <tr class="row" *ngFor="let result of results; let i = index">
+                <td>{{i + 1}}</td>
                 <td><a href="">{{result.season}} {{result.raceName}}</a></td>
                 <td>{{result.formattedDate}}</td>
                 <td><img src="https://www.countryflags.io/{{result.Results[0].Driver.countryCode}}/shiny/32.png" title="{{result.Results[0].Driver.nationality}}"></td>
                 <td><a href="#">{{result.Results[0].Driver.givenName}} {{result.Results[0].Driver.familyName}}</a></td>
                 <td><a href="#">{{result.Results[0].Constructor.name}}</a></td>
                 <td class="pole">{{result.Results[0].Time.time}}</td>
-                <td class="pole"><img src="https://www.countryflags.io/cn/shiny/32.png " alt=" "></td>
-                <td class="pole"><a href="#">Nico Rosberg</a></td>
-                <td class="pole"><a href="#">Mercedes</a></td>
+                <ng-container *ngIf="polemansReady else noPolemans">
+                    <td class="pole"><img src="https://www.countryflags.io/{{polemans[i].Results[0].Driver.countryCode}}/shiny/32.png"></td>
+                    <td class="pole"><a href="#">{{polemans[i].Results[0].Driver.givenName}} {{polemans[i].Results[0].Driver.familyName}}</a></td>
+                    <td class="pole"><a href="#">{{polemans[i].Results[0].Constructor.name}}</a></td>
+                </ng-container>
+                <ng-template #noPolemans>
+                    <td class="pole"> NULL </td>
+                    <td class="pole"> NULL</td>
+                    <td class="pole"> NULL </td>
+                </ng-template>
+
             </tr>
         </table>
     </div>
@@ -71,4 +79,7 @@
             <h1>Circuitos de Fórmula 1</h1>
         </div>
     </div>
+</ng-template>
+<ng-template #noResults>
+    <td>NO DATA</td>
 </ng-template>

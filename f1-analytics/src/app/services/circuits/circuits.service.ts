@@ -83,4 +83,18 @@ export class CircuitsService {
       });
     return subject.asObservable();
   }
+
+  getPolemansAtThisCircuit(circuit: Circuit) {
+    let subject = new Subject();
+    let results = new Array();
+    this.http.get(API_URL + '/grid/1/circuits/' + circuit.circuitId + '/results.json')
+      .subscribe((data: any) => {
+        let races = data.MRData.RaceTable.Races;
+        for (const race of races) {
+          results.push(race);
+        }
+        subject.next(results);
+      });
+    return subject.asObservable();
+  }
 }
