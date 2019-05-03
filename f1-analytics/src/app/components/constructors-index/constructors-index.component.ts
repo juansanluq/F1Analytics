@@ -25,9 +25,9 @@ export class ConstructorsIndexComponent implements OnInit {
         console.log(this.constructors);
         this.iniciales = this.constructorsService.getFirtCharacterOfConstructorsArray(constructors);
       })
-    const video = document.getElementById('video');
-    video.muted = "muted";
-    video.autoplay = "autoplay";
+    const video = <HTMLVideoElement>document.getElementById('video');
+    video.muted = true;
+    video.autoplay = true;
   }
 
 }

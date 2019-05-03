@@ -96,6 +96,15 @@
                     text-decoration: none;
                 }
             }
+            .row:hover {
+                background-color: lighten($naranja, 30);
+                td a {
+                    text-decoration: underline;
+                    &:hover {
+                        color: $naranja;
+                    }
+                }
+            }
         }
     }
 }

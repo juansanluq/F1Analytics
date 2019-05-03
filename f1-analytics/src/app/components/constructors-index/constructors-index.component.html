@@ -18,7 +18,7 @@
                     <th>Constructor</th>
                     <th>Puntos</th>
                 </tr>
-                <tr *ngFor="let const of currentConstructors | async">
+                <tr class="row" *ngFor="let const of currentConstructors | async">
                     <td>{{const.position}}</td>
                     <td><span id="badge" class="{{const.Constructor.constructorId}}"></span> <a href="#">{{const.Constructor.name}}</a> </td>
                     <td>{{const.points}}</td>
