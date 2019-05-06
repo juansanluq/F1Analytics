@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Subject, Observable } from 'rxjs';
-import { Constructor, API_URL } from '../utils';
+import { Constructor, API_URL, Driver } from '../utils';
 import { DemonymsService } from '../demonyms/demonyms.service';
 
 @Injectable({
@@ -49,5 +49,101 @@ export class ConstructorsService {
         constructorsOb.next(constructorsWCCArray);
       });
     return constructorsOb.asObservable();
+  }
+
+  getNationalityByConstructorID(id: string) {
+    let nationality = new Subject<string>();
+    this.http.get(API_URL + '/constructors/' + id + '.json')
+      .subscribe((res: any) => {
+        nationality.next(res.MRData.ConstructorTable.Constructors[0].nationality);
+      });
+    return nationality.asObservable();
+  }
+
+  getConstructorByID(id: string) {
+    let constructor = new Subject();
+    this.http.get(API_URL + '/constructors/' + id + '.json')
+      .subscribe((res: any) => {
+        constructor.next(res.MRData.ConstructorTable.Constructors[0] = {
+          ...res.MRData.ConstructorTable.Constructors[0],
+          countryCode: this.demonymsService.getCountryCode(res.MRData.ConstructorTable.Constructors[0].nationality)
+        });
+      });
+    return constructor.asObservable();
+  }
+
+  getCurrentDriversByConstructorID(id: string): Observable<Driver[]> {
+    let drivers = new Subject<Driver[]>();
+    this.http.get(API_URL + '/current/constructors/' + id + '/drivers.json')
+      .subscribe((res: any) => {
+        const rawdrivers = res.MRData.DriverTable.Drivers;
+        const driversWithCountryCode = new Array();
+        for (let driver of rawdrivers) {
+          driver = {
+            ...driver,
+            countryCode: this.demonymsService.getCountryCode(driver.nationality),
+          };
+          driversWithCountryCode.push(driver);
+        }
+        drivers.next(driversWithCountryCode);
+      });
+    return drivers.asObservable();
+  }
+
+  getVictoriesCountByConstructorID(id: string) {
+    const count = new Subject();
+    this.http.get(API_URL + '/constructors/' + id + '/results/1.json?limit=1000')
+      .subscribe((res: any) => {
+        count.next(res.MRData.RaceTable.Races.length);
+      });
+    return count.asObservable();
+  }
+
+  getRacesCountByConstructorID(id: string) {
+    const count = new Subject();
+    this.http.get(API_URL + '/constructors/' + id + '/results.json?limit=5000')
+      .subscribe((res: any) => count.next(res.MRData.RaceTable.Races.length));
+    return count.asObservable();
+  }
+
+  getPolesCountByConstructorID(id: string) {
+    const count = new Subject();
+    this.http.get(API_URL + '/constructors/' + id + '/grid/1/results.json?limit=5000')
+      .subscribe((res: any) => count.next(res.MRData.RaceTable.Races.length));
+    return count.asObservable();
+  }
+
+  getSeasonCountByConstructorID(id: string) {
+    const count = new Subject();
+    this.http.get(API_URL + '/constructors/' + id + '/seasons.json?limit=1000')
+      .subscribe((res: any) => count.next(res.MRData.SeasonTable.Seasons.length));
+    return count.asObservable();
+  }
+
+  getDriverChampionshipsCountByConstructorID(id: string) {
+    const countOb = new Subject();
+    let count = 0;
+    this.http.get(API_URL + '/driverStandings/1.json?limit=1000')
+      .subscribe((res: any) => {
+        let StandingLists = res.MRData.StandingsTable.StandingsLists;
+        for (const standing of StandingLists) {
+          // console.log(standing.DriverStandings[0].Constructors[0].constructorId);
+          let constructors = standing.DriverStandings[0].Constructors;
+          for (const constructor of constructors) {
+            if (constructor.constructorId === id) {
+              count++;
+            }
+          }
+        }
+        countOb.next(count);
+      });
+    return countOb.asObservable();
+  }
+
+  getConstructorChampionshipsCountByConstructorID(id: string) {
+    const count = new Subject();
+    this.http.get(API_URL + '/constructors/' + id + '/constructorStandings/1.json?limit=1000')
+      .subscribe((res: any) => count.next(res.MRData.StandingsTable.StandingsLists.length));
+    return count.asObservable();
   }
 }

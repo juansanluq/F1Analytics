@@ -22,6 +22,7 @@ import { CircuitDetailComponent } from './components/circuit-detail/circuit-deta
 
 import { AgmCoreModule } from '@agm/core';
 import { ConstructorsIndexComponent } from './components/constructors-index/constructors-index.component';
+import { ConstructorDetailComponent } from './components/constructor-detail/constructor-detail.component';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { ConstructorsIndexComponent } from './components/constructors-index/cons
     FooterComponent,
     CircuitsIndexComponent,
     CircuitDetailComponent,
-    ConstructorsIndexComponent
+    ConstructorsIndexComponent,
+    ConstructorDetailComponent
   ],
   imports: [
     BrowserModule,

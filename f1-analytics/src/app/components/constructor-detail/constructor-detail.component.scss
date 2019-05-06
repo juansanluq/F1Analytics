@@ -1,0 +1,135 @@
+@import '../../scss_utils/variables';
+@import '../../scss_utils/mixins';
+.contenedor {
+    max-width: 1500px;
+    margin: 0 auto;
+}
+
+.box-presets {
+    font-size: 1.3rem;
+    margin: .5rem 1rem;
+    font-family: 'F1-Regular';
+}
+
+.hero {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 100%;
+    background-image: url(http://i.imgur.com/4kporth.jpg);
+    background-position: bottom center;
+    background-size: cover;
+    background-attachment: fixed;
+    .titulo {
+        position: absolute;
+        top: calc(50% - 3rem);
+        text-align: center;
+        color: $blanco;
+        font-family: 'F1-Bold';
+        align-self: center;
+        font-size: 1.2rem;
+        width: 100%;
+        @include for-desktop-up {
+            font-size: 1.7rem;
+        }
+    }
+}
+
+.box {
+    margin: 1rem;
+    border: 3px solid $naranja;
+    border-radius: 10px;
+    background-color: lighten($naranja, 35);
+    .titulo {
+        margin: 1rem;
+        text-align: center;
+        font-family: 'F1-Bold';
+        text-transform: uppercase;
+        padding-bottom: .5rem;
+        border-bottom: 2px solid $naranja;
+        font-size: 1.3rem;
+    }
+}
+
+.info-container {
+    @include for-desktop-up {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        align-items: center;
+    }
+}
+
+.nationality-box {
+    font-size: 1.3rem;
+    margin: .5rem 1rem;
+    font-family: 'F1-Regular';
+    display: grid;
+    align-items: center;
+    grid-template-rows: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+    text-align: center;
+    .nationality {
+        grid-column: 1 / 3;
+        font-weight: bold;
+        margin-top: -1rem;
+    }
+    .value {
+        text-align: left;
+        @include for-desktop-up {
+            text-align: center;
+        }
+    }
+}
+
+.current-drivers {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 1rem;
+    .drivers-title {
+        font-weight: bold;
+        margin-bottom: .5rem;
+        margin-top: 1rem;
+    }
+    .driver {
+        display: flex;
+        flex: 1 1 100%;
+        align-items: center;
+        .flag {
+            margin-right: .5rem;
+        }
+        .name {
+            margin-left: .5rem;
+        }
+    }
+}
+
+.chart {
+    display: flex;
+    flex-direction: column;
+    font-size: 1.2rem;
+    .record {
+        display: flex;
+        flex: 1 1 50%;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        margin: 1rem 0;
+        .value {
+            display: flex;
+            font-size: 1rem;
+            justify-content: space-between;
+            span {
+                margin-left: .2rem;
+            }
+        }
+    }
+}
+
+@include for-desktop-up {
+    .basic-info {
+        max-height: 22rem;
+    }
+}

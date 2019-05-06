@@ -26,7 +26,7 @@ export interface Driver {
   familyName: string;
   dateOfBirth: string;
   nationality: string;
-  countryCode: string;
+  countryCode?: string;
 }
 
 export interface Constructor {

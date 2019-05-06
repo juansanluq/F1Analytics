@@ -20,7 +20,7 @@
                 </tr>
                 <tr class="row" *ngFor="let const of currentConstructors | async">
                     <td>{{const.position}}</td>
-                    <td><span id="badge" class="{{const.Constructor.constructorId}}"></span> <a href="#">{{const.Constructor.name}}</a> </td>
+                    <td><span id="badge" class="{{const.Constructor.constructorId}}"></span> <a [routerLink]="['/constructores', const.Constructor.constructorId]" routerLinkActive="router-link-active">{{const.Constructor.name}}</a> </td>
                     <td>{{const.points}}</td>
                 </tr>
             </table>
@@ -39,7 +39,7 @@
                 <ng-container *ngFor="let constructor of constructors">
                     <div class="circuit" *ngIf="constructor.name.charAt(0) === letra">
                         <img src="https://www.countryflags.io/{{constructor.countryCode}}/shiny/64.png">
-                        <div class="circuit-name"> <a [routerLink]="[ '/circuitos', constructor,constructorId ]">{{constructor.name}}</a>
+                        <div class="circuit-name"> <a [routerLink]="[ '/constructores', constructor.constructorId ]">{{constructor.name}}</a>
                         </div>
                     </div>
                 </ng-container>
