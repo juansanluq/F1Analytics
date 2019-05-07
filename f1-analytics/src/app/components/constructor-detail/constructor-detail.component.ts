@@ -33,6 +33,9 @@ export class ConstructorDetailComponent implements OnInit {
   constructorChampionshipsCount: Observable<any>;
   constructorChampionshipsPercentage: Observable<any>;
 
+  constructorImage: Observable<any>;
+  constructorInfo: Observable<any>;
+
   constructor(private route: ActivatedRoute, private constructorsService: ConstructorsService) { }
 
   ngOnInit() {
@@ -51,6 +54,12 @@ export class ConstructorDetailComponent implements OnInit {
     this.driverChampionshipPercentage = this.getDriverChampionshipPercentage();
     this.constructorChampionshipsCount = this.constructorsService.getConstructorChampionshipsCountByConstructorID(this.parametro);
     this.constructorChampionshipsPercentage = this.getConstructorChampionshipsPercentage();
+
+
+    this.selectedConstructor.subscribe(res => {
+      this.constructorImage = this.constructorsService.getConstructorImage(res.name);
+      this.constructorInfo = this.constructorsService.getConstructorInfo(res);
+    });
   }
 
   getWinPercentage() {

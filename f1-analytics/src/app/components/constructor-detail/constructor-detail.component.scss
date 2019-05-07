@@ -5,6 +5,10 @@
     margin: 0 auto;
 }
 
+img {
+    max-width: 100%;
+}
+
 .box-presets {
     font-size: 1.3rem;
     margin: .5rem 1rem;
@@ -131,5 +135,37 @@
 @include for-desktop-up {
     .basic-info {
         max-height: 22rem;
+    }
+}
+
+.extended-info {
+    display: flex;
+    flex-direction: column;
+    .image {
+        border: 3px solid $naranja_oscuro;
+        border-radius: 10px;
+        background-color: $blanco;
+        padding: .2rem;
+    }
+    .text {
+        line-height: 2rem;
+        text-align: center;
+        font-size: 1rem;
+        margin: 1rem .5rem;
+    }
+    .boton {
+        @include boton();
+        text-align: center;
+        margin: 0 3rem 1rem 3rem;
+    }
+    @include for-desktop-up {
+        .image {
+            align-self: center;
+            max-width: 40rem;
+            max-height: 20rem;
+        }
+        .boton {
+            margin: 0 30rem 1rem 30rem;
+        }
     }
 }

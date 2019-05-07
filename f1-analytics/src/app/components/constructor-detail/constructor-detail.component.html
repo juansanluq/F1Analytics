@@ -51,4 +51,23 @@
             </div>
         </div>
     </div>
+    <div class="box" *ngIf="selectedConstructor | async as constructor">
+        <div class="titulo">Acerca de {{constructor.name}}</div>
+        <div class="extended-info box-presets">
+            <img *ngIf="constructorImage | async as image else noImage" class="image" src="{{image}}" title="Renault F1 Team">
+            <ng-template #noImage>
+                <img class="image" src="http://logok.org/wp-content/uploads/2014/06/Formula-1-logo-2017-logotype-1024x768.png">
+            </ng-template>
+            <ng-container *ngIf="constructorInfo | async as info else noInfo">
+                <div class="text">{{info.text}}</div>
+                <div class="boton"><a href="{{info.url}}" target="_blank">Saber más</a></div>
+            </ng-container>
+            <ng-template #noInfo>
+                <div class="text">No se ha podido recabar información sobre este constructor</div>
+            </ng-template>
+        </div>
+    </div>
+    <div class="charts-container box">
+        <div class="titulo">Temporadas</div>
+    </div>
 </div>

@@ -24,6 +24,10 @@ import { AgmCoreModule } from '@agm/core';
 import { ConstructorsIndexComponent } from './components/constructors-index/constructors-index.component';
 import { ConstructorDetailComponent } from './components/constructor-detail/constructor-detail.component';
 
+import { ChartsModule } from 'ng2-charts';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 @NgModule({
   declarations: [
@@ -48,9 +52,8 @@ import { ConstructorDetailComponent } from './components/constructor-detail/cons
       maxAge: 25,
       logOnly: environment.production,
     }),
-    AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyDfMmKqfiQop5i6H_ZpXCRGuULlxyYJD94'
-    })
+    ChartsModule,
+    NgxSpinnerModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

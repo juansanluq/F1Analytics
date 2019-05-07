@@ -15,7 +15,6 @@ export class ConstructorsService {
     let constructors = new Subject();
     this.http.get(API_URL + '/2019/constructorStandings.json')
       .subscribe((res: any) => {
-        console.log(res.MRData.StandingsTable.StandingsLists[0].ConstructorStandings);
         constructors.next(res.MRData.StandingsTable.StandingsLists[0].ConstructorStandings);
       });
     return constructors.asObservable();
@@ -145,5 +144,49 @@ export class ConstructorsService {
     this.http.get(API_URL + '/constructors/' + id + '/constructorStandings/1.json?limit=1000')
       .subscribe((res: any) => count.next(res.MRData.StandingsTable.StandingsLists.length));
     return count.asObservable();
+  }
+
+  getConstructorImage(name: string) {
+    const image = new Subject();
+    this.http.get('https://en.wikipedia.org/api/rest_v1/page/media/' + name + '_F1_Team')
+      .subscribe((res: any) => image.next(res.items[0].thumbnail.source), error => {
+        this.http.get('https://en.wikipedia.org/api/rest_v1/page/media/' + name)
+          .subscribe((res: any) => {
+            try {
+              image.next(res.items[0].thumbnail.source);
+            } catch (error) {
+              // Doing nothing
+            }
+          }, error => {
+            image.next(null);
+          });
+      });
+    return image.asObservable();
+  }
+
+  getConstructorInfo(constructor: any) {
+    const info = new Subject();
+    let data;
+    let splitted_name = constructor.url.split('/');
+    console.log(constructor.name);
+    this.http.get('https://es.wikipedia.org/api/rest_v1/page/summary/' + constructor.name + '_F1_Team')
+      .subscribe((res: any) => {
+        data = {
+          text: res.extract,
+          url: res.content_urls.desktop.page,
+        };
+        info.next(data);
+
+      }, error => {
+        this.http.get('https://es.wikipedia.org/api/rest_v1/page/summary/' + splitted_name[splitted_name.length - 1])
+          .subscribe((res: any) => {
+            data = {
+              text: res.extract,
+              url: res.content_urls.desktop.page,
+            };
+            info.next(data);
+          }, error => info.next(null));
+      });
+    return info.asObservable();
   }
 }

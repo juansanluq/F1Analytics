@@ -35,3 +35,17 @@
         @content;
     }
 }
+
+@mixin boton {
+    text-decoration: none;
+    background-color: $naranja;
+    padding: .5rem;
+    border: 3px solid $naranja_oscuro;
+    color: $blanco;
+    border-radius: 10px;
+    font-family: 'F1-Regular';
+    a {
+        text-decoration: none;
+        color: $blanco;
+    }
+}
