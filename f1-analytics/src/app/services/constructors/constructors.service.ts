@@ -146,9 +146,10 @@ export class ConstructorsService {
     return count.asObservable();
   }
 
-  getConstructorImage(name: string) {
+  getConstructorImage(constructor: any) {
+    let splitted_name = constructor.url.split('/');
     const image = new Subject();
-    this.http.get('https://en.wikipedia.org/api/rest_v1/page/media/' + name + '_F1_Team')
+    this.http.get('https://en.wikipedia.org/api/rest_v1/page/media/' + splitted_name[splitted_name.length - 1])
       .subscribe((res: any) => image.next(res.items[0].thumbnail.source), error => {
         this.http.get('https://en.wikipedia.org/api/rest_v1/page/media/' + name)
           .subscribe((res: any) => {

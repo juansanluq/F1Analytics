@@ -212,7 +212,7 @@ export class ConstructorDetailComponent implements OnInit, AfterViewInit {
 
 
     this.selectedConstructor.subscribe(res => {
-      this.constructorImage = this.constructorsService.getConstructorImage(res.name);
+      this.constructorImage = this.constructorsService.getConstructorImage(res);
       this.constructorInfo = this.constructorsService.getConstructorInfo(res);
     });
 
