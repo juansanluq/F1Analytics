@@ -3,6 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable, Subject, forkJoin } from 'rxjs';
 import { ConstructorsService } from '../../services/constructors/constructors.service';
 import { Driver } from 'src/app/services/utils';
+import { Color, Label, monkeyPatchChartJsLegend } from 'ng2-charts';
+import { ChartDataSets, ChartOptions } from 'chart.js';
+import * as pluginAnnotations from 'chartjs-plugin-annotation';
 
 @Component({
   selector: 'app-constructor-detail',
@@ -36,9 +39,96 @@ export class ConstructorDetailComponent implements OnInit {
   constructorImage: Observable<any>;
   constructorInfo: Observable<any>;
 
+  public lineChartData: ChartDataSets[] = [
+    { data: [4, 5, 2, 1, 1], label: 'Resultados del equipo', fill: false },
+  ];
+  public lineChartLabels: Label[] = ['2011', '2012', '2013', '2014', '2015'];
+  public lineChartOptions: (ChartOptions) = {
+    legend: {
+      fullWidth: true,
+      labels: {
+        fontSize: 20,
+        fontFamily: 'F1-Regular',
+        fontColor: '#000'
+      }
+    },
+    layout: {
+      padding: {
+        left: 10,
+        right: 10,
+        top: 10,
+        bottom: 25
+      }
+    },
+    title: {
+      text: 'RESULTADOS DEL CAMPEONATO DE CONSTRUCTORES POR TEMPORADA',
+      display: true,
+      fontSize: 30,
+      fontFamily: 'F1-Bold',
+      fontColor: '#000'
+    },
+    responsive: true,
+    scales: {
+      // We use this empty structure as a placeholder for dynamic theming.
+      xAxes: [{
+        scaleLabel: {
+          display: true,
+          labelString: 'Temporadas',
+          fontSize: 20,
+          fontFamily: 'F1-Regular',
+          fontColor: '#000'
+        },
+        ticks: {
+          fontSize: 15,
+          maxRotation: 90,
+          minRotation: 50,
+          padding: 5,
+          fontColor: '#000'
+        },
+      }],
+      yAxes: [
+        {
+          scaleLabel: {
+            display: true,
+            labelString: 'Puesto en el campeontao',
+            fontSize: 20,
+            fontFamily: 'F1-Regular',
+            fontColor: '#000'
+          },
+          ticks: {
+            reverse: true,
+            autoSkip: true,
+            callback: function (value, index, values) {
+              return value + 'º';
+            },
+            stepSize: 1,
+            fontSize: 15,
+            fontColor: '#000'
+          },
+          position: 'left',
+        },
+      ]
+    }
+  };
+  public lineChartColors: Color[] = [
+    { // grey
+      backgroundColor: 'rgba(148,159,177,0.2)',
+      borderColor: '#F17F42',
+      pointBackgroundColor: '#000',
+      pointBorderColor: '#fff',
+
+    }
+  ];
+  public lineChartLegend = true;
+  public lineChartType = 'line';
+  public lineChartPlugins = [pluginAnnotations];
+
   constructor(private route: ActivatedRoute, private constructorsService: ConstructorsService) { }
 
   ngOnInit() {
+    let canvas = document.getElementsByTagName('canvas')[0];
+    canvas.width = 800;
+    canvas.height = 300;
     this.parametro = this.route.snapshot.paramMap.get('id');
     this.nationality = this.constructorsService.getNationalityByConstructorID(this.parametro);
     this.selectedConstructor = this.constructorsService.getConstructorByID(this.parametro);

@@ -69,5 +69,6 @@
     </div>
     <div class="charts-container box">
         <div class="titulo">Temporadas</div>
+        <canvas baseChart width="400" height="400" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType" [plugins]="lineChartPlugins" (chartHover)="chartHovered($event)"></canvas>
     </div>
 </div>
