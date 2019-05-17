@@ -67,9 +67,9 @@
             </ng-template>
         </div>
     </div>
-    <div #charts_container class="charts-container box">
+    <div [ngStyle]="{'display': !seasonData ? 'none': 'block'}" class="charts-container box">
         <div class="titulo">Temporadas</div>
-        <canvas baseChart width="400" height="400" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType"></canvas>
+        <canvas baseChart width="400" height="400" [datasets]="seasonChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType"></canvas>
     </div>
 </div>
 <ngx-spinner [fullScreen]="true" type="ball-running-dots" size="Large" color=#F17F42>

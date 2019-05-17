@@ -41,10 +41,12 @@ export class ConstructorDetailComponent implements OnInit, AfterViewInit {
   constructorImage: Observable<any>;
   constructorInfo: Observable<any>;
 
-  public lineChartData: ChartDataSets[] = [
-    { data: [4, 5, 2, 1, 1], label: 'Resultados del equipo', fill: false },
+  seasonData = false;
+
+  public seasonChartData: ChartDataSets[] = [
+    { data: [], label: 'Resultados del equipo', fill: false },
   ];
-  public lineChartLabels: Label[] = ['2011', '2012', '2013', '2014', '2015'];
+  public lineChartLabels: Label[] = [];
   public lineChartOptions: (ChartOptions) = {
     responsive: true,
     responsiveAnimationDuration: 1000,
@@ -220,10 +222,11 @@ export class ConstructorDetailComponent implements OnInit, AfterViewInit {
       .subscribe((res: any) => {
         if (res) {
           console.log(res);
-          this.lineChartData[0].data = res.results;
+          this.seasonChartData[0].data = res.results;
           this.lineChartLabels = res.seasons;
           this.spinner.hide();
           enableBodyScroll();
+          this.seasonData = true;
         } else {
           this.spinner.hide();
           enableBodyScroll();
@@ -232,8 +235,10 @@ export class ConstructorDetailComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.spinner.show();
-    disableBodyScroll();
+    setTimeout(() => {
+      this.spinner.show();
+      disableBodyScroll();
+    }, 3000);
   }
 
   getWinPercentage() {
