@@ -146,10 +146,17 @@ export class ConstructorsService {
     return count.asObservable();
   }
 
-  getConstructorImage(name: string) {
+  getConstructorImage(constructor: any) {
+    let splitted_name = constructor.url.split('/');
     const image = new Subject();
-    this.http.get('https://en.wikipedia.org/api/rest_v1/page/media/' + name + '_F1_Team')
-      .subscribe((res: any) => image.next(res.items[0].thumbnail.source), error => {
+    this.http.get('https://en.wikipedia.org/api/rest_v1/page/media/' + splitted_name[splitted_name.length - 1])
+      .subscribe((res: any) => {
+        try {
+          image.next(res.items[0].thumbnail.source);
+        } catch (error) {
+          // Doing nothing
+        }
+      }, error => {
         this.http.get('https://en.wikipedia.org/api/rest_v1/page/media/' + name)
           .subscribe((res: any) => {
             try {
@@ -188,5 +195,30 @@ export class ConstructorsService {
           }, error => info.next(null));
       });
     return info.asObservable();
+  }
+
+  getSeasonsResults(id: string) {
+    let subject = new Subject();
+    let seasonResults;
+    let seasonsArray = new Array();
+    let resultsArray = new Array();
+    this.http.get(API_URL + '/constructors/' + id + '/constructorStandings.json?limit=100')
+      .subscribe((res: any) => {
+        let standings = res.MRData.StandingsTable.StandingsLists;
+        if (standings.length === 0) {
+          subject.next(null);
+        } else {
+          for (const standingRecord of standings) {
+            seasonsArray.push(standingRecord.season);
+            resultsArray.push(standingRecord.ConstructorStandings[0].position);
+          }
+          seasonResults = {
+            seasons: seasonsArray,
+            results: resultsArray,
+          };
+          subject.next(seasonResults);
+        }
+      });
+    return subject.asObservable();
   }
 }
