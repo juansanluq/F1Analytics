@@ -1,77 +1,85 @@
 <div class="hero">
-    <app-navbar></app-navbar>
-    <div class="titulo">
-        <h1 *ngIf="selectedConstructor | async as constructor">{{constructor.name}}</h1>
-    </div>
+  <app-navbar></app-navbar>
+  <div class="titulo">
+    <h1 *ngIf="selectedConstructor | async as constructor">{{constructor.name}}</h1>
+  </div>
 </div>
 <div class="contenedor">
-    <div class="info-container">
-        <div class="box basic-info">
-            <div class="titulo">Información básica</div>
-            <div class="nationality-box" *ngIf="selectedConstructor | async as constructor">
-                <div class="nationality">Nacionalidad: </div>
-                <div class="flag"><img src="https://www.countryflags.io/{{constructor.countryCode}}/shiny/64.png"></div>
-                <div class="value">{{constructor.nationality}}</div>
-            </div>
-            <div class="current-drivers box-presets" *ngIf="constructorDrivers | async as drivers">
-                <div class="drivers-title" *ngIf="drivers.length">Pilotos actuales</div>
-                <div class="driver" *ngFor="let driver of drivers">
-                    <div class="flag"><img src="https://www.countryflags.io/{{driver.countryCode}}/shiny/32.png"></div>
-                    <div class="name">{{driver.givenName}} {{driver.familyName}}</div>
-                </div>
-            </div>
+  <div class="info-container">
+    <div class="box basic-info">
+      <div class="titulo">Información básica</div>
+      <div class="nationality-box" *ngIf="selectedConstructor | async as constructor">
+        <div class="nationality">Nacionalidad: </div>
+        <div class="flag"><img src="https://www.countryflags.io/{{constructor.countryCode}}/shiny/64.png"></div>
+        <div class="value">{{constructor.nationality}}</div>
+      </div>
+      <div class="current-drivers box-presets" *ngIf="constructorDrivers | async as drivers">
+        <div class="drivers-title" *ngIf="drivers.length">Pilotos actuales</div>
+        <div class="driver" *ngFor="let driver of drivers">
+          <div class="flag"><img src="https://www.countryflags.io/{{driver.countryCode}}/shiny/32.png"></div>
+          <div class="name">{{driver.givenName}} {{driver.familyName}}</div>
         </div>
-        <div class="box">
-            <div class="titulo">Estadísticas</div>
-            <div class="chart box-presets">
-                <div class="record">
-                    <div class="record-name">Victorias</div>
-                    <div class="value">{{winsCount | async}} <span>({{winPercentage | async}}%)</span></div>
-                </div>
-                <div class="record">
-                    <div class="record-name">Pole positions</div>
-                    <div class="value">{{polesCount | async}} <span>({{polesPercentage | async}}%)</span></div>
-                </div>
-                <div class="record">
-                    <div class="record-name">Temporadas</div>
-                    <div class="value">{{seasonCount | async }}</div>
-                </div>
-                <div class="record">
-                    <div class="record-name">Carreras</div>
-                    <div class="value">{{racesCount | async}}</div>
-                </div>
-                <div class="record">
-                    <div class="record-name">Campeonatos de pilotos</div>
-                    <div class="value">{{driverChampionshipsCount | async}} <span>({{driverChampionshipPercentage | async}}%)</span></div>
-                </div>
-                <div class="record">
-                    <div class="record-name">Campeonatos de constructores</div>
-                    <div class="value">{{constructorChampionshipsCount | async}} <span>({{constructorChampionshipsPercentage | async}}%)</span></div>
-                </div>
-            </div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="titulo">Estadísticas</div>
+      <div class="chart box-presets">
+        <div class="record">
+          <div class="record-name">Victorias</div>
+          <div class="value">{{winsCount | async}} <span>({{winPercentage | async}}%)</span></div>
         </div>
-    </div>
-    <div class="box" *ngIf="selectedConstructor | async as constructor">
-        <div class="titulo">Acerca de {{constructor.name}}</div>
-        <div class="extended-info box-presets">
-            <img *ngIf="constructorImage | async as image else noImage" class="image" src="{{image}}" title="Renault F1 Team">
-            <ng-template #noImage>
-                <img class="image" src="http://logok.org/wp-content/uploads/2014/06/Formula-1-logo-2017-logotype-1024x768.png">
-            </ng-template>
-            <ng-container *ngIf="constructorInfo | async as info else noInfo">
-                <div class="text">{{info.text}}</div>
-                <div class="boton"><a href="{{info.url}}" target="_blank">Saber más</a></div>
-            </ng-container>
-            <ng-template #noInfo>
-                <div class="text">No se ha podido recabar información sobre este constructor</div>
-            </ng-template>
+        <div class="record">
+          <div class="record-name">Pole positions</div>
+          <div class="value">{{polesCount | async}} <span>({{polesPercentage | async}}%)</span></div>
         </div>
+        <div class="record">
+          <div class="record-name">Temporadas</div>
+          <div class="value">{{seasonCount | async }}</div>
+        </div>
+        <div class="record">
+          <div class="record-name">Carreras</div>
+          <div class="value">{{racesCount | async}}</div>
+        </div>
+        <div class="record">
+          <div class="record-name">Campeonatos de pilotos</div>
+          <div class="value">{{driverChampionshipsCount | async}}
+            <span>({{driverChampionshipPercentage | async}}%)</span></div>
+        </div>
+        <div class="record">
+          <div class="record-name">Campeonatos de constructores</div>
+          <div class="value">{{constructorChampionshipsCount | async}}
+            <span>({{constructorChampionshipsPercentage | async}}%)</span></div>
+        </div>
+      </div>
     </div>
-    <div [ngStyle]="{'display': !seasonData ? 'none': 'block'}" class="charts-container box">
-        <div class="titulo">Temporadas</div>
-        <canvas baseChart width="400" height="400" [datasets]="seasonChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType"></canvas>
+  </div>
+  <div class="box" *ngIf="selectedConstructor | async as constructor">
+    <div class="titulo">Acerca de {{constructor.name}}</div>
+    <div class="extended-info box-presets">
+      <img *ngIf="constructorImage | async as image else noImage" class="image" src="{{image}}" title="Renault F1 Team">
+      <ng-template #noImage>
+        <img class="image" src="http://logok.org/wp-content/uploads/2014/06/Formula-1-logo-2017-logotype-1024x768.png">
+      </ng-template>
+      <ng-container *ngIf="constructorInfo | async as info else noInfo">
+        <div class="text">{{info.text}}</div>
+        <div class="boton"><a href="{{info.url}}" target="_blank">Saber más</a></div>
+      </ng-container>
+      <ng-template #noInfo>
+        <div class="text">No se ha podido recabar información sobre este constructor</div>
+      </ng-template>
     </div>
+  </div>
+  <div [ngStyle]="{'display': !seasonData ? 'none': 'block'}" class="charts-container box">
+    <div class="titulo">Temporadas</div>
+    <canvas baseChart width="400" height="400" [datasets]="seasonChartData" [labels]="seasonChartLabels"
+      [options]="seasonChartOptions" [colors]="lineChartColors" legend="true" chartType="line"></canvas>
+  </div>
+  <div [ngStyle]="{'display': !finishingPositionsData ? 'none': 'block'}" class="charts-container box">
+    <div class="titulo">Posiciones finales</div>
+    <canvas baseChart width="400" height="400" [datasets]="fPositionsChartData" [labels]="fPositionsChartLabels"
+      [options]="fPositionsLineChartOptions" [colors]="lineChartColors" legend="true" chartType="bar"></canvas>
+  </div>
 </div>
 <ngx-spinner [fullScreen]="true" type="ball-running-dots" size="Large" color=#F17F42>
-    <p style="color: white; font-size: 1.5rem; font-family: 'F1-Regular'; margin: 1.5rem;"> Cargando... </p>
+  <p style="color: white; font-size: 1.5rem; font-family: 'F1-Regular'; margin: 1.5rem;"> Cargando... </p>
 </ngx-spinner>

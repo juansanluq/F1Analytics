@@ -8,6 +8,7 @@ import { ChartDataSets, ChartOptions } from 'chart.js';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { disableBodyScroll, enableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
+import { mapFinishingPositions, setChartOptions, setMobileChartOptions } from 'src/core/utils';
 
 @Component({
   selector: 'app-constructor-detail',
@@ -41,137 +42,34 @@ export class ConstructorDetailComponent implements OnInit, AfterViewInit {
   constructorImage: Observable<any>;
   constructorInfo: Observable<any>;
 
-  seasonData = false;
+  finishingPositions: Observable<any>;
 
+  /*
+  *   Variables para el control de la vista
+  */
+  seasonData = false;
+  finishingPositionsData = false;
+
+
+  /*
+  *   Configuración de las gráficas
+  */
+
+  public fPositionsChartData: ChartDataSets[] = [
+    { data: [], label: 'Resultados del equipo', fill: false },
+  ];
+
+  /* GRAFICA TEMPORADAS */
   public seasonChartData: ChartDataSets[] = [
     { data: [], label: 'Resultados del equipo', fill: false },
   ];
-  public lineChartLabels: Label[] = [];
-  public lineChartOptions: (ChartOptions) = {
-    responsive: true,
-    responsiveAnimationDuration: 1000,
-    legend: {
-      fullWidth: true,
-      labels: {
-        fontSize: 20,
-        fontFamily: 'F1-Regular',
-        fontColor: '#000'
-      }
-    },
-    layout: {
-      padding: {
-        left: 10,
-        right: 10,
-        top: 10,
-        bottom: 25
-      }
-    },
-    title: {
-      text: 'RESULTADOS DEL CAMPEONATO DE CONSTRUCTORES POR TEMPORADA',
-      display: true,
-      fontSize: 30,
-      fontFamily: 'F1-Bold',
-      fontColor: '#000',
-    },
-    scales: {
-      // We use this empty structure as a placeholder for dynamic theming.
-      xAxes: [{
-        scaleLabel: {
-          display: true,
-          labelString: 'Temporadas',
-          fontSize: 20,
-          fontFamily: 'F1-Regular',
-          fontColor: '#000'
-        },
-        ticks: {
-          fontSize: 15,
-          maxRotation: 90,
-          minRotation: 50,
-          padding: 5,
-          fontColor: '#000',
-        },
-      }],
-      yAxes: [
-        {
-          scaleLabel: {
-            display: true,
-            labelString: 'Puesto en el campeontao',
-            fontSize: 20,
-            fontFamily: 'F1-Regular',
-            fontColor: '#000'
-          },
-          ticks: {
-            reverse: true,
-            autoSkip: true,
-            callback: function (value, index, values) {
-              return value + 'º';
-            },
-            stepSize: 1,
-            fontSize: 15,
-            fontColor: '#000'
-          },
-          position: 'left',
-        },
-      ]
-    }
-  };
+  public seasonChartOptions: (ChartOptions) = setChartOptions('RESULTADOS DEL CAMPEONATO DE CONSTRUCTORES', 'Temporadas', 'Puesto en el campeonato', 1, true);
+  public mSeasonChartOptions: (ChartOptions) = setMobileChartOptions(1, true);
 
-  public mobilelineChartOptions: (ChartOptions) = {
-    responsive: true,
-    responsiveAnimationDuration: 1000,
-    legend: {
-      fullWidth: true,
-      labels: {
-        fontSize: 20,
-        fontFamily: 'F1-Regular',
-        fontColor: '#000',
-        boxWidth: 15,
-        fontStyle: 'center',
-      },
-    },
-    layout: {
-      padding: {
-        left: 10,
-        right: 20,
-        top: 10,
-        bottom: 25
-      },
-    },
-    scales: {
-      // We use this empty structure as a placeholder for dynamic theming.
-      xAxes: [{
-        scaleLabel: {
-          display: true,
-          labelString: 'Temporadas',
-          fontSize: 20,
-          fontFamily: 'F1-Regular',
-          fontColor: '#000'
-        },
-        ticks: {
-          fontSize: 15,
-          maxRotation: 90,
-          minRotation: 50,
-          padding: 5,
-          fontColor: '#000',
-        },
-      }],
-      yAxes: [
-        {
-          ticks: {
-            reverse: true,
-            autoSkip: true,
-            callback: function (value, index, values) {
-              return value + 'º';
-            },
-            stepSize: 1,
-            fontSize: 15,
-            fontColor: '#000'
-          },
-          position: 'left',
-        },
-      ]
-    }
-  };
+  public seasonChartLabels: Label[] = [];
+  public fPositionsChartLabels: Label[] = [];
+
+  public fPositionsLineChartOptions: (ChartOptions) = setChartOptions('POSICIONES FINALES EN CARRERA', 'Puesto', 'Nº de veces', 10, false, 'º');
 
   public lineChartColors: Color[] = [
     { // grey
@@ -182,20 +80,13 @@ export class ConstructorDetailComponent implements OnInit, AfterViewInit {
 
     }
   ];
-  public lineChartLegend = true;
-  public lineChartType = 'line';
 
   constructor(private route: ActivatedRoute, private constructorsService: ConstructorsService,
     private deviceService: DeviceDetectorService, private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
-    let canvas = document.getElementsByTagName('canvas')[0];
-    canvas.width = 800;
-    canvas.height = 300;
-    if (this.deviceService.isMobile()) {
-      this.lineChartOptions = this.mobilelineChartOptions;
-      canvas.height = 900;
-    }
+    this.resizeCharts(800, 300, 900);
+
     this.parametro = this.route.snapshot.paramMap.get('id');
     this.nationality = this.constructorsService.getNationalityByConstructorID(this.parametro);
     this.selectedConstructor = this.constructorsService.getConstructorByID(this.parametro);
@@ -221,9 +112,8 @@ export class ConstructorDetailComponent implements OnInit, AfterViewInit {
     this.constructorsService.getSeasonsResults(this.parametro)
       .subscribe((res: any) => {
         if (res) {
-          console.log(res);
           this.seasonChartData[0].data = res.results;
-          this.lineChartLabels = res.seasons;
+          this.seasonChartLabels = res.seasons;
           this.spinner.hide();
           enableBodyScroll();
           this.seasonData = true;
@@ -232,13 +122,20 @@ export class ConstructorDetailComponent implements OnInit, AfterViewInit {
           enableBodyScroll();
         }
       });
+
+    this.finishingPositions = this.constructorsService.getFinishingPositions(this.parametro);
+    this.finishingPositions.subscribe(data => {
+      console.log(data);
+      this.fPositionsChartData[0].data = data[1];
+      this.fPositionsChartLabels = data[0];
+      this.finishingPositionsData = true;
+    })
+
   }
 
   ngAfterViewInit() {
-    setTimeout(() => {
-      this.spinner.show();
-      disableBodyScroll();
-    }, 3000);
+    // this.spinner.show();
+    // disableBodyScroll();
   }
 
   getWinPercentage() {
@@ -279,5 +176,21 @@ export class ConstructorDetailComponent implements OnInit, AfterViewInit {
       });
     });
     return percentage.asObservable();
+  }
+
+  resizeCharts(width, height, mobileheight) {
+    let canvasArray = document.getElementsByTagName('canvas');
+    let lenght = canvasArray.length;
+    for (let i = 0; i < lenght; i++) {
+      canvasArray.item(i).width = width;
+      canvasArray.item(i).height = height;
+    }
+    if (this.deviceService.isMobile()) {
+      this.seasonChartOptions = this.mSeasonChartOptions;
+      for (let i = 0; i < lenght; i++) {
+        canvasArray.item(i).height = mobileheight;
+      }
+      // canvasArray.height = mobileheight;
+    }
   }
 }

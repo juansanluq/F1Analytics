@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Subject, Observable } from 'rxjs';
 import { Constructor, API_URL, Driver } from '../utils';
 import { DemonymsService } from '../demonyms/demonyms.service';
+import { mapFinishingPositions } from 'src/core/utils';
 
 @Injectable({
   providedIn: 'root'
@@ -219,6 +220,23 @@ export class ConstructorsService {
           subject.next(seasonResults);
         }
       });
+    return subject.asObservable();
+  }
+
+  getRaceResults(id: string) {
+    let subject = new Subject();
+    this.http.get(API_URL + '/constructors/' + id + '/results.json?limit=5000')
+      .subscribe((data: any) => {
+        subject.next(data.MRData.RaceTable.Races);
+      });
+    return subject.asObservable();
+  }
+
+  getFinishingPositions(id: string) {
+    let subject = new Subject();
+    this.getRaceResults(id).subscribe((results: any) => {
+      subject.next(mapFinishingPositions(results));
+    });
     return subject.asObservable();
   }
 }
