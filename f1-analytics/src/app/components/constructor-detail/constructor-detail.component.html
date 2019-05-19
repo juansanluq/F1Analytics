@@ -72,14 +72,35 @@
   <div [ngStyle]="{'display': !seasonData ? 'none': 'block'}" class="charts-container box">
     <div class="titulo">Temporadas</div>
     <canvas baseChart width="400" height="400" [datasets]="seasonChartData" [labels]="seasonChartLabels"
-      [options]="seasonChartOptions" [colors]="lineChartColors" legend="true" chartType="line"></canvas>
+      [options]="seasonChartOptions" [colors]="seasonChartColors" legend="true" chartType="line"></canvas>
   </div>
   <div [ngStyle]="{'display': !finishingPositionsData ? 'none': 'block'}" class="charts-container box">
     <div class="titulo">Posiciones finales</div>
     <canvas baseChart width="400" height="400" [datasets]="fPositionsChartData" [labels]="fPositionsChartLabels"
-      [options]="fPositionsLineChartOptions" [colors]="lineChartColors" legend="true" chartType="bar"></canvas>
+      [options]="fPositionsChartOptions" [colors]="fPositionsChartColors" legend="true" chartType="bar"></canvas>
+  </div>
+  <div [ngStyle]="{'display': !finishingPositionsData ? 'none': 'block'}" class="charts-container box">
+    <div class="titulo">Posiciones de parrilla</div>
+    <canvas baseChart width="400" height="400" [datasets]="gPositionsChartData" [labels]="gPositionsChartLabels"
+      [options]="gPositionsChartOptions" [colors]="fPositionsChartColors" legend="true" chartType="bar"></canvas>
   </div>
 </div>
+<div class="box who-drive" *ngIf="selectedConstructor | async as constructor">
+  <div class="titulo">Han conducido para {{constructor.name}}...</div>
+  <table>
+    <tr class="main-titles">
+        <th>#</th>
+        <th colspan="3">Piloto</th>
+    </tr>
+    <tr class="row" *ngFor="let driver of drivers | async; let i=index">
+      <td>{{i+1}}</td>
+      <td><img src="https://www.countryflags.io/{{driver.countryCode}}/shiny/32.png"/></td>
+      <td> <a href="#">{{driver.fullName}}</a> </td>
+      <td>{{driver.code}}</td>
+    </tr>
+</table>
+</div>
+<app-footer></app-footer>
 <ngx-spinner [fullScreen]="true" type="ball-running-dots" size="Large" color=#F17F42>
   <p style="color: white; font-size: 1.5rem; font-family: 'F1-Regular'; margin: 1.5rem;"> Cargando... </p>
 </ngx-spinner>

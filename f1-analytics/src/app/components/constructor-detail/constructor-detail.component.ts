@@ -43,48 +43,68 @@ export class ConstructorDetailComponent implements OnInit, AfterViewInit {
   constructorInfo: Observable<any>;
 
   finishingPositions: Observable<any>;
+  drivers: Observable<any>;
 
   /*
   *   Variables para el control de la vista
   */
   seasonData = false;
   finishingPositionsData = false;
+  gridPositionsData = false;
 
 
   /*
   *   Configuración de las gráficas
   */
 
-  public fPositionsChartData: ChartDataSets[] = [
-    { data: [], label: 'Resultados del equipo', fill: false },
-  ];
-
-  /* GRAFICA TEMPORADAS */
+  /* SEASON CHART */
   public seasonChartData: ChartDataSets[] = [
     { data: [], label: 'Resultados del equipo', fill: false },
   ];
-  public seasonChartOptions: (ChartOptions) = setChartOptions('RESULTADOS DEL CAMPEONATO DE CONSTRUCTORES', 'Temporadas', 'Puesto en el campeonato', 1, true);
-  public mSeasonChartOptions: (ChartOptions) = setMobileChartOptions(1, true);
-
+  public seasonChartOptions: (ChartOptions) = setChartOptions('RESULTADOS DEL CAMPEONATO DE CONSTRUCTORES', 'Temporadas', 'Puesto', 1, true, true);
+  public mSeasonChartOptions: (ChartOptions) = setMobileChartOptions(1, true, true);
   public seasonChartLabels: Label[] = [];
-  public fPositionsChartLabels: Label[] = [];
-
-  public fPositionsLineChartOptions: (ChartOptions) = setChartOptions('POSICIONES FINALES EN CARRERA', 'Puesto', 'Nº de veces', 10, false, 'º');
-
-  public lineChartColors: Color[] = [
+  public seasonChartColors: Color[] = [
     { // grey
-      backgroundColor: 'rgba(148,159,177,0.2)',
+      backgroundColor: '#000',
       borderColor: '#F17F42',
       pointBackgroundColor: '#000',
       pointBorderColor: '#fff',
 
     }
   ];
+  /* END SEASON CHART */
+
+  /* FINISHING POSITIONS CHART */
+  public fPositionsChartData: ChartDataSets[] = [
+    { data: [], label: 'Resultados del equipo', fill: false },
+  ];
+  public fPositionsChartOptions: (ChartOptions) = setChartOptions('POSICIONES FINALES EN CARRERA', 'Puesto', 'Nº de veces', 10, false, 'º');
+  public mFPositionsChartOptions: (ChartOptions) = setMobileChartOptions(10, false, false);
+  public fPositionsChartLabels: Label[] = [];
+  public fPositionsChartColors: Color[] = [{
+    backgroundColor: '#F17F42',
+  }];
+  /* END FINISHING POSITIONS CHART */
+
+
+  /* GRID POSITIONS CHART */
+  public gPositionsChartData: ChartDataSets[] = [
+    { data: [], label: 'Posición de salida', fill: false },
+  ];
+  public gPositionsChartOptions: (ChartOptions) = setChartOptions('POSICIONES DE PARRILLA', 'Puesto', 'Nº de veces', 10, false, 'º');
+  public mGPositionsChartOptions: (ChartOptions) = setMobileChartOptions(10, false, false);
+  public gPositionsChartLabels: Label[] = [];
+  public gPositionsChartColors: Color[] = [{
+    backgroundColor: '#F17F42',
+  }];
+  /* END GRID POSITIONS CHART */
 
   constructor(private route: ActivatedRoute, private constructorsService: ConstructorsService,
     private deviceService: DeviceDetectorService, private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
+    window.onbeforeunload = function() {window.scrollTo(0,0);}
     this.resizeCharts(800, 300, 900);
 
     this.parametro = this.route.snapshot.paramMap.get('id');
@@ -125,15 +145,20 @@ export class ConstructorDetailComponent implements OnInit, AfterViewInit {
 
     this.finishingPositions = this.constructorsService.getFinishingPositions(this.parametro);
     this.finishingPositions.subscribe(data => {
-      console.log(data);
-      this.fPositionsChartData[0].data = data[1];
-      this.fPositionsChartLabels = data[0];
+      this.fPositionsChartData[0].data = data.fp[1];
+      this.fPositionsChartLabels = data.fp[0];
       this.finishingPositionsData = true;
-    })
+      this.gPositionsChartData[0].data = data.gp[1];
+      this.gPositionsChartLabels = data.gp[0];
+      this.gridPositionsData = true;
+    });
+
+    this.drivers = this.constructorsService.getDrivers(this.parametro);
 
   }
 
   ngAfterViewInit() {
+    //TODO Descomentar para activar el spinner de carga
     // this.spinner.show();
     // disableBodyScroll();
   }
@@ -187,6 +212,12 @@ export class ConstructorDetailComponent implements OnInit, AfterViewInit {
     }
     if (this.deviceService.isMobile()) {
       this.seasonChartOptions = this.mSeasonChartOptions;
+      this.fPositionsChartOptions = this.mFPositionsChartOptions;
+      /* Cambiamos el label para el eje X */
+      this.fPositionsChartOptions.scales.xAxes[0].scaleLabel.labelString = 'Puesto';
+      this.gPositionsChartOptions = this.mGPositionsChartOptions;
+      this.gPositionsChartOptions.scales.xAxes[0].scaleLabel.labelString = 'Puesto';
+
       for (let i = 0; i < lenght; i++) {
         canvasArray.item(i).height = mobileheight;
       }

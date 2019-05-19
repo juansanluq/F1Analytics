@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Subject, Observable } from 'rxjs';
 import { Constructor, API_URL, Driver } from '../utils';
 import { DemonymsService } from '../demonyms/demonyms.service';
-import { mapFinishingPositions } from 'src/core/utils';
+import { mapFinishingPositions, mapGridPositions } from 'src/core/utils';
 
 @Injectable({
   providedIn: 'root'
@@ -235,8 +235,31 @@ export class ConstructorsService {
   getFinishingPositions(id: string) {
     let subject = new Subject();
     this.getRaceResults(id).subscribe((results: any) => {
-      subject.next(mapFinishingPositions(results));
+      let retornable = {
+        fp: mapFinishingPositions(results),
+        gp: mapGridPositions(results),
+      }
+      subject.next(retornable);
     });
+    return subject.asObservable();
+  }
+
+  getDrivers(id: string) {
+    let subject = new Subject();
+    this.http.get(API_URL + '/constructors/' + id + '/drivers.json?limit=3000')
+        .subscribe((data: any) => {
+          let drivers = data.MRData.DriverTable.Drivers.map(item => {
+            let dc;
+            dc = item.code ? item.code : '---';
+            return {
+              driverId: item.driverId,
+              fullName: item.givenName + ' ' + item.familyName,
+              countryCode: this.demonymsService.getCountryCode(item.nationality),
+              code: dc,
+            };
+          });
+          subject.next(drivers);
+        });
     return subject.asObservable();
   }
 }

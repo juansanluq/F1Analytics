@@ -10,6 +10,16 @@ export function mapFinishingPositions(Results: any[]) {
   return countPositions(resultados);
 }
 
+export function mapGridPositions(Results: any[]) {
+  let resultados = new Array();
+  Results.map(item => {
+    item.Results.map(result => {
+        resultados.push(result.grid);
+    });
+  });
+  return countPositions(resultados);
+}
+
 function countPositions(arr) {
   var a = [], b = [], prev;
 
@@ -27,16 +37,17 @@ function countPositions(arr) {
   return [a, b];
 }
 
-export function setChartOptions(title, xlabel, ylabel, yStepSize, yReverse, xTicksDecoration?, yTicksDecoration?) {
+export function setChartOptions(title, xlabel, ylabel, yStepSize, yReverse, legendPointStyle, xTicksDecoration?, yTicksDecoration?) {
   return {
     responsive: true,
     responsiveAnimationDuration: 3000,
     legend: {
       fullWidth: true,
       labels: {
-        fontSize: 20,
+        fontSize: 15,
         fontFamily: 'F1-Regular',
         fontColor: '#000',
+        usePointStyle: legendPointStyle
       }
     },
     layout: {
@@ -105,7 +116,7 @@ export function setChartOptions(title, xlabel, ylabel, yStepSize, yReverse, xTic
   };
 }
 
-export function setMobileChartOptions(yStepSize, yReverse, yticksDecoration?) {
+export function setMobileChartOptions(yStepSize, yReverse, legendPointStyle, yticksDecoration?) {
   return {
     responsive: true,
     responsiveAnimationDuration: 3000,
@@ -117,6 +128,7 @@ export function setMobileChartOptions(yStepSize, yReverse, yticksDecoration?) {
         fontColor: '#000',
         boxWidth: 15,
         fontStyle: 'center',
+        usePointStyle: legendPointStyle
       },
     },
     layout: {
@@ -135,14 +147,13 @@ export function setMobileChartOptions(yStepSize, yReverse, yticksDecoration?) {
           labelString: 'Temporadas',
           fontSize: 20,
           fontFamily: 'F1-Regular',
-          fontColor: '#000'
+          fontColor: '#000',
         },
         ticks: {
           fontSize: 15,
-          maxRotation: 90,
-          minRotation: 50,
           padding: 5,
           fontColor: '#000',
+          autoSkip: true
         },
       }],
       yAxes: [
