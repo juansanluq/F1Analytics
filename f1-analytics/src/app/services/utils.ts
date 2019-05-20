@@ -124,6 +124,7 @@ export const countryList = [
   ["AO", "Angola", "11-11", "Angolan", "+1"],
   ["AQ", "Antarctica", "", "", "-3"],
   ["AR", "Argentina", "07-09", "Argentine", "-3"],
+  ["AR", "Argentina", "07-09", "Argentine-Italian", "-3"],
   ["AS", "American Samoa", "04-17", "American Samoan", "-11"],
   ["AT", "Austria", "10-26", "Austrian", "+1"],
   ["AU", "Australia", "01-26", "Australian", "+8 to +10.5"],

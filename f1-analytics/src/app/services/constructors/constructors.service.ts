@@ -247,19 +247,19 @@ export class ConstructorsService {
   getDrivers(id: string) {
     let subject = new Subject();
     this.http.get(API_URL + '/constructors/' + id + '/drivers.json?limit=3000')
-        .subscribe((data: any) => {
-          let drivers = data.MRData.DriverTable.Drivers.map(item => {
-            let dc;
-            dc = item.code ? item.code : '---';
-            return {
-              driverId: item.driverId,
-              fullName: item.givenName + ' ' + item.familyName,
-              countryCode: this.demonymsService.getCountryCode(item.nationality),
-              code: dc,
-            };
-          });
-          subject.next(drivers);
+      .subscribe((data: any) => {
+        let drivers = data.MRData.DriverTable.Drivers.map(item => {
+          let dc;
+          dc = item.code ? item.code : '---';
+          return {
+            driverId: item.driverId,
+            fullName: item.givenName + ' ' + item.familyName,
+            countryCode: this.demonymsService.getCountryCode(item.nationality),
+            code: dc,
+          };
         });
+        subject.next(drivers);
+      });
     return subject.asObservable();
   }
 }
