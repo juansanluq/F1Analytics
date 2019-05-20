@@ -93,20 +93,71 @@
         <ng-template #noGdData>
             <div class="triple-spinner"> </div>
         </ng-template>
+        <div class="box table-container who-drive" *ngIf="selectedConstructor | async as constructor">
+            <div class="titulo">Han conducido para {{constructor.name}}...</div>
+            <table *ngIf="drivers | async as driversList else noDriversData">
+                <tr class="main-titles">
+                    <th>#</th>
+                    <th colspan="3">Piloto</th>
+                </tr>
+                <tr class="row" *ngFor="let driver of driversList; let i = index">
+                    <td>{{i+1}}</td>
+                    <td><img src="https://www.countryflags.io/{{driver.countryCode}}/shiny/32.png" /></td>
+                    <td> <a href="#">{{driver.fullName}}</a> </td>
+                    <td>{{driver.code}}</td>
+                </tr>
+            </table>
+            <ng-template #noDriversData>
+                <div class="triple-spinner"> </div>
+            </ng-template>
+        </div>
+        <div [ngStyle]="{'display': !dcData ? 'none' : 'block'}" class="box table-container" *ngIf="driversChampionships | async as records">
+            <div class="titulo">Campeonatos de pilotos</div>
+            <table>
+                <tr class="main-titles">
+                    <th>#</th>
+                    <th>Año</th>
+                    <th colspan="2">Piloto</th>
+                </tr>
+                <tr class="row" *ngFor="let registro of records; let i=index">
+                    <td>{{i + 1}}</td>
+                    <td>{{registro.season}}</td>
+                    <td><img src="https://www.countryflags.io/{{registro.driverCountryCode}}/shiny/32.png" /></td>
+                    <td><a href="">{{registro.driverName}}</a></td>
+                </tr>
+            </table>
+        </div>
+        <div [ngStyle]="{'display': !ccData ? 'none' : 'block'}" class="box table-container" *ngIf="constructorsChampionships | async as records">
+            <div class="titulo">Campeonatos de constructores</div>
+            <table>
+                <tr class="main-titles">
+                    <th>#</th>
+                    <th colspan="2">Temporada</th>
+                </tr>
+                <tr class="row" *ngFor="let item of records; let i=index">
+                    <td>{{ i + 1}}</td>
+                    <td>{{item}}</td>
+                    <td><a href="#">Ver temporada</a></td>
+                </tr>
+            </table>
+        </div>
     </div>
-    <div class="box who-drive" *ngIf="selectedConstructor | async as constructor">
-        <div class="titulo">Han conducido para {{constructor.name}}...</div>
+    <div [ngStyle]="{'display': !winsData ? 'none' : 'block'}" class="box table-container" *ngIf="wins | async as records">
+        <div class="titulo">Victorias</div>
         <table>
             <tr class="main-titles">
                 <th>#</th>
-                <th colspan="3">Piloto</th>
+                <th colspan="2">Carrera</th>
+                <th>Piloto</th>
             </tr>
-            <tr class="row" *ngFor="let driver of drivers | async; let i=index">
-                <td>{{i+1}}</td>
-                <td><img src="https://www.countryflags.io/{{driver.countryCode}}/shiny/32.png" /></td>
-                <td> <a href="#">{{driver.fullName}}</a> </td>
-                <td>{{driver.code}}</td>
-            </tr>
+            <ng-container *ngFor="let item of records; let i=index">
+                <tr class="row" [ngStyle]="{'border-top': item.firstWinInSeason ? '3px solid #CE6D39' : '1px solid #F17F42'}">
+                    <td>{{i + 1}}</td>
+                    <td><a href="#">{{ item.season }} {{item.raceName}}</a></td>
+                    <td> Ronda {{item.round}}</td>
+                    <td><a href="#">{{item.driver}}</a></td>
+                </tr>
+            </ng-container>
         </table>
     </div>
 </div>

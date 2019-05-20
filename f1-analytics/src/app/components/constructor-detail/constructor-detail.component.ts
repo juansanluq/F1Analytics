@@ -45,12 +45,19 @@ export class ConstructorDetailComponent implements OnInit, AfterViewInit {
   finishingPositions: Observable<any>;
   drivers: Observable<any>;
 
+  driversChampionships: Observable<any>;
+  constructorsChampionships: Observable<any>;
+  wins: Observable<any>;
+
   /*
   *   Variables para el control de la vista
   */
   seasonData = false;
   finishingPositionsData = false;
   gridPositionsData = false;
+  dcData = false;
+  ccData = false;
+  winsData = false;
 
 
   /*
@@ -105,7 +112,7 @@ export class ConstructorDetailComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     window.onbeforeunload = function () { window.scrollTo(0, 0); }
-    this.resizeCharts(800, 300, 900);
+    this.resizeCharts(800, 100, 900);
 
     this.parametro = this.route.snapshot.paramMap.get('id');
     this.nationality = this.constructorsService.getNationalityByConstructorID(this.parametro);
@@ -154,6 +161,26 @@ export class ConstructorDetailComponent implements OnInit, AfterViewInit {
     });
 
     this.drivers = this.constructorsService.getDrivers(this.parametro);
+    this.driversChampionships = this.constructorsService.getDriversChamp(this.parametro);
+    this.constructorsChampionships = this.constructorsService.getConstructorsChamp(this.parametro);
+
+    this.driversChampionships.subscribe(data => {
+      if (data.length > 0) {
+        this.dcData = true;
+      };
+    });
+    this.constructorsChampionships.subscribe(data => {
+      if (data.legth > 0) {
+        this.ccData = true;
+      }
+    });
+    this.wins = this.constructorsService.getWins(this.parametro);
+    this.wins.subscribe(data => {
+      if (data.length > 0) {
+        this.winsData = true;
+      }
+    })
+
 
   }
 

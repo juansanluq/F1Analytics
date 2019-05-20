@@ -262,4 +262,68 @@ export class ConstructorsService {
       });
     return subject.asObservable();
   }
+
+  getDriversChamp(id: string) {
+    let subject = new Subject();
+    this.http.get(API_URL + '/driverStandings/1.json?limit=1000')
+      .subscribe((data: any) => {
+        let driverChampionships = [];
+        data.MRData.StandingsTable.StandingsLists.map(item => {
+          if (item.DriverStandings[0].Constructors[0].constructorId === id) {
+            driverChampionships.push({
+              season: item.season,
+              driverName: item.DriverStandings[0].Driver.givenName + ' ' + item.DriverStandings[0].Driver.familyName,
+              driverCountryCode: this.demonymsService.getCountryCode(item.DriverStandings[0].Driver.nationality)
+            });
+          }
+        });
+        subject.next(driverChampionships);
+      });
+    return subject.asObservable();
+  }
+
+  getConstructorsChamp(id: string) {
+    let subject = new Subject();
+    this.http.get(API_URL + '/constructors/' + id + '/constructorStandings/1.json?limit=1000')
+      .subscribe((data: any) => {
+        let cC = data.MRData.StandingsTable.StandingsLists.map(item => {
+          return item.season;
+        })
+        subject.next(cC);
+      });
+    return subject.asObservable();
+  }
+
+  getWins(id: string) {
+    let subject = new Subject();
+    this.http.get(API_URL + '/constructors/' + id + '/results/1.json?limit=1000')
+      .subscribe((data: any) => {
+        let events = [];
+        let year = 0;
+        data.MRData.RaceTable.Races.map(item => {
+          if (year != item.season) {
+            events.push({
+              season: item.season,
+              round: item.round,
+              raceName: item.raceName,
+              driver: item.Results[0].Driver.givenName + ' ' + item.Results[0].Driver.familyName,
+              driverId: item.Results[0].Driver.driverId,
+              firstWinInSeason: true,
+            });
+            year = item.season;
+          } else {
+            events.push({
+              season: item.season,
+              round: item.round,
+              raceName: item.raceName,
+              driver: item.Results[0].Driver.givenName + ' ' + item.Results[0].Driver.familyName,
+              driverId: item.Results[0].Driver.driverId,
+              firstWinInSeason: false,
+            });
+          }
+        });
+        subject.next(events);
+      });
+    return subject.asObservable();
+  }
 }

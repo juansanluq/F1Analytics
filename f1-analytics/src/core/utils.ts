@@ -1,3 +1,5 @@
+import { Driver } from 'selenium-webdriver/opera';
+
 export function mapFinishingPositions(Results: any[]) {
   let resultados = new Array();
   Results.map(item => {
@@ -14,7 +16,7 @@ export function mapGridPositions(Results: any[]) {
   let resultados = new Array();
   Results.map(item => {
     item.Results.map(result => {
-        resultados.push(result.grid);
+      resultados.push(result.grid);
     });
   });
   return countPositions(resultados);
@@ -39,6 +41,7 @@ function countPositions(arr) {
 
 export function setChartOptions(title, xlabel, ylabel, yStepSize, yReverse, legendPointStyle, xTicksDecoration?, yTicksDecoration?) {
   return {
+    maintainAspectRatio: false,
     responsive: true,
     responsiveAnimationDuration: 3000,
     legend: {
