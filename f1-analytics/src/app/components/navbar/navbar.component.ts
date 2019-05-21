@@ -52,4 +52,8 @@ export class NavbarComponent implements OnInit {
     this.router.navigateByUrl('/constructores');
   }
 
+  goToDrivers() {
+    this.router.navigateByUrl('/pilotos');
+  }
+
 }

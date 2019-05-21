@@ -5,6 +5,8 @@ import { Subject } from 'rxjs';
 import { AppState } from 'src/app/store/app.reducer';
 import { Store } from '@ngrx/store';
 import { LoadDriversAction } from 'src/app/store/actions';
+import { DemonymsService } from '../demonyms/demonyms.service';
+import wiki from 'wikijs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +16,7 @@ export class DriversService {
   currentDate = new Date();
   podiumCount;
 
-  constructor(private http: HttpClient, private store: Store<AppState>) { }
+  constructor(private http: HttpClient, private store: Store<AppState>, private demonymsService: DemonymsService) { }
 
 
   getAllDrivers() {
@@ -110,5 +112,67 @@ export class DriversService {
         }
       });
     return subject;
+  }
+
+  getAllDriversOrdered() {
+    let subject = new Subject();
+    this.http.get(API_URL + '/drivers.json?limit=1000')
+      .subscribe((res: any) => {
+        let pilotos = res.MRData.DriverTable.Drivers;
+        pilotos = pilotos.sort((a, b) => {
+          let nameA = a.givenName.toUpperCase();
+          let nameB = b.givenName.toUpperCase();
+          return (nameA < nameB) ? -1 : (nameA > nameB) ? 1 : 0;
+        });
+        subject.next(pilotos);
+      })
+    return subject.asObservable();
+  }
+
+  getFirstCharacterOfDriversArray(drivers: any[]) {
+    let letras = new Array();
+    let primeraLetra = '';
+    for (const driver of drivers) {
+      if (driver.givenName.charAt(0) != primeraLetra) {
+        letras.push(driver.givenName.charAt(0));
+        primeraLetra = driver.givenName.charAt(0);
+      }
+    }
+    return letras;
+  }
+
+  getDriverStandings(año: string) {
+    let subject = new Subject();
+    this.http.get(API_URL + '/' + año + '/driverStandings.json')
+      .subscribe((data: any) => {
+        let DriverStandings = data.MRData.StandingsTable.StandingsLists[0].DriverStandings;
+        DriverStandings.map(item => {
+          item.Driver.countryCode = this.demonymsService.getCountryCode(item.Driver.nationality);
+        })
+        subject.next(DriverStandings);
+      });
+    return subject.asObservable();
+  }
+
+  getDriver(id: string) {
+    let subject = new Subject();
+    this.http.get(API_URL + '/drivers/' + id + '.json?limit=1')
+      .subscribe((data: any) => {
+        let driver = data.MRData.DriverTable.Drivers[0];
+        driver.countryCode = this.demonymsService.getCountryCode(driver.nationality);
+        this.getBirthPlace(driver.givenName + ' ' + driver.familyName)
+          .then(place => {
+            driver.birthPlace = place;
+            console.log(driver);
+            subject.next(driver);
+          })
+      });
+    return subject.asObservable();
+  }
+
+  getBirthPlace(driverName: any) {
+    return wiki().page(driverName)
+      .then(page => page.info('birthPlace'))
+      .catch(data => { })
   }
 }

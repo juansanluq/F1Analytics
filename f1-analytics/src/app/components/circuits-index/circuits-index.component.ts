@@ -26,7 +26,7 @@ export class CircuitsIndexComponent implements OnInit {
           }
           this.circuits.push(circuitWithCountryCode);
         }
-        this.letras = this.circuitsService.getFirtCharacterOfCircuitsArray(circuits);
+        this.letras = this.circuitsService.getFirstCharacterOfCircuitsArray(circuits);
       });
   }
 

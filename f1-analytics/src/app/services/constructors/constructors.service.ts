@@ -326,4 +326,38 @@ export class ConstructorsService {
       });
     return subject.asObservable();
   }
+
+  getPoles(id: string) {
+    let subject = new Subject();
+    this.http.get(API_URL + '/constructors/' + id + '/grid/1/results.json?limit=1000')
+      .subscribe((data: any) => {
+        let events = [];
+        let year = 0;
+        data.MRData.RaceTable.Races.map(item => {
+          if (year != item.season) {
+            events.push({
+              season: item.season,
+              round: item.round,
+              raceName: item.raceName,
+              driver: item.Results[0].Driver.givenName + ' ' + item.Results[0].Driver.familyName,
+              driverId: item.Results[0].Driver.driverId,
+              firstWinInSeason: true,
+            });
+            year = item.season;
+          } else {
+            events.push({
+              season: item.season,
+              round: item.round,
+              raceName: item.raceName,
+              driver: item.Results[0].Driver.givenName + ' ' + item.Results[0].Driver.familyName,
+              driverId: item.Results[0].Driver.driverId,
+              firstWinInSeason: false,
+            });
+          }
+        });
+        console.log(events);
+        subject.next(events);
+      });
+    return subject.asObservable();
+  }
 }

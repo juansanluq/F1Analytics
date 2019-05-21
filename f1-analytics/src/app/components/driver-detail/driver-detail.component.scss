@@ -1,0 +1,107 @@
+@import '../../scss_utils/variables';
+@import '../../scss_utils/mixins';
+@include spinner;
+.contenedor {
+    max-width: 1500px;
+    margin: 0 auto;
+}
+
+.hero {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 100%;
+    background-image: url(http://i.imgur.com/uPLfuYC.jpg);
+    background-position: bottom center;
+    background-size: cover;
+    background-attachment: fixed;
+    .titulo {
+        top: calc(50% - 3rem);
+        position: absolute;
+        text-align: center;
+        color: $blanco;
+        font-family: 'F1-Bold';
+        align-self: center;
+        font-size: 1.5rem;
+    }
+}
+
+.header {
+    margin: 1rem .5rem;
+    border: 3px solid $naranja;
+    border-radius: 10px;
+    background-color: lighten($naranja, 35);
+    box-shadow: 10px 10px 51px -10px rgba(0, 0, 0, 0.39);
+    text-align: center;
+    .circuit-name {
+        font-family: 'F1-Bold';
+        @include margen();
+        border-bottom: 2px solid $naranja;
+        padding-bottom: .5rem;
+    }
+    .circuit-image {
+        width: 90%;
+        @include margen();
+        border: 2px solid $naranja_oscuro;
+        border-radius: 10px;
+        max-height: 25rem;
+        max-width: 25rem;
+        object-fit: contain;
+        padding: .1rem;
+        background-color: $naranja_oscuro;
+    }
+    .country {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        @include margen();
+        font-family: 'F1-Bold';
+        font-size: 1.3rem;
+        margin-bottom: 1.5rem;
+        img {
+            margin-right: 2rem;
+        }
+    }
+    .extended-description {
+        margin: 1rem auto;
+        width: 90%;
+        align-self: center;
+        justify-self: center;
+        font-family: 'F1-Regular';
+        line-height: 2rem;
+    }
+    .description {
+        @include margen();
+        font-family: 'F1-Regular';
+        line-height: 1.5rem;
+        margin-bottom: 1.5rem;
+        text-align: left;
+        margin: 1rem auto;
+        width: 90%;
+        text-align: center;
+        border-bottom: 1px solid $naranja;
+    }
+    @include for-desktop-up {
+        padding: 1rem;
+        max-width: 90%;
+        margin: 1rem auto;
+        display: grid;
+        grid-template-areas: "name name" "image country" "image info" "extended extended";
+        .circuit-name {
+            grid-area: name;
+        }
+        .circuit-image {
+            grid-area: image;
+            align-self: center;
+            justify-self: center;
+        }
+        .extended-description {
+            grid-area: extended;
+        }
+        .description {
+            border: 0;
+        }
+    }
+}

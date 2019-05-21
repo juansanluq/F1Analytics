@@ -28,7 +28,7 @@ export class CircuitsService {
     return subject.asObservable();
   }
 
-  getFirtCharacterOfCircuitsArray(circuitos: Circuit[]) {
+  getFirstCharacterOfCircuitsArray(circuitos: Circuit[]) {
     let letras = new Array();
     let primeraLetra = '';
     for (const circuito of circuitos) {

@@ -48,6 +48,7 @@ export class ConstructorDetailComponent implements OnInit, AfterViewInit {
   driversChampionships: Observable<any>;
   constructorsChampionships: Observable<any>;
   wins: Observable<any>;
+  poles: Observable<any>;
 
   /*
   *   Variables para el control de la vista
@@ -58,6 +59,7 @@ export class ConstructorDetailComponent implements OnInit, AfterViewInit {
   dcData = false;
   ccData = false;
   winsData = false;
+  polesData = false;
 
 
   /*
@@ -170,7 +172,7 @@ export class ConstructorDetailComponent implements OnInit, AfterViewInit {
       };
     });
     this.constructorsChampionships.subscribe(data => {
-      if (data.legth > 0) {
+      if (data.length > 0) {
         this.ccData = true;
       }
     });
@@ -178,6 +180,13 @@ export class ConstructorDetailComponent implements OnInit, AfterViewInit {
     this.wins.subscribe(data => {
       if (data.length > 0) {
         this.winsData = true;
+      }
+    });
+
+    this.poles = this.constructorsService.getPoles(this.parametro);
+    this.poles.subscribe(data => {
+      if (data.length > 0) {
+        this.polesData = true;
       }
     })
 
