@@ -28,4 +28,66 @@
             <p>{{extendedInfo}}</p>
         </div>
     </div>
+
+    <div class="box">
+        <div class="titulo">Estadísticas</div>
+        <div class="chart box-presets">
+            <div class="record">
+                <div class="record-name">Victorias</div>
+                <div class="value">{{winsCount | async}} <span>({{winPercentage | async}}%)</span></div>
+            </div>
+            <div class="record">
+                <div class="record-name">Podiums</div>
+                <div class="value">{{polesCount | async}} <span>({{polesPercentage | async}}%)</span></div>
+            </div>
+            <div class="record">
+                <div class="record-name">Pole Positions</div>
+                <div class="value">{{seasonCount | async }}</div>
+            </div>
+            <div class="record">
+                <div class="record-name">Campeonatos</div>
+                <div class="value">{{racesCount | async}}</div>
+            </div>
+            <div class="record">
+                <div class="record-name">Mejor resultado</div>
+                <div class="value">{{driverChampionshipsCount | async}}
+                    <span>({{driverChampionshipPercentage | async}}%)</span></div>
+            </div>
+            <div class="record">
+                <div class="record-name">Temporadas</div>
+                <div class="value">{{constructorChampionshipsCount | async}}
+                    <span>({{constructorChampionshipsPercentage | async}}%)</span></div>
+            </div>
+            <div class="record">
+                <div class="record-name">Carreras</div>
+                <div class="value">{{constructorChampionshipsCount | async}}
+                    <span>({{constructorChampionshipsPercentage | async}}%)</span></div>
+            </div>
+            <div class="record">
+                <div class="record-name">Puntos conseguidos</div>
+                <div class="value">{{constructorChampionshipsCount | async}}
+                    <span>({{constructorChampionshipsPercentage | async}}%)</span></div>
+            </div>
+            <div class="record">
+                <div class="record-name">Vueltas corridas</div>
+                <div class="value">{{constructorChampionshipsCount | async}}
+                    <span>({{constructorChampionshipsPercentage | async}}%)</span></div>
+            </div>
+            <div class="record">
+                <div class="record-name">Vueltas lideradas</div>
+                <div class="value">{{constructorChampionshipsCount | async}}
+                    <span>({{constructorChampionshipsPercentage | async}}%)</span></div>
+            </div>
+            <div class="record">
+                <div class="record-name">Vueltas rápidas</div>
+                <div class="value">{{constructorChampionshipsCount | async}}
+                    <span>({{constructorChampionshipsPercentage | async}}%)</span></div>
+            </div>
+            <div class="record">
+                <div class="record-name">Retiradas</div>
+                <div class="value">{{constructorChampionshipsCount | async}}
+                    <span>({{constructorChampionshipsPercentage | async}}%)</span></div>
+            </div>
+        </div>
+    </div>
 </div>

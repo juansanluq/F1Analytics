@@ -20,7 +20,7 @@
                     <td *ngIf="mobile"> <img src="https://www.countryflags.io/{{driver.Driver.countryCode}}/shiny/16.png" alt=" "></td>
                     <td *ngIf="!mobile"> <img src="https://www.countryflags.io/{{driver.Driver.countryCode}}/shiny/32.png" alt=" "></td>
                     <td> <a [routerLink]="[ '/pilotos', driver.Driver.driverId ]"> {{driver.Driver.givenName}} {{driver.Driver.familyName}} </a> </td>
-                    <td *ngIf="!mobile"> <a href="#"> {{driver.Constructors[0].name}} </a> </td>
+                    <td *ngIf="!mobile"> <a [routerLink]="[ '/constructores', driver.Constructors[0].constructorId ]"> {{driver.Constructors[0].name}} </a> </td>
                     <td *ngIf="!mobile"> {{driver.points}} </td>
                 </tr>
             </table>

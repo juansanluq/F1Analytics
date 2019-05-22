@@ -20,11 +20,11 @@ export class DriverDetailComponent implements OnInit {
 
   ngOnInit() {
     this.parametro = this.route.snapshot.paramMap.get('id');
+    this.driversService.getStats(this.parametro);
     this.driverSelected = this.driversService.getDriver(this.parametro);
     this.driverSelected.subscribe(driver => {
       this.driverImage = this.driversService.getImage(driver);
       this.driverInfo = this.driversService.getInfo(driver);
-      this.driverInfo.subscribe(console.log);
     });
   }
 

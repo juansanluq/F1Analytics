@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { API_URL } from '../utils';
-import { Subject } from 'rxjs';
+import { Subject, forkJoin } from 'rxjs';
 import { AppState } from 'src/app/store/app.reducer';
 import { Store } from '@ngrx/store';
 import { LoadDriversAction } from 'src/app/store/actions';
@@ -92,6 +92,9 @@ export class DriversService {
   }
 
   getInfo(driver: any) {
+    if (driver.familyName === 'Sainz') {
+      driver.familyName = 'Sainz Jr.';
+    }
     const subject = new Subject();
     const searchTerm = driver.givenName.replace(' ', '_') + '_' + driver.familyName.replace(' ', '_');
     this.http.get('https://es.wikipedia.org/api/rest_v1/page/summary/' + searchTerm)
@@ -100,6 +103,9 @@ export class DriversService {
   }
 
   getImage(driver: any) {
+    if (driver.familyName === 'Sainz') {
+      driver.familyName = 'Sainz Jr.';
+    }
     const subject = new Subject();
     const searchTerm = driver.givenName.replace(' ', '_') + '_' + driver.familyName.replace(' ', '_');
     this.http.get('https://es.wikipedia.org/api/rest_v1/page/media/' + searchTerm)
@@ -163,7 +169,6 @@ export class DriversService {
         this.getBirthPlace(driver.givenName + ' ' + driver.familyName)
           .then(place => {
             driver.birthPlace = place;
-            console.log(driver);
             subject.next(driver);
           })
       });
@@ -174,5 +179,16 @@ export class DriversService {
     return wiki().page(driverName)
       .then(page => page.info('birthPlace'))
       .catch(data => { })
+  }
+
+  getStats(id: string) {
+    let raceCountUrl = API_URL + '/drivers/' + id + '/results.json?limit=1000';
+    let seasonCountUrl = API_URL + '/drivers/' + id + '/seasons.json?limit=1000';
+
+    let raceCount = this.http.get(raceCountUrl);
+    let seasonCount = this.http.get(seasonCountUrl);
+    forkJoin([raceCount, seasonCount]).subscribe(results => {
+      console.log(results);
+    })
   }
 }
