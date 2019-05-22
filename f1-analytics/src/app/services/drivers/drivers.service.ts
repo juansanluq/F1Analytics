@@ -182,13 +182,50 @@ export class DriversService {
   }
 
   getStats(id: string) {
+    let statistics = {
+      raceCount: undefined,
+      seasonCount: undefined,
+      winsCount: undefined,
+      podiumsCount: undefined,
+      polesCount: undefined,
+      championshipsCount: undefined,
+      bestResult: undefined,
+    };
     let raceCountUrl = API_URL + '/drivers/' + id + '/results.json?limit=1000';
     let seasonCountUrl = API_URL + '/drivers/' + id + '/seasons.json?limit=1000';
+    let winsUrl = API_URL + '/drivers/' + id + '/results/1.json?limit=1000';
+    let podiumsUrl = API_URL + '/drivers/' + id + '/results.json?limit=1000';
+    let polesUrl = API_URL + '/drivers/' + id + '/grid/1/results.json?limit=1000';
+    let championsUrl = API_URL + '/drivers/' + id + '/driverStandings/1.json?limit=100';
 
-    let raceCount = this.http.get(raceCountUrl);
-    let seasonCount = this.http.get(seasonCountUrl);
-    forkJoin([raceCount, seasonCount]).subscribe(results => {
-      console.log(results);
+    let getRaceCount = this.http.get(raceCountUrl);
+    let getSeasonCount = this.http.get(seasonCountUrl);
+    let getWinsCount = this.http.get(winsUrl);
+    let getPodiumsCount = this.http.get(podiumsUrl);
+    let getPolesCount = this.http.get(polesUrl);
+    let getChampionshipsCount = this.http.get(championsUrl);
+
+    forkJoin([getRaceCount, getSeasonCount]).subscribe((res: any) => {
+      statistics.raceCount = res[0].MRData.RaceTable.Races.length;
+      statistics.seasonCount = res[1].MRData.SeasonTable.Seasons.length;
+
+      forkJoin([getWinsCount, getPodiumsCount, getPolesCount, getChampionshipsCount]).subscribe((res: any) => {
+        statistics.winsCount = res[0].MRData.RaceTable.Races.length;
+        let podiumsCounter = 0;
+        res[1].MRData.RaceTable.Races.map(item => {
+          if (item.Results[0].position === '1' || item.Results[0].position === '2' || item.Results[0].position === '3') {
+            return podiumsCounter++;
+          }
+        });
+        statistics.podiumsCount = podiumsCounter;
+        statistics.polesCount = res[2].MRData.RaceTable.Races.length;
+        statistics.championshipsCount = res[3].MRData.StandingsTable.StandingsLists.length;
+        let bestPosition = 99;
+        res[1].MRData.RaceTable.Races.map(item => {
+          bestPosition = parseInt(item.Results[0].position) < bestPosition ? parseInt(item.Results[0].position) : bestPosition;
+        });
+        statistics.bestResult = bestPosition;
+      })
     })
   }
 }
