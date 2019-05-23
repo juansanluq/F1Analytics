@@ -14,17 +14,23 @@ export class DriverDetailComponent implements OnInit {
   driverSelected: Observable<any>;
   driverImage: Observable<any>;
   driverInfo: Observable<any>;
+  stats: Observable<any>;
+  statsReady = false;
 
 
   constructor(private route: ActivatedRoute, private driversService: DriversService) { }
 
   ngOnInit() {
     this.parametro = this.route.snapshot.paramMap.get('id');
-    this.driversService.getStats(this.parametro);
     this.driverSelected = this.driversService.getDriver(this.parametro);
     this.driverSelected.subscribe(driver => {
       this.driverImage = this.driversService.getImage(driver);
       this.driverInfo = this.driversService.getInfo(driver);
+    });
+    this.stats = this.driversService.getStats(this.parametro);
+    this.stats.subscribe(stats => {
+      this.statsReady = true;
+      console.log(stats);
     });
   }
 

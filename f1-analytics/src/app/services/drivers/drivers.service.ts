@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store';
 import { LoadDriversAction } from 'src/app/store/actions';
 import { DemonymsService } from '../demonyms/demonyms.service';
 import wiki from 'wikijs';
+import { getPercentage, getAvg } from '../../../core/utils';
 
 @Injectable({
   providedIn: 'root'
@@ -182,50 +183,93 @@ export class DriversService {
   }
 
   getStats(id: string) {
+    let subject = new Subject();
     let statistics = {
       raceCount: undefined,
       seasonCount: undefined,
-      winsCount: undefined,
-      podiumsCount: undefined,
-      polesCount: undefined,
-      championshipsCount: undefined,
+      wins: {
+        count: undefined,
+        percentage: undefined,
+      },
+      podiums: {
+        count: undefined,
+        percentage: undefined,
+      },
+      poles: {
+        count: undefined,
+        percentage: undefined,
+      },
+      championships: {
+        count: undefined,
+        percentage: undefined,
+      },
       bestResult: undefined,
+      points: {
+        count: undefined,
+        average: undefined,
+      },
+      retirements: {
+        count: undefined,
+        percentage: undefined,
+      }
     };
-    let raceCountUrl = API_URL + '/drivers/' + id + '/results.json?limit=1000';
-    let seasonCountUrl = API_URL + '/drivers/' + id + '/seasons.json?limit=1000';
-    let winsUrl = API_URL + '/drivers/' + id + '/results/1.json?limit=1000';
-    let podiumsUrl = API_URL + '/drivers/' + id + '/results.json?limit=1000';
-    let polesUrl = API_URL + '/drivers/' + id + '/grid/1/results.json?limit=1000';
-    let championsUrl = API_URL + '/drivers/' + id + '/driverStandings/1.json?limit=100';
+    const raceCountUrl = API_URL + '/drivers/' + id + '/results.json?limit=1000';
+    const seasonCountUrl = API_URL + '/drivers/' + id + '/seasons.json?limit=1000';
+    const winsUrl = API_URL + '/drivers/' + id + '/results/1.json?limit=1000';
+    const podiumsUrl = API_URL + '/drivers/' + id + '/results.json?limit=1000';
+    const polesUrl = API_URL + '/drivers/' + id + '/grid/1/results.json?limit=1000';
+    const championsUrl = API_URL + '/drivers/' + id + '/driverStandings/1.json?limit=100';
+    const pointsUrl = API_URL + '/drivers/' + id + '/results.json?limit=1000';
 
-    let getRaceCount = this.http.get(raceCountUrl);
-    let getSeasonCount = this.http.get(seasonCountUrl);
-    let getWinsCount = this.http.get(winsUrl);
-    let getPodiumsCount = this.http.get(podiumsUrl);
-    let getPolesCount = this.http.get(polesUrl);
-    let getChampionshipsCount = this.http.get(championsUrl);
+    const getRaceCount = this.http.get(raceCountUrl);
+    const getSeasonCount = this.http.get(seasonCountUrl);
+    const getWinsCount = this.http.get(winsUrl);
+    const getPodiumsCount = this.http.get(podiumsUrl);
+    const getPolesCount = this.http.get(polesUrl);
+    const getChampionshipsCount = this.http.get(championsUrl);
+    const getPointsCount = this.http.get(pointsUrl);
 
-    forkJoin([getRaceCount, getSeasonCount]).subscribe((res: any) => {
+    forkJoin([getRaceCount, getSeasonCount, getPointsCount]).subscribe((res: any) => {
       statistics.raceCount = res[0].MRData.RaceTable.Races.length;
       statistics.seasonCount = res[1].MRData.SeasonTable.Seasons.length;
+      let pointsCounter = 0;
+      let retirementsCounter = 0;
+      res[2].MRData.RaceTable.Races.map(item => {
+        if (item.Results[0].positionText === 'R' || item.Results[0].positionText === 'D'
+          || item.Results[0].positionText === 'E' || item.Results[0].positionText === 'W'
+          || item.Results[0].positionText === 'F' || item.Results[0].positionText === 'N') {
+          retirementsCounter++;
+        }
+        pointsCounter += parseFloat(item.Results[0].points);
+      });
+      statistics.retirements.count = retirementsCounter;
+      statistics.retirements.percentage = getPercentage(statistics.retirements.count, statistics.raceCount);
+      statistics.points.count = pointsCounter;
+      statistics.points.average = getAvg(statistics.points.count, statistics.raceCount);
 
       forkJoin([getWinsCount, getPodiumsCount, getPolesCount, getChampionshipsCount]).subscribe((res: any) => {
-        statistics.winsCount = res[0].MRData.RaceTable.Races.length;
+        statistics.wins.count = res[0].MRData.RaceTable.Races.length;
+        statistics.wins.percentage = getPercentage(statistics.wins.count, statistics.raceCount);
         let podiumsCounter = 0;
         res[1].MRData.RaceTable.Races.map(item => {
           if (item.Results[0].position === '1' || item.Results[0].position === '2' || item.Results[0].position === '3') {
             return podiumsCounter++;
           }
         });
-        statistics.podiumsCount = podiumsCounter;
-        statistics.polesCount = res[2].MRData.RaceTable.Races.length;
-        statistics.championshipsCount = res[3].MRData.StandingsTable.StandingsLists.length;
+        statistics.podiums.count = podiumsCounter;
+        statistics.podiums.percentage = getPercentage(statistics.podiums.count, statistics.raceCount);
+        statistics.poles.count = res[2].MRData.RaceTable.Races.length;
+        statistics.poles.percentage = getPercentage(statistics.poles.count, statistics.raceCount);
+        statistics.championships.count = res[3].MRData.StandingsTable.StandingsLists.length;
+        statistics.championships.percentage = getPercentage(statistics.championships.count, statistics.seasonCount);
         let bestPosition = 99;
         res[1].MRData.RaceTable.Races.map(item => {
           bestPosition = parseInt(item.Results[0].position) < bestPosition ? parseInt(item.Results[0].position) : bestPosition;
         });
         statistics.bestResult = bestPosition;
-      })
-    })
+        subject.next(statistics);
+      });
+    });
+    return subject.asObservable();
   }
 }

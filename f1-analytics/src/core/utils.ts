@@ -180,6 +180,15 @@ export function setMobileChartOptions(yStepSize, yReverse, legendPointStyle, yti
   };
 }
 
-export function setChartDataSet() {
+function round(value, precision) {
+  var multiplier = Math.pow(10, precision || 0);
+  return Math.round(value * multiplier) / multiplier;
+}
 
+export function getPercentage(valorReal, valorTotal) {
+  return round((valorReal * 100) / valorTotal, 1);
+}
+
+export function getAvg(count, valorTotal) {
+  return Math.round(count / valorTotal);
 }
