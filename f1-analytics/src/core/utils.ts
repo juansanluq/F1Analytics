@@ -1,4 +1,5 @@
 import { Driver } from 'selenium-webdriver/opera';
+import { ChartOptions } from 'chart.js';
 
 export function mapFinishingPositions(Results: any[]) {
   let resultados = new Array();
@@ -16,7 +17,9 @@ export function mapGridPositions(Results: any[]) {
   let resultados = new Array();
   Results.map(item => {
     item.Results.map(result => {
-      resultados.push(result.grid);
+      if (result.grid != 0) {
+        resultados.push(result.grid);
+      }
     });
   });
   return countPositions(resultados);
@@ -88,7 +91,8 @@ export function setChartOptions(title, xlabel, ylabel, yStepSize, yReverse, lege
             callback: (value, index, values) => {
               return value + xTicksDecoration;
             }
-          }
+          },
+          min: 1,
         },
       }],
       yAxes: [
@@ -110,7 +114,9 @@ export function setChartOptions(title, xlabel, ylabel, yStepSize, yReverse, lege
             },
             stepSize: yStepSize,
             fontSize: 15,
-            fontColor: '#000'
+            fontColor: '#000',
+            beginAtZero: false,
+            min: 1
           },
           position: 'left',
         },
@@ -119,7 +125,7 @@ export function setChartOptions(title, xlabel, ylabel, yStepSize, yReverse, lege
   };
 }
 
-export function setMobileChartOptions(yStepSize, yReverse, legendPointStyle, yticksDecoration?) {
+export function setMobileChartOptions(yStepSize, yReverse, legendPointStyle, yticksDecoration?): ChartOptions {
   return {
     responsive: true,
     responsiveAnimationDuration: 3000,
@@ -156,7 +162,8 @@ export function setMobileChartOptions(yStepSize, yReverse, legendPointStyle, yti
           fontSize: 15,
           padding: 5,
           fontColor: '#000',
-          autoSkip: true
+          autoSkip: true,
+          min: 1,
         },
       }],
       yAxes: [
@@ -171,7 +178,9 @@ export function setMobileChartOptions(yStepSize, yReverse, legendPointStyle, yti
             },
             stepSize: yStepSize,
             fontSize: 15,
-            fontColor: '#000'
+            fontColor: '#000',
+            beginAtZero: false,
+            min: 1,
           },
           position: 'left',
         },

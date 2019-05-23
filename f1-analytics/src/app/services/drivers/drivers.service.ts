@@ -272,4 +272,29 @@ export class DriversService {
     });
     return subject.asObservable();
   }
+
+  getSeasonsResults(id: string) {
+    let subject = new Subject();
+    let seasonResults;
+    let seasonsArray = new Array();
+    let resultsArray = new Array();
+    this.http.get(API_URL + '/drivers/' + id + '/driverStandings.json?limit=100')
+      .subscribe((res: any) => {
+        let standings = res.MRData.StandingsTable.StandingsLists;
+        if (standings.length === 0) {
+          subject.next(null);
+        } else {
+          for (const standingRecord of standings) {
+            seasonsArray.push(standingRecord.season);
+            resultsArray.push(standingRecord.DriverStandings[0].position);
+          }
+          seasonResults = {
+            seasons: seasonsArray,
+            results: resultsArray,
+          };
+          subject.next(seasonResults);
+        }
+      });
+    return subject.asObservable();
+  }
 }
