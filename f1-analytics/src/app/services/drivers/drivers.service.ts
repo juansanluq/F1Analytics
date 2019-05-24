@@ -99,7 +99,13 @@ export class DriversService {
     const subject = new Subject();
     const searchTerm = driver.givenName.replace(' ', '_') + '_' + driver.familyName.replace(' ', '_');
     this.http.get('https://es.wikipedia.org/api/rest_v1/page/summary/' + searchTerm)
-      .subscribe((res: any) => subject.next(res.extract));
+      .subscribe((res: any) => {
+        if (res.type === 'disambiguation') {
+          this.http.get('https://es.wikipedia.org/api/rest_v1/page/summary/' + searchTerm + '_(piloto)')
+            .subscribe((data: any) => subject.next(data.extract));
+        }
+        subject.next(res.extract);
+      });
     return subject;
   }
 
@@ -107,11 +113,13 @@ export class DriversService {
     if (driver.familyName === 'Sainz') {
       driver.familyName = 'Sainz Jr.';
     }
+    console.log(driver.url.split('/'));
     const subject = new Subject();
-    const searchTerm = driver.givenName.replace(' ', '_') + '_' + driver.familyName.replace(' ', '_');
-    this.http.get('https://es.wikipedia.org/api/rest_v1/page/media/' + searchTerm)
-      .subscribe((res: any) => {
+    // const searchTerm = driver.givenName.replace(' ', '_') + '_' + driver.familyName.replace(' ', '_');
+    const searchTerm = driver.url.split('/');
 
+    this.http.get('https://en.wikipedia.org/api/rest_v1/page/media/' + searchTerm[searchTerm.length - 1])
+      .subscribe((res: any) => {
         try {
           subject.next(res.items[0].thumbnail.source);
         } catch (TypeError) {

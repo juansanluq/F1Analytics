@@ -50,16 +50,15 @@ export class DriverDetailComponent implements OnInit {
 
     this.seasonsResults = this.driversService.getSeasonsResults(this.parametro);
     this.seasonsResults.subscribe(res => {
-      console.log(res);
       this.seasonChartData[0].data = res.results;
       this.seasonChartLabels = res.seasons;
       this.seasonData = true;
-    })
+    });
 
     this.driverSelected = this.driversService.getDriver(this.parametro);
     this.driverSelected.subscribe(driver => {
-      this.driverImage = this.driversService.getImage(driver);
       this.driverInfo = this.driversService.getInfo(driver);
+      this.driverImage = this.driversService.getImage(driver);
     });
     this.stats = this.driversService.getStats(this.parametro);
     this.stats.subscribe(stats => {

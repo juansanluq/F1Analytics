@@ -18,16 +18,13 @@
     </div>
     <div *ngIf="driverInfo | async as info else noInfo" class="description">
       <p>{{info}}</p>
+      <div class="boton"><a href="https://ergast.com/mrd/" target="_blank">Saber más</a></div>
     </div>
     <ng-template #noInfo>
       <div class="description">
         <p>No tenemos una descripción detallada de este piloto</p>
       </div>
     </ng-template>
-    <div class="extended-description">
-      <p>{{extendedInfo}}</p>
-      <div class="boton"><a href="https://ergast.com/mrd/" target="_blank">Saber más</a></div>
-    </div>
   </div>
 
   <div class="box">

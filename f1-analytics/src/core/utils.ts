@@ -125,7 +125,7 @@ export function setChartOptions(title, xlabel, ylabel, yStepSize, yReverse, lege
   };
 }
 
-export function setMobileChartOptions(yStepSize, yReverse, legendPointStyle, yticksDecoration?): ChartOptions {
+export function setMobileChartOptions(yStepSize, yReverse, legendPointStyle, yticksDecoration?) {
   return {
     responsive: true,
     responsiveAnimationDuration: 3000,
