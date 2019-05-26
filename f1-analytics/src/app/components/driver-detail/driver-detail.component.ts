@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DriversService } from '../../services/drivers/drivers.service';
-import { Observable } from 'rxjs';
+import { Observable, forkJoin, combineLatest } from 'rxjs';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { ChartDataSets, ChartOptions } from 'chart.js';
 import { Label, Color } from 'ng2-charts';
 import { setChartOptions, setMobileChartOptions } from 'src/core/utils';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-driver-detail',
@@ -25,6 +26,18 @@ export class DriverDetailComponent implements OnInit {
   seasonsResults: Observable<any>;
   seasonData = false;
 
+  fpResults: Observable<any>;
+  fpData = false;
+
+  gpResults: Observable<any>;
+  gpData = false;
+
+  wins: Observable<any>;
+  winsData = false;
+
+  poles: Observable<any>;
+  polesData = false;
+
 
   public seasonChartData: ChartDataSets[] = [
     { data: [], label: 'Resultados por temporada', fill: false },
@@ -42,9 +55,40 @@ export class DriverDetailComponent implements OnInit {
     }
   ];
 
-  constructor(private route: ActivatedRoute, private driversService: DriversService, private deviceDetector: DeviceDetectorService) { }
+
+  /* FINISHING POSITIONS CHART */
+  public fPositionsChartData: ChartDataSets[] = [
+    { data: [], label: 'Resultados del piloto', fill: false },
+  ];
+  public fPositionsChartOptions: (ChartOptions) = setChartOptions('POSICIONES FINALES EN CARRERA', 'Puesto', 'Nº de veces', 10, false, 'º');
+  public mFPositionsChartOptions: (ChartOptions) = setMobileChartOptions(10, false, false);
+  public fPositionsChartLabels: Label[] = [];
+  public fPositionsChartColors: Color[] = [{
+    backgroundColor: '#F17F42',
+  }];
+  /* END FINISHING POSITIONS CHART */
+
+
+  /* GRID POSITIONS CHART */
+  public gPositionsChartData: ChartDataSets[] = [
+    { data: [], label: 'Posición de salida', fill: false },
+  ];
+  public gPositionsChartOptions: (ChartOptions) = setChartOptions('POSICIONES DE PARRILLA', 'Puesto', 'Nº de veces', 10, false, 'º');
+  public mGPositionsChartOptions: (ChartOptions) = setMobileChartOptions(10, false, false);
+  public gPositionsChartLabels: Label[] = [];
+  public gPositionsChartColors: Color[] = [{
+    backgroundColor: '#F17F42',
+  }];
+  /* END GRID POSITIONS CHART */
+
+  constructor(private route: ActivatedRoute, private driversService: DriversService, private deviceDetector: DeviceDetectorService,
+    private toastr: ToastrService) { }
 
   ngOnInit() {
+    setTimeout(() => this.toastr.info('Los datos están cargando', 'Cargando...', {
+      timeOut: 0,
+      enableHtml: true,
+    }), 1000);
     this.resizeCharts(800, 100, 900);
     this.parametro = this.route.snapshot.paramMap.get('id');
 
@@ -64,6 +108,40 @@ export class DriverDetailComponent implements OnInit {
     this.stats.subscribe(stats => {
       this.statsReady = true;
     });
+
+    this.fpResults = this.driversService.getFinishingPositions(this.parametro);
+    this.fpResults.subscribe(data => {
+      this.fPositionsChartData[0].data = data.fp[1];
+      this.fPositionsChartLabels = data.fp[0];
+      this.fpData = true;
+      this.gPositionsChartData[0].data = data.gp[1];
+      this.gPositionsChartLabels = data.gp[0];
+      this.gpData = true;
+    });
+
+    this.wins = this.driversService.getWins(this.parametro);
+    this.wins.subscribe(data => {
+      this.winsData = true;
+    });
+
+    this.poles = this.driversService.getPoles(this.parametro);
+    this.poles.subscribe(data => {
+      this.polesData = true;
+    });
+
+    this.driversService.getTeamMates(this.parametro);
+
+    forkJoin([this.stats, this.seasonsResults, this.fpResults, this.gpResults, this.wins, this.poles])
+      .subscribe(data => {
+        console.log('Todo a cargado')
+      });
+
+    combineLatest(this.stats, this.seasonsResults, this.fpResults, this.gpResults, this.wins, this.poles)
+      .subscribe(data => {
+        console.log('Todo ha terminado');
+        // this.toastr.remove(1);
+        // this.toastr.success('Los datos han cargado correctamente', '¡Listo!');
+      });
   }
 
   resizeCharts(width, height, mobileheight) {
