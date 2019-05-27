@@ -7,7 +7,7 @@ import { Store } from '@ngrx/store';
 import { LoadDriversAction } from 'src/app/store/actions';
 import { DemonymsService } from '../demonyms/demonyms.service';
 import wiki from 'wikijs';
-import { getPercentage, getAvg } from '../../../core/utils';
+import { getPercentage, getAvg, mapFinishingPositions, mapGridPositions } from '../../../core/utils';
 
 @Injectable({
   providedIn: 'root'
@@ -99,7 +99,13 @@ export class DriversService {
     const subject = new Subject();
     const searchTerm = driver.givenName.replace(' ', '_') + '_' + driver.familyName.replace(' ', '_');
     this.http.get('https://es.wikipedia.org/api/rest_v1/page/summary/' + searchTerm)
-      .subscribe((res: any) => subject.next(res.extract));
+      .subscribe((res: any) => {
+        if (res.type === 'disambiguation') {
+          this.http.get('https://es.wikipedia.org/api/rest_v1/page/summary/' + searchTerm + '_(piloto)')
+            .subscribe((data: any) => subject.next(data.extract));
+        }
+        subject.next(res.extract);
+      });
     return subject;
   }
 
@@ -108,10 +114,11 @@ export class DriversService {
       driver.familyName = 'Sainz Jr.';
     }
     const subject = new Subject();
-    const searchTerm = driver.givenName.replace(' ', '_') + '_' + driver.familyName.replace(' ', '_');
-    this.http.get('https://es.wikipedia.org/api/rest_v1/page/media/' + searchTerm)
-      .subscribe((res: any) => {
+    // const searchTerm = driver.givenName.replace(' ', '_') + '_' + driver.familyName.replace(' ', '_');
+    const searchTerm = driver.url.split('/');
 
+    this.http.get('https://en.wikipedia.org/api/rest_v1/page/media/' + searchTerm[searchTerm.length - 1])
+      .subscribe((res: any) => {
         try {
           subject.next(res.items[0].thumbnail.source);
         } catch (TypeError) {
@@ -296,5 +303,92 @@ export class DriversService {
         }
       });
     return subject.asObservable();
+  }
+
+
+  getFinishingPositions(id: string) {
+    let subject = new Subject();
+    this.http.get(API_URL + '/drivers/' + id + '/results.json?limit=1000').subscribe((data: any) => {
+      let results = data.MRData.RaceTable.Races;
+      let retornable = {
+        fp: mapFinishingPositions(results),
+        gp: mapGridPositions(results),
+      }
+      subject.next(retornable);
+    });
+    return subject.asObservable();
+  };
+
+  getWins(id: string) {
+    let subject = new Subject();
+    this.http.get(API_URL + '/drivers/' + id + '/results/1.json?limit=1000')
+      .subscribe((data: any) => {
+        let events = [];
+        let year = 0;
+        data.MRData.RaceTable.Races.map(item => {
+          if (year != item.season) {
+            events.push({
+              season: item.season,
+              round: item.round,
+              raceName: item.raceName,
+              constructor: item.Results[0].Constructor.name,
+              constructorId: item.Results[0].Constructor.constructorId,
+              firstWinInSeason: true,
+            });
+            year = item.season;
+          } else {
+            events.push({
+              season: item.season,
+              round: item.round,
+              raceName: item.raceName,
+              constructor: item.Results[0].Constructor.name,
+              constructorId: item.Results[0].Constructor.constructorId,
+              firstWinInSeason: false,
+            });
+          }
+        });
+        subject.next(events);
+      });
+    return subject.asObservable();
+  }
+
+  getPoles(id: string) {
+    let subject = new Subject();
+    this.http.get(API_URL + '/drivers/' + id + '/grid/1/results.json?limit=1000')
+      .subscribe((data: any) => {
+        let events = [];
+        let year = 0;
+        data.MRData.RaceTable.Races.map(item => {
+          if (year != item.season) {
+            events.push({
+              season: item.season,
+              round: item.round,
+              raceName: item.raceName,
+              constructor: item.Results[0].Constructor.name,
+              constructorId: item.Results[0].Constructor.constructorId,
+              firstWinInSeason: true,
+            });
+            year = item.season;
+          } else {
+            events.push({
+              season: item.season,
+              round: item.round,
+              raceName: item.raceName,
+              constructor: item.Results[0].Constructor.name,
+              constructorId: item.Results[0].Constructor.constructorId,
+              firstWinInSeason: false,
+            });
+          }
+        });
+        subject.next(events);
+      });
+    return subject.asObservable();
+  }
+
+  getTeamMates(id: string) {
+    this.http.get(API_URL + '/drivers/' + id + '/driverStandings.json?limit=1000')
+      .subscribe((data: any) => {
+        console.log(data.MRData.StandingsTable.StandingsLists);
+      })
   }
 }

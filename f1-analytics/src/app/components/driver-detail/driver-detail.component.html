@@ -18,16 +18,13 @@
     </div>
     <div *ngIf="driverInfo | async as info else noInfo" class="description">
       <p>{{info}}</p>
+      <div class="boton"><a href="https://ergast.com/mrd/" target="_blank">Saber más</a></div>
     </div>
     <ng-template #noInfo>
       <div class="description">
         <p>No tenemos una descripción detallada de este piloto</p>
       </div>
     </ng-template>
-    <div class="extended-description">
-      <p>{{extendedInfo}}</p>
-      <div class="boton"><a href="https://ergast.com/mrd/" target="_blank">Saber más</a></div>
-    </div>
   </div>
 
   <div class="box">
@@ -83,6 +80,57 @@
       <canvas *ngIf="seasonData else noData" baseChart width="400" height="400" [datasets]="seasonChartData"
         [labels]="seasonChartLabels" [options]="seasonChartOptions" [colors]="seasonChartColors" legend="true"
         chartType="line"></canvas>
+    </div>
+    <div class="charts-container box finishing">
+      <div class="titulo">Posiciones finales</div>
+      <canvas *ngIf="fpData else noData" baseChart width="400" height="400" [datasets]="fPositionsChartData"
+        [labels]="fPositionsChartLabels" [options]="fPositionsChartOptions" [colors]="fPositionsChartColors"
+        legend="true" chartType="bar"></canvas>
+    </div>
+    <div class="charts-container box grid">
+      <div class="titulo">Posiciones de parrilla</div>
+      <canvas *ngIf="gpData else noData" baseChart width="400" height="400" [datasets]="gPositionsChartData"
+        [labels]="gPositionsChartLabels" [options]="gPositionsChartOptions" [colors]="fPositionsChartColors"
+        legend="true" chartType="bar"></canvas>
+    </div>
+    <div class="box table-container" *ngIf="wins | async as records"
+      [ngStyle]="{'display': !winsData ? 'none' : 'block'}">
+      <div class="titulo">Victorias</div>
+      <table>
+        <tr class="main-titles">
+          <th>#</th>
+          <th colspan="2">Carrera</th>
+          <th>Constructor</th>
+        </tr>
+        <ng-container *ngFor="let item of records; let i=index">
+          <tr class="row" [ngStyle]="{'border-top': item.firstWinInSeason ? '3px solid #CE6D39' : '1px solid #F17F42'}">
+            <td>{{i + 1}}</td>
+            <td><a href="#">{{ item.season }} {{item.raceName}}</a></td>
+            <td> Ronda {{item.round}}</td>
+            <td><a href="#">{{item.constructor}}</a></td>
+          </tr>
+        </ng-container>
+      </table>
+    </div>
+
+    <div class="box table-container" *ngIf="poles | async as records"
+      [ngStyle]="{'display': !polesData ? 'none' : 'block'}">
+      <div class="titulo">Pole Positions</div>
+      <table>
+        <tr class="main-titles">
+          <th>#</th>
+          <th colspan="2">Carrera</th>
+          <th>Constructor</th>
+        </tr>
+        <ng-container *ngFor="let item of records; let i=index">
+          <tr class="row" [ngStyle]="{'border-top': item.firstWinInSeason ? '3px solid #CE6D39' : '1px solid #F17F42'}">
+            <td>{{i + 1}}</td>
+            <td><a href="#">{{ item.season }} {{item.raceName}}</a></td>
+            <td> Ronda {{item.round}}</td>
+            <td><a href="#">{{item.constructor}}</a></td>
+          </tr>
+        </ng-container>
+      </table>
     </div>
   </div>
 </div>

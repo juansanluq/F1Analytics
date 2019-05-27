@@ -26,9 +26,12 @@ import { ConstructorDetailComponent } from './components/constructor-detail/cons
 
 import { ChartsModule } from 'ng2-charts';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DriversIndexComponent } from './components/drivers-index/drivers-index.component';
 import { DriverDetailComponent } from './components/driver-detail/driver-detail.component';
+
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { ToastrModule } from 'ngx-toastr';
 
 
 @NgModule({
@@ -58,6 +61,8 @@ import { DriverDetailComponent } from './components/driver-detail/driver-detail.
     }),
     ChartsModule,
     NgxSpinnerModule,
+    BrowserAnimationsModule, // required animations module
+    ToastrModule.forRoot() // ToastrModule added
   ],
   providers: [],
   bootstrap: [AppComponent]
