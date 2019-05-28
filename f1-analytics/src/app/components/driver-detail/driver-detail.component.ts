@@ -85,12 +85,10 @@ export class DriverDetailComponent implements OnInit {
     private toastr: ToastrService) { }
 
   ngOnInit() {
-    setTimeout(() => this.toastr.info('Los datos están cargando', 'Cargando...', {
-      timeOut: 0,
-      enableHtml: true,
-    }), 1000);
     this.resizeCharts(800, 100, 900);
     this.parametro = this.route.snapshot.paramMap.get('id');
+
+    this.driversService.getTeamMates(this.parametro);
 
     this.seasonsResults = this.driversService.getSeasonsResults(this.parametro);
     this.seasonsResults.subscribe(res => {
@@ -128,20 +126,6 @@ export class DriverDetailComponent implements OnInit {
     this.poles.subscribe(data => {
       this.polesData = true;
     });
-
-    this.driversService.getTeamMates(this.parametro);
-
-    forkJoin([this.stats, this.seasonsResults, this.fpResults, this.gpResults, this.wins, this.poles])
-      .subscribe(data => {
-        console.log('Todo a cargado')
-      });
-
-    combineLatest(this.stats, this.seasonsResults, this.fpResults, this.gpResults, this.wins, this.poles)
-      .subscribe(data => {
-        console.log('Todo ha terminado');
-        // this.toastr.remove(1);
-        // this.toastr.success('Los datos han cargado correctamente', '¡Listo!');
-      });
   }
 
   resizeCharts(width, height, mobileheight) {

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { API_URL } from '../utils';
-import { Subject, forkJoin } from 'rxjs';
+import { Subject, forkJoin, combineLatest } from 'rxjs';
 import { AppState } from 'src/app/store/app.reducer';
 import { Store } from '@ngrx/store';
 import { LoadDriversAction } from 'src/app/store/actions';
@@ -386,9 +386,48 @@ export class DriversService {
   }
 
   getTeamMates(id: string) {
+    let temporadas;
     this.http.get(API_URL + '/drivers/' + id + '/driverStandings.json?limit=1000')
       .subscribe((data: any) => {
-        console.log(data.MRData.StandingsTable.StandingsLists);
+        let standings = data.MRData.StandingsTable.StandingsLists;
+        temporadas = standings.map(item => {
+          return {
+            "season": item.season,
+            "constructorId": item.DriverStandings[0].Constructors[0].constructorId,
+            "teamMates": [],
+          }
+        });
+        let consultas = temporadas.map(item => {
+          return this.http.get(API_URL + '/' + item.season + '/results.json?limit=1000')
+        });
+        console.log('Antes del forkjoin');
+        let resultados = []
+        forkJoin(consultas).subscribe(data => {
+          data.map((item: any, index) => {
+            item.MRData.RaceTable.Races.map(item => {
+              if (item.season === temporadas[index].season) {
+                item.Results.map(item => {
+                  resultados.push(item);
+                })
+              }
+            })
+          });
+          let mate = resultados[0].Driver;
+          console.log(resultados);
+          console.log(temporadas[0].constructorId);
+          for (let i = 0; i <= temporadas.length; i++) {
+            resultados.map(item => {
+              if (item.Constructor.constructorId === temporadas[i].constructorId && item.Driver.driverId != id) {
+                if (item.Driver.driverId != mate.driverId) {
+                  console.log('Nuevo mate');
+                  temporadas[i].teamMates.push(mate);
+                  mate = item.Driver;
+                }
+              }
+            })
+          }
+          console.log(temporadas);
+        })
       })
   }
 }
