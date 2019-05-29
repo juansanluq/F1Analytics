@@ -5,7 +5,7 @@ export function mapFinishingPositions(Results: any[]) {
   let resultados = new Array();
   Results.map(item => {
     item.Results.map(result => {
-      if (result.positionText != 'R' && result.positionText != 'F' && result.positionText != 'D' && result.positionText != 'N' && result.positionText != 'W') {
+      if (result.positionText != 'R' && result.positionText != 'F' && result.positionText != 'D' && result.positionText != 'N' && result.positionText != 'W' && result.positionText != 'E') {
         resultados.push(result.positionText);
       };
     })
@@ -42,7 +42,7 @@ function countPositions(arr) {
   return [a, b];
 }
 
-export function setChartOptions(title, xlabel, ylabel, yStepSize, yReverse, legendPointStyle, xTicksDecoration?, yTicksDecoration?) {
+export function setChartOptions(title, xlabel, ylabel, yStepSize, yReverse, legendPointStyle, minYAxis, xTicksDecoration?, yTicksDecoration?) {
   return {
     maintainAspectRatio: false,
     responsive: true,
@@ -116,7 +116,7 @@ export function setChartOptions(title, xlabel, ylabel, yStepSize, yReverse, lege
             fontSize: 15,
             fontColor: '#000',
             beginAtZero: false,
-            min: 1
+            min: minYAxis
           },
           position: 'left',
         },
@@ -125,7 +125,7 @@ export function setChartOptions(title, xlabel, ylabel, yStepSize, yReverse, lege
   };
 }
 
-export function setMobileChartOptions(yStepSize, yReverse, legendPointStyle, yticksDecoration?) {
+export function setMobileChartOptions(yStepSize, yReverse, legendPointStyle, minYAxis, yticksDecoration?) {
   return {
     responsive: true,
     responsiveAnimationDuration: 3000,
@@ -180,7 +180,7 @@ export function setMobileChartOptions(yStepSize, yReverse, legendPointStyle, yti
             fontSize: 15,
             fontColor: '#000',
             beginAtZero: false,
-            min: 1,
+            min: minYAxis
           },
           position: 'left',
         },

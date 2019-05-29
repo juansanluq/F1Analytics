@@ -59,6 +59,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     }),
     ChartsModule,
     NgxSpinnerModule,
+    RouterModule
   ],
   providers: [],
   bootstrap: [AppComponent]

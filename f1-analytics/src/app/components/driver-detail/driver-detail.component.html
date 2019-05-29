@@ -134,7 +134,7 @@
     </div>
 
 
-    <div class="box table-container" *ngIf="teamMates | async as mates"
+    <div class="box table-container colspan-2" *ngIf="teamMates | async as mates"
       [ngStyle]="{'display': !teamMatesData ? 'none' : 'block'}">
       <div class="titulo">Equipos y compañeros</div>
       <table>
@@ -146,8 +146,12 @@
         <ng-container *ngFor="let item of mates; let i=index">
           <tr class="row">
             <td>{{item.season}}</td>
-            <td><div *ngFor="let piloto of item.teamMates">{{piloto.givenName}} {{piloto.familyName}}</div></td>
-            <td>{{item.constructor.name}}</td>
+            <td>
+              <div *ngFor="let piloto of item.teamMates"> <a
+                  [routerLink]="[ '/pilotos', piloto.driverId ]">{{piloto.givenName}} {{piloto.familyName}}</a>
+              </div>
+            </td>
+            <td><a href="www.google.es">{{item.constructor.name}}</a></td>
           </tr>
         </ng-container>
       </table>
