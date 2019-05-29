@@ -6,7 +6,6 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 import { ChartDataSets, ChartOptions } from 'chart.js';
 import { Label, Color } from 'ng2-charts';
 import { setChartOptions, setMobileChartOptions } from 'src/core/utils';
-import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-driver-detail',
@@ -37,6 +36,9 @@ export class DriverDetailComponent implements OnInit {
 
   poles: Observable<any>;
   polesData = false;
+
+  teamMates: Observable<any>;
+  teamMatesData = false;
 
 
   public seasonChartData: ChartDataSets[] = [
@@ -81,17 +83,21 @@ export class DriverDetailComponent implements OnInit {
   }];
   /* END GRID POSITIONS CHART */
 
-  constructor(private route: ActivatedRoute, private driversService: DriversService, private deviceDetector: DeviceDetectorService,
-    private toastr: ToastrService) { }
+  constructor(private route: ActivatedRoute, private driversService: DriversService, private deviceDetector: DeviceDetectorService) { }
 
   ngOnInit() {
     this.resizeCharts(800, 100, 900);
     this.parametro = this.route.snapshot.paramMap.get('id');
 
-    this.driversService.getTeamMates(this.parametro);
+    this.teamMates = this.driversService.getTeamMates(this.parametro);
+    this.teamMates.subscribe(data => {
+      this.teamMatesData = true;
+      console.log(data);
+    });
 
     this.seasonsResults = this.driversService.getSeasonsResults(this.parametro);
     this.seasonsResults.subscribe(res => {
+      console.log(res);
       this.seasonChartData[0].data = res.results;
       this.seasonChartLabels = res.seasons;
       this.seasonData = true;

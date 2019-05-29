@@ -289,7 +289,21 @@ export class DriversService {
       .subscribe((res: any) => {
         let standings = res.MRData.StandingsTable.StandingsLists;
         if (standings.length === 0) {
-          subject.next(null);
+          this.http.get(API_URL + '/current/drivers/' + id + '/driverStandings.json?limit=100')
+            .subscribe((res: any) => {
+              standings = res.MRData.StandingsTable.StandingsLists;
+              console.log('2019 Standings', standings);
+              for (const standingRecord of standings) {
+                seasonsArray.push(standingRecord.season);
+                resultsArray.push(standingRecord.DriverStandings[0].position);
+              }
+
+              seasonResults = {
+                seasons: seasonsArray,
+                results: resultsArray,
+              };
+              subject.next(seasonResults);
+            })
         } else {
           for (const standingRecord of standings) {
             seasonsArray.push(standingRecord.season);
@@ -386,6 +400,7 @@ export class DriversService {
   }
 
   getTeamMates(id: string) {
+    let subject = new Subject();
     let temporadas;
     this.http.get(API_URL + '/drivers/' + id + '/driverStandings.json?limit=1000')
       .subscribe((data: any) => {
@@ -393,41 +408,27 @@ export class DriversService {
         temporadas = standings.map(item => {
           return {
             "season": item.season,
-            "constructorId": item.DriverStandings[0].Constructors[0].constructorId,
+            "constructor": item.DriverStandings[0].Constructors[0],
             "teamMates": [],
           }
         });
-        let consultas = temporadas.map(item => {
-          return this.http.get(API_URL + '/' + item.season + '/results.json?limit=1000')
+        let consultas = temporadas.map((item, indexTemporadas) => {
+          return this.http.get(API_URL + '/' + item.season + '/constructors/' + item.constructor.constructorId + '/drivers.json')
         });
-        console.log('Antes del forkjoin');
-        let resultados = []
         forkJoin(consultas).subscribe(data => {
-          data.map((item: any, index) => {
-            item.MRData.RaceTable.Races.map(item => {
-              if (item.season === temporadas[index].season) {
-                item.Results.map(item => {
-                  resultados.push(item);
-                })
-              }
-            })
+          let pilotosTemporada = data.map((item: any, index) => {
+            return item.MRData.DriverTable.Drivers;
           });
-          let mate = resultados[0].Driver;
-          console.log(resultados);
-          console.log(temporadas[0].constructorId);
-          for (let i = 0; i <= temporadas.length; i++) {
-            resultados.map(item => {
-              if (item.Constructor.constructorId === temporadas[i].constructorId && item.Driver.driverId != id) {
-                if (item.Driver.driverId != mate.driverId) {
-                  console.log('Nuevo mate');
-                  temporadas[i].teamMates.push(mate);
-                  mate = item.Driver;
-                }
-              }
-            })
-          }
-          console.log(temporadas);
-        })
-      })
+          pilotosTemporada = pilotosTemporada.map(item => {
+            return item.filter(item => item.driverId != id);
+          });
+          // console.log(pilotosTemporada);
+          pilotosTemporada.map((item, index) => {
+            temporadas[index].teamMates = item;
+          })
+          subject.next(temporadas);
+        });
+      });
+    return subject.asObservable();
   }
 }
