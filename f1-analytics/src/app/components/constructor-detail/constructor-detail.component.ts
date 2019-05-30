@@ -70,8 +70,8 @@ export class ConstructorDetailComponent implements OnInit, AfterViewInit {
   public seasonChartData: ChartDataSets[] = [
     { data: [], label: 'Resultados del equipo', fill: false },
   ];
-  public seasonChartOptions: (ChartOptions) = setChartOptions('RESULTADOS DEL CAMPEONATO DE CONSTRUCTORES', 'Temporadas', 'Puesto', 1, true, true);
-  public mSeasonChartOptions: (ChartOptions) = setMobileChartOptions(1, true, true);
+  public seasonChartOptions: (ChartOptions) = setChartOptions('RESULTADOS DEL CAMPEONATO DE CONSTRUCTORES', 'Temporadas', 'Puesto', 1, true, true, 0);
+  public mSeasonChartOptions: (ChartOptions) = setMobileChartOptions(1, true, true, 0);
   public seasonChartLabels: Label[] = [];
   public seasonChartColors: Color[] = [
     { // grey
@@ -88,8 +88,8 @@ export class ConstructorDetailComponent implements OnInit, AfterViewInit {
   public fPositionsChartData: ChartDataSets[] = [
     { data: [], label: 'Resultados del equipo', fill: false },
   ];
-  public fPositionsChartOptions: (ChartOptions) = setChartOptions('POSICIONES FINALES EN CARRERA', 'Puesto', 'Nº de veces', 10, false, 'º');
-  public mFPositionsChartOptions: (ChartOptions) = setMobileChartOptions(10, false, false);
+  public fPositionsChartOptions: (ChartOptions) = setChartOptions('POSICIONES FINALES EN CARRERA', 'Puesto', 'Nº de veces', 10, false, 'º', 0);
+  public mFPositionsChartOptions: (ChartOptions) = setMobileChartOptions(10, false, false, 0);
   public fPositionsChartLabels: Label[] = [];
   public fPositionsChartColors: Color[] = [{
     backgroundColor: '#F17F42',
@@ -101,8 +101,8 @@ export class ConstructorDetailComponent implements OnInit, AfterViewInit {
   public gPositionsChartData: ChartDataSets[] = [
     { data: [], label: 'Posición de salida', fill: false },
   ];
-  public gPositionsChartOptions: (ChartOptions) = setChartOptions('POSICIONES DE PARRILLA', 'Puesto', 'Nº de veces', 10, false, 'º');
-  public mGPositionsChartOptions: (ChartOptions) = setMobileChartOptions(10, false, false);
+  public gPositionsChartOptions: (ChartOptions) = setChartOptions('POSICIONES DE PARRILLA', 'Puesto', 'Nº de veces', 10, false, 'º', 0);
+  public mGPositionsChartOptions: (ChartOptions) = setMobileChartOptions(10, false, false, 0);
   public gPositionsChartLabels: Label[] = [];
   public gPositionsChartColors: Color[] = [{
     backgroundColor: '#F17F42',

@@ -31,8 +31,6 @@ import { DriverDetailComponent } from './components/driver-detail/driver-detail.
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { ToastrModule } from 'ngx-toastr';
-
 
 @NgModule({
   declarations: [
@@ -61,8 +59,7 @@ import { ToastrModule } from 'ngx-toastr';
     }),
     ChartsModule,
     NgxSpinnerModule,
-    BrowserAnimationsModule, // required animations module
-    ToastrModule.forRoot() // ToastrModule added
+    RouterModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { API_URL } from '../utils';
-import { Subject, forkJoin } from 'rxjs';
+import { Subject, forkJoin, combineLatest } from 'rxjs';
 import { AppState } from 'src/app/store/app.reducer';
 import { Store } from '@ngrx/store';
 import { LoadDriversAction } from 'src/app/store/actions';
@@ -289,7 +289,21 @@ export class DriversService {
       .subscribe((res: any) => {
         let standings = res.MRData.StandingsTable.StandingsLists;
         if (standings.length === 0) {
-          subject.next(null);
+          this.http.get(API_URL + '/current/drivers/' + id + '/driverStandings.json?limit=100')
+            .subscribe((res: any) => {
+              standings = res.MRData.StandingsTable.StandingsLists;
+              console.log('2019 Standings', standings);
+              for (const standingRecord of standings) {
+                seasonsArray.push(standingRecord.season);
+                resultsArray.push(standingRecord.DriverStandings[0].position);
+              }
+
+              seasonResults = {
+                seasons: seasonsArray,
+                results: resultsArray,
+              };
+              subject.next(seasonResults);
+            })
         } else {
           for (const standingRecord of standings) {
             seasonsArray.push(standingRecord.season);
@@ -386,9 +400,35 @@ export class DriversService {
   }
 
   getTeamMates(id: string) {
+    let subject = new Subject();
+    let temporadas;
     this.http.get(API_URL + '/drivers/' + id + '/driverStandings.json?limit=1000')
       .subscribe((data: any) => {
-        console.log(data.MRData.StandingsTable.StandingsLists);
-      })
+        let standings = data.MRData.StandingsTable.StandingsLists;
+        temporadas = standings.map(item => {
+          return {
+            "season": item.season,
+            "constructor": item.DriverStandings[0].Constructors[0],
+            "teamMates": [],
+          }
+        });
+        let consultas = temporadas.map((item, indexTemporadas) => {
+          return this.http.get(API_URL + '/' + item.season + '/constructors/' + item.constructor.constructorId + '/drivers.json')
+        });
+        forkJoin(consultas).subscribe(data => {
+          let pilotosTemporada = data.map((item: any, index) => {
+            return item.MRData.DriverTable.Drivers;
+          });
+          pilotosTemporada = pilotosTemporada.map(item => {
+            return item.filter(item => item.driverId != id);
+          });
+          // console.log(pilotosTemporada);
+          pilotosTemporada.map((item, index) => {
+            temporadas[index].teamMates = item;
+          })
+          subject.next(temporadas);
+        });
+      });
+    return subject.asObservable();
   }
 }

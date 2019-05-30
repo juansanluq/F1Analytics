@@ -217,6 +217,10 @@ table {
               border: 0;
           }
       }
+
+      div {
+        margin: .5rem;
+      }
   }
   .main-titles {
       background-color: lighten($naranja, 10);
@@ -230,4 +234,8 @@ table {
           }
       }
   }
+}
+
+.colspan-2 {
+  grid-column: 1/3;
 }

@@ -6,7 +6,6 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 import { ChartDataSets, ChartOptions } from 'chart.js';
 import { Label, Color } from 'ng2-charts';
 import { setChartOptions, setMobileChartOptions } from 'src/core/utils';
-import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-driver-detail',
@@ -38,13 +37,16 @@ export class DriverDetailComponent implements OnInit {
   poles: Observable<any>;
   polesData = false;
 
+  teamMates: Observable<any>;
+  teamMatesData = false;
+
 
   public seasonChartData: ChartDataSets[] = [
     { data: [], label: 'Resultados por temporada', fill: false },
   ];
   public seasonChartLabels: Label[] = [];
-  public seasonChartOptions: (ChartOptions) = setChartOptions('RESULTADOS DEL CAMPEONATO DE PILOTOS', 'Temporadas', 'Puesto', 1, true, true);
-  public mSeasonChartOptions: (ChartOptions) = setMobileChartOptions(3, true, true);
+  public seasonChartOptions: (ChartOptions) = setChartOptions('RESULTADOS DEL CAMPEONATO DE PILOTOS', 'Temporadas', 'Puesto', 1, true, true, 0);
+  public mSeasonChartOptions: (ChartOptions) = setMobileChartOptions(3, true, true, 0);
   public seasonChartColors: Color[] = [
     { // grey
       backgroundColor: '#000',
@@ -60,8 +62,8 @@ export class DriverDetailComponent implements OnInit {
   public fPositionsChartData: ChartDataSets[] = [
     { data: [], label: 'Resultados del piloto', fill: false },
   ];
-  public fPositionsChartOptions: (ChartOptions) = setChartOptions('POSICIONES FINALES EN CARRERA', 'Puesto', 'Nº de veces', 10, false, 'º');
-  public mFPositionsChartOptions: (ChartOptions) = setMobileChartOptions(10, false, false);
+  public fPositionsChartOptions: (ChartOptions) = setChartOptions('POSICIONES FINALES EN CARRERA', 'Puesto', 'Nº de veces', 10, false, 'º', 0);
+  public mFPositionsChartOptions: (ChartOptions) = setMobileChartOptions(10, false, false, 0);
   public fPositionsChartLabels: Label[] = [];
   public fPositionsChartColors: Color[] = [{
     backgroundColor: '#F17F42',
@@ -73,27 +75,29 @@ export class DriverDetailComponent implements OnInit {
   public gPositionsChartData: ChartDataSets[] = [
     { data: [], label: 'Posición de salida', fill: false },
   ];
-  public gPositionsChartOptions: (ChartOptions) = setChartOptions('POSICIONES DE PARRILLA', 'Puesto', 'Nº de veces', 10, false, 'º');
-  public mGPositionsChartOptions: (ChartOptions) = setMobileChartOptions(10, false, false);
+  public gPositionsChartOptions: (ChartOptions) = setChartOptions('POSICIONES DE PARRILLA', 'Puesto', 'Nº de veces', 10, false, 'º', 0);
+  public mGPositionsChartOptions: (ChartOptions) = setMobileChartOptions(10, false, false, 0);
   public gPositionsChartLabels: Label[] = [];
   public gPositionsChartColors: Color[] = [{
     backgroundColor: '#F17F42',
   }];
   /* END GRID POSITIONS CHART */
 
-  constructor(private route: ActivatedRoute, private driversService: DriversService, private deviceDetector: DeviceDetectorService,
-    private toastr: ToastrService) { }
+  constructor(private route: ActivatedRoute, private driversService: DriversService, private deviceDetector: DeviceDetectorService) { }
 
   ngOnInit() {
-    setTimeout(() => this.toastr.info('Los datos están cargando', 'Cargando...', {
-      timeOut: 0,
-      enableHtml: true,
-    }), 1000);
     this.resizeCharts(800, 100, 900);
     this.parametro = this.route.snapshot.paramMap.get('id');
 
+    this.teamMates = this.driversService.getTeamMates(this.parametro);
+    this.teamMates.subscribe(data => {
+      this.teamMatesData = true;
+      console.log(data);
+    });
+
     this.seasonsResults = this.driversService.getSeasonsResults(this.parametro);
     this.seasonsResults.subscribe(res => {
+      console.log(res);
       this.seasonChartData[0].data = res.results;
       this.seasonChartLabels = res.seasons;
       this.seasonData = true;
@@ -121,27 +125,17 @@ export class DriverDetailComponent implements OnInit {
 
     this.wins = this.driversService.getWins(this.parametro);
     this.wins.subscribe(data => {
-      this.winsData = true;
+      if (data.lenght > 0) {
+        this.winsData = true;
+      }
     });
 
     this.poles = this.driversService.getPoles(this.parametro);
     this.poles.subscribe(data => {
-      this.polesData = true;
+      if (data.lenght > 0) {
+        this.polesData = true;
+      }
     });
-
-    this.driversService.getTeamMates(this.parametro);
-
-    forkJoin([this.stats, this.seasonsResults, this.fpResults, this.gpResults, this.wins, this.poles])
-      .subscribe(data => {
-        console.log('Todo a cargado')
-      });
-
-    combineLatest(this.stats, this.seasonsResults, this.fpResults, this.gpResults, this.wins, this.poles)
-      .subscribe(data => {
-        console.log('Todo ha terminado');
-        // this.toastr.remove(1);
-        // this.toastr.success('Los datos han cargado correctamente', '¡Listo!');
-      });
   }
 
   resizeCharts(width, height, mobileheight) {
