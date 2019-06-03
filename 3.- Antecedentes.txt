@@ -1,0 +1,63 @@
+3.1 Antecedentes y estado del arte
+A continuación se muestra el resultado de la investigación que se ha realizado para determinar
+que herramientas hay actualmente en el mercado que realicen una función parecida a la nuestra,
+explicaremos como funcionan (si hay documentación al respecto) y en qué nuestra aplicación las mejora.
+Viendo que el campo donde nuestro aplicativo se centra es un campo bastante cubierto por los medios, solo basta buscar
+"Resultados Fórmula 1" para que aparezcan delante de tí cientos de resultados, esto es en parte por que casi todos los
+medios de comunicación cubren los resultados del campeonato o de las carreras, pero no llegan al mismo nivel de análisis
+que nuestro software. Para evitar tener que analizar todos esos sitios nos vamos a centrar en el sitio oficial de la Fórmula 1
+y en las distintas aplicaciones que hay relacionadas directamente con los datos, y que están desarrolladas basándose en la misma
+API de la que consumimos nosotros.
+
+3.1.1 Página oficial de la Fórmula 1 (www.formula1.com)
+Como era de esperar es la alternativa más completa a la hora de encontrar resultados sobre el campeonato. Analizando
+la sección de resultados de la misma, podemos hacer el siguiente resumen:
+	- Apartado "Races" (Carreras): Nos muestra una lista con las carreras del campeonato del año en curso, junto
+	con el ganador de cada una de ellas (si lo hubiera), además de venir indicadas con un pequeño sombreado las que
+	ya se han disputado. Cuando se pulsa encima de cualquiera de las carreras nos lleva a una página con el detalle
+	de la misma con los resultados y la información del circuito.
+
+	- Apartado "Standings" (Resultados): Vemos una serie de listas con información acerca de los resultados de pilotos,
+	equipos, y (de nuevo) carreras. La información viene dispuesta de una forma que puede llegar a confundir al usuario
+	ya que se muestra en una combinación de listas que el usuario debe combinar para ver los resultados que desee.
+	Dentro de este apartado posee una sección dedicada exclusivamente a un "archivo", donde están los resultados de todas
+	las temporadas anteriores a la que se encuentre en curso. También incluye un apartado de "premios" donde se pueden
+	consultar los "Driver of the Day" y el premio "DHL Fastest Pit Stop Award".
+
+	- Apartado "Drivers" (Pilotos): Accedemos a una lista de los pilotos de esta temporada, viendo su nombre, número y
+	fotografía. Además nos la lista con las posiciones del campeonato de pilotos del año en curso, por lo que de un vistazo
+	podemos ver una gran cantidad de información.
+
+	- Apartado "Teams" (Equipos): Nos lleva a una vista con un diseño bastante elaborado en la cual se listan los equipos oficiales
+	del campeonato para esa temporada, en cada entrada de esta lista tenemos el nombre del equipo, los pilotos actuales, el número de
+	podiums y el número de títulos que tiene el equipo en cuestión. Al pulsar encima de cada equipo nos llevará a una página dedicada
+	exclusivamente al mismo, donde vemos estadísticas más detalladas del equipo.
+
+Vistos estos apartados se ha realizado una valoración general del sitio, por lo que bajo nuestro punto de vista es quizás la alternativa más
+vistosa, ya que el diseño es espectacular, además que tenga el respaldo de ser un sitio oficial otorga de mucha confianza a los usuarios.
+Por otro lado encontramos un poco dificil encontrar algunos detalles en la información (quizás por el diseño tan recargado de la página), y puede
+que para los usuarios que no estén acostumbrados al diseño de la página les cueste un poco moverse por ella.
+Otro aspecto negativo que hemos encontrado es el de tener tanto artículo de noticias y/o opinión, ya que los usuarios que quieran saber solo los
+resultados quizás les moleste un poco.
+En relación a este sitio, nuestra aplicación está más centrada en los resultados propiamente dichos, sin ofrecer más distracciones al usuario.
+Aún así pensamos que nuestra aplicación puede estar más enfocada, o que sea de más utilidad, a usuarios familiarizados con la estadística.
+
+3.1.2 Formula Graph (www.formulagraph.com)
+Nada más visitar este sitio lo primero que nos llama la atención es su simpleza, ya que todos los datos mostrados en la misma es a traves de
+una gráfica por lo que tiene sus ventajas y sus inconvenientes. Se puede alternar entre ver los resultados de una temporada en concreto o ver
+los resultados históricos de un determinado constructor o piloto.
+Aunque la disposición de la información es buena, la valoración se ve un poco lastrada por la falta de datos. Por ejemplo se echa en falta datos
+más específicos de los pilotos, tales como lugar de nacimiento, numero de carreras, etc. Lo mismo se puede llegar a decir de los constructores
+de los cuales solo se puede saber los resultados a lo largo de su historia, en el campeonato de constructores, información a todas luces, escasa.
+
+3.1.3 F1 Fansite (www.f1-fansite.com)
+Antes de empezar el análisis de este sitio, debemos referirnos a su descripción:
+"On F1-Fansite.com you can find all F1 results of each and every held Formula 1 grand prix. You can also find all championships since the beginning of Formula 1 in 1950 until the current season
+This page displays every F1 season. Behind each year you will find the F1 results of each F1 GP and the drivers and constructors championship tables for each F1 season.
+
+En F1-Fansite.com puede encontrar todos los resultados de F1 de todos y cada uno de los grandes premios de Fórmula 1 celebrados. También puede encontrar todos los campeonatos desde el comienzo de la Fórmula 1 en 1950 hasta la temporada actual.
+Esta página muestra cada temporada de F1. Detrás de cada año, encontrarás los resultados de F1 de cada GP de F1 y las mesas de campeonato de pilotos y constructores para cada temporada de F1."
+
+Leído esto tenemos que decir que es fiel a lo que la página ofrece, ya que en en materia de datos es bastante competente, teniendo una cantidad abundante,
+quizás su talón de aquiles sea el diseño, que recuerda a los de las primeras páginas de Internet y su adaptación a distintos dispositivos es bastante
+mediocre.
