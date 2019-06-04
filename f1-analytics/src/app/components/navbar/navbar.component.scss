@@ -60,7 +60,6 @@ nav {
             flex-direction: row;
         }
         li {
-            padding: 0;
             width: 100%;
             padding: 1rem;
             text-align: center;
@@ -76,6 +75,7 @@ nav {
                 text-decoration: none;
                 color: #FFEEE4;
                 cursor: pointer;
+                white-space: nowrap;
             }
             .contenedor-flex .header {
                 display: none;

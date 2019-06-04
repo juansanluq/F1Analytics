@@ -30,6 +30,7 @@ import { DriversIndexComponent } from './components/drivers-index/drivers-index.
 import { DriverDetailComponent } from './components/driver-detail/driver-detail.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SeasonsIndexComponent } from './components/seasons-index/seasons-index.component';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ConstructorsIndexComponent,
     ConstructorDetailComponent,
     DriversIndexComponent,
-    DriverDetailComponent
+    DriverDetailComponent,
+    SeasonsIndexComponent
   ],
   imports: [
     BrowserModule,

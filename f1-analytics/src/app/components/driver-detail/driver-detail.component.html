@@ -151,10 +151,12 @@
                   [routerLink]="[ '/pilotos', piloto.driverId ]">{{piloto.givenName}} {{piloto.familyName}}</a>
               </div>
             </td>
-            <td><a href="www.google.es">{{item.constructor.name}}</a></td>
+            <td><a [routerLink]="[ '/constructores', item.constructor.constructorId ]">{{item.constructor.name}}</a>
+            </td>
           </tr>
         </ng-container>
       </table>
     </div>
   </div>
 </div>
+<app-footer></app-footer>

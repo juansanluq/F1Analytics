@@ -56,4 +56,8 @@ export class NavbarComponent implements OnInit {
     this.router.navigateByUrl('/pilotos');
   }
 
+  goToSeasons() {
+    this.router.navigateByUrl('/temporadas');
+  }
+
 }

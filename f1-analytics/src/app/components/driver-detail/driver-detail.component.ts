@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DriversService } from '../../services/drivers/drivers.service';
 import { Observable, forkJoin, combineLatest } from 'rxjs';
@@ -12,8 +12,9 @@ import { setChartOptions, setMobileChartOptions } from 'src/core/utils';
   templateUrl: './driver-detail.component.html',
   styleUrls: ['./driver-detail.component.scss']
 })
-export class DriverDetailComponent implements OnInit {
+export class DriverDetailComponent implements OnInit, OnDestroy {
 
+  paramSubscription: any;
   parametro;
   driverSelected: Observable<any>;
   driverImage: Observable<any>;
@@ -86,56 +87,65 @@ export class DriverDetailComponent implements OnInit {
   constructor(private route: ActivatedRoute, private driversService: DriversService, private deviceDetector: DeviceDetectorService) { }
 
   ngOnInit() {
-    this.resizeCharts(800, 100, 900);
-    this.parametro = this.route.snapshot.paramMap.get('id');
+    this.paramSubscription = this.route.params
+      .subscribe(params => {
+        this.reiniciarVariables();
+        this.parametro = params['id'];
+        this.resizeCharts(800, 100, 900);
+        // this.parametro = this.route.snapshot.paramMap.get('id');
 
-    this.teamMates = this.driversService.getTeamMates(this.parametro);
-    this.teamMates.subscribe(data => {
-      this.teamMatesData = true;
-      console.log(data);
-    });
+        this.teamMates = this.driversService.getTeamMates(this.parametro);
+        this.teamMates.subscribe(data => {
+          this.teamMatesData = true;
+          console.log(data);
+        });
 
-    this.seasonsResults = this.driversService.getSeasonsResults(this.parametro);
-    this.seasonsResults.subscribe(res => {
-      console.log(res);
-      this.seasonChartData[0].data = res.results;
-      this.seasonChartLabels = res.seasons;
-      this.seasonData = true;
-    });
+        this.seasonsResults = this.driversService.getSeasonsResults(this.parametro);
+        this.seasonsResults.subscribe(res => {
+          console.log(res);
+          this.seasonChartData[0].data = res.results;
+          this.seasonChartLabels = res.seasons;
+          this.seasonData = true;
+        });
 
-    this.driverSelected = this.driversService.getDriver(this.parametro);
-    this.driverSelected.subscribe(driver => {
-      this.driverInfo = this.driversService.getInfo(driver);
-      this.driverImage = this.driversService.getImage(driver);
-    });
-    this.stats = this.driversService.getStats(this.parametro);
-    this.stats.subscribe(stats => {
-      this.statsReady = true;
-    });
+        this.driverSelected = this.driversService.getDriver(this.parametro);
+        this.driverSelected.subscribe(driver => {
+          this.driverInfo = this.driversService.getInfo(driver);
+          this.driverImage = this.driversService.getImage(driver);
+        });
+        this.stats = this.driversService.getStats(this.parametro);
+        this.stats.subscribe(stats => {
+          this.statsReady = true;
+        });
 
-    this.fpResults = this.driversService.getFinishingPositions(this.parametro);
-    this.fpResults.subscribe(data => {
-      this.fPositionsChartData[0].data = data.fp[1];
-      this.fPositionsChartLabels = data.fp[0];
-      this.fpData = true;
-      this.gPositionsChartData[0].data = data.gp[1];
-      this.gPositionsChartLabels = data.gp[0];
-      this.gpData = true;
-    });
+        this.fpResults = this.driversService.getFinishingPositions(this.parametro);
+        this.fpResults.subscribe(data => {
+          this.fPositionsChartData[0].data = data.fp[1];
+          this.fPositionsChartLabels = data.fp[0];
+          this.fpData = true;
+          this.gPositionsChartData[0].data = data.gp[1];
+          this.gPositionsChartLabels = data.gp[0];
+          this.gpData = true;
+        });
 
-    this.wins = this.driversService.getWins(this.parametro);
-    this.wins.subscribe(data => {
-      if (data.lenght > 0) {
-        this.winsData = true;
-      }
-    });
+        this.wins = this.driversService.getWins(this.parametro);
+        this.wins.subscribe(data => {
+          if (data.lenght > 0) {
+            this.winsData = true;
+          }
+        });
 
-    this.poles = this.driversService.getPoles(this.parametro);
-    this.poles.subscribe(data => {
-      if (data.lenght > 0) {
-        this.polesData = true;
-      }
-    });
+        this.poles = this.driversService.getPoles(this.parametro);
+        this.poles.subscribe(data => {
+          if (data.lenght > 0) {
+            this.polesData = true;
+          }
+        });
+      })
+  }
+
+  ngOnDestroy() {
+    this.paramSubscription.unsubscribe();
   }
 
   resizeCharts(width, height, mobileheight) {
@@ -159,6 +169,27 @@ export class DriverDetailComponent implements OnInit {
       }
       // canvasArray.height = mobileheight;
     }
+  }
+
+  reiniciarVariables() {
+    this.driverSelected = null;
+    this.driverImage = null;
+    this.driverInfo = null;
+    this.stats = null;
+    this.statsReady = false;
+    this.mobile = false;
+    this.seasonsResults = null;
+    this.seasonData = false;
+    this.fpResults = null;
+    this.fpData = false;
+    this.gpResults = null;
+    this.gpData = false;
+    this.wins = null;
+    this.winsData = false;
+    this.poles = null;
+    this.polesData = false;
+    this.teamMates = null;
+    this.teamMatesData = false;
   }
 
 }
