@@ -9,6 +9,7 @@ import { ConstructorDetailComponent } from './components/constructor-detail/cons
 import { DriversIndexComponent } from './components/drivers-index/drivers-index.component';
 import { DriverDetailComponent } from './components/driver-detail/driver-detail.component';
 import { SeasonsIndexComponent } from './components/seasons-index/seasons-index.component';
+import { SeasonDetailComponent } from './components/season-detail/season-detail.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: LandingComponent },
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: 'pilotos', component: DriversIndexComponent },
   { path: 'pilotos/:id', component: DriverDetailComponent },
   { path: 'temporadas', component: SeasonsIndexComponent },
+  { path: 'temporadas/:year', component: SeasonDetailComponent },
 ];
 
 @NgModule({

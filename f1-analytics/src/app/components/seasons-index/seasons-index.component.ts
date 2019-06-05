@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { SeasonsService } from '../../services/seasons/seasons.service';
+import { Observable } from 'rxjs';
+import { DriversService } from '../../services/drivers/drivers.service';
 
 @Component({
   selector: 'app-seasons-index',
@@ -7,9 +10,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SeasonsIndexComponent implements OnInit {
 
-  constructor() { }
+  temporadas: Observable<any>;
+
+  constructor(private seasons: SeasonsService) { }
 
   ngOnInit() {
+    this.temporadas = this.seasons.getSeasonsList();
   }
 
 }

@@ -48,7 +48,6 @@
         "request": "^2.88.0",
         "request-promise": "^4.2.4",
         "rxjs": "~6.3.3",
-        "toastr": "^2.1.4",
         "tslib": "^1.9.0",
         "typescript": "~3.2.2",
         "wikijs": "^4.13.0",

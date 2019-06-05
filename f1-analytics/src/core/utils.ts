@@ -201,3 +201,25 @@ export function getPercentage(valorReal, valorTotal) {
 export function getAvg(count, valorTotal) {
   return Math.round(count / valorTotal);
 }
+
+export function mapSeasons(temporadas: any[]) {
+  let sMapped = {
+    'season': null,
+    'eventsCount': null,
+  }
+  let year = 0;
+  let lastYearCount = 0;
+  let seasonsMapped = [];
+  temporadas.map(item => {
+    if (item.season != year) {
+      // console.log(item.season);
+      // console.log(temporadas.filter(itemf => itemf.season == item.season).length);
+      seasonsMapped.push({
+        'season': item.season,
+        'eventsCount': temporadas.filter(itemf => itemf.season == item.season).length
+      });
+      year = item.season;
+    }
+  });
+  return seasonsMapped;
+}
