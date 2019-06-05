@@ -371,3 +371,19 @@ export const countryList = [
   ["ZW", "Zimbabwe", "04-18", "Zimbabwean", "+2"],
   ["ZW", "Zimbabwe", "04-18", "Rhodesian", "+2"]
 ];
+
+export const colorList = [
+  'rgba(225, 6, 0, 1)',
+  'rgba(241, 127, 66, 1)',
+  'rgba(70, 155, 255, 1)',
+  'rgba(0, 210, 190, 1)',
+  'rgba(30, 65, 255, 1)',
+  'rgba(155, 0, 0, 1)',
+  'rgba(189, 158, 87, 1)',
+  'rgba(255, 245, 0, 1)',
+  'rgba(220, 0, 0, 1)',
+  'rgba(255, 135, 0, 1)',
+  'rgba(245, 150, 200, 1)',
+  'rgba(59, 89, 152, 1)',
+  'rgba(0, 172, 238, 1)',
+]
