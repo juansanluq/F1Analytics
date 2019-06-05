@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { API_URL } from '../utils';
-import { mapSeasons } from 'src/core/utils';
+import { mapSeasons, mapPointsDistribution } from 'src/core/utils';
 import { ScheduleService } from '../schedule/schedule.service';
 import { Subject } from 'rxjs';
 
@@ -31,6 +31,15 @@ export class SeasonsService {
               })
             });
         }
+      });
+    return subject.asObservable();
+  }
+
+  getPointsDistribution(season: string) {
+    let subject = new Subject();
+    this.http.get(API_URL + '/' + season + '/driverStandings.json?limit=1000')
+      .subscribe((data: any) => {
+        subject.next(mapPointsDistribution(data.MRData.StandingsTable.StandingsLists[0].DriverStandings));
       });
     return subject.asObservable();
   }

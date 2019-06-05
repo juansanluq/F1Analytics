@@ -1,30 +1,39 @@
 <div class="hero">
-    <app-navbar></app-navbar>
-    <div class="titulo" *ngIf="seasonExists">
-        <h1>Temporada {{parametro}} de Fórmula 1</h1>
-    </div>
+  <app-navbar></app-navbar>
+  <div class="titulo" *ngIf="seasonExists">
+    <h1>Temporada {{parametro}} de Fórmula 1</h1>
+  </div>
 </div>
 <div class="current-constructors">
-    <div class="titulo">Posiciones campeonato de pilotos</div>
-    <div class="constructors-table" *ngIf="seasonStandings | async as drivers else noData">
-        <table>
-            <tr>
-                <th>#</th>
-                <th colspan="2">Piloto</th>
-                <th *ngIf="!mobile">Constructor</th>
-                <th *ngIf="!mobile">Puntos</th>
-            </tr>
-            <tr class="row" *ngFor="let driver of drivers; let i=index">
-                <td>{{i+1}}</td>
-                <td *ngIf="mobile"> <img src="https://www.countryflags.io/{{driver.Driver.countryCode}}/shiny/16.png" alt=" "></td>
-                <td *ngIf="!mobile"> <img src="https://www.countryflags.io/{{driver.Driver.countryCode}}/shiny/32.png" alt=" "></td>
-                <td> <a [routerLink]="[ '/pilotos', driver.Driver.driverId ]"> {{driver.Driver.givenName}} {{driver.Driver.familyName}} </a> </td>
-                <td *ngIf="!mobile"> <a [routerLink]="[ '/constructores', driver.Constructors[0].constructorId ]"> {{driver.Constructors[0].name}} </a> </td>
-                <td *ngIf="!mobile"> {{driver.points}} </td>
-            </tr>
-        </table>
-    </div>
-    <ng-template #noData>
-        <div class="triple-spinner"> </div>
-    </ng-template>
+  <div class="titulo">Posiciones campeonato de pilotos</div>
+  <div class="constructors-table" *ngIf="seasonStandings | async as drivers else noData">
+    <table>
+      <tr>
+        <th>#</th>
+        <th colspan="2">Piloto</th>
+        <th *ngIf="!mobile">Constructor</th>
+        <th *ngIf="!mobile">Puntos</th>
+      </tr>
+      <tr class="row" *ngFor="let driver of drivers; let i=index">
+        <td>{{i+1}}</td>
+        <td *ngIf="mobile"> <img src="https://www.countryflags.io/{{driver.Driver.countryCode}}/shiny/16.png" alt=" ">
+        </td>
+        <td *ngIf="!mobile"> <img src="https://www.countryflags.io/{{driver.Driver.countryCode}}/shiny/32.png" alt=" ">
+        </td>
+        <td> <a [routerLink]="[ '/pilotos', driver.Driver.driverId ]"> {{driver.Driver.givenName}}
+            {{driver.Driver.familyName}} </a> </td>
+        <td *ngIf="!mobile"> <a [routerLink]="[ '/constructores', driver.Constructors[0].constructorId ]">
+            {{driver.Constructors[0].name}} </a> </td>
+        <td *ngIf="!mobile"> {{driver.points}} </td>
+      </tr>
+    </table>
+  </div>
+  <ng-template #noData>
+    <div class="triple-spinner"> </div>
+  </ng-template>
+</div>
+<div class="box">
+  <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"
+    [options]="pieChartOptions" [plugins]="pieChartPlugins" [legend]="pieChartLegend">
+  </canvas>
 </div>

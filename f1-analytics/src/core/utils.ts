@@ -223,3 +223,32 @@ export function mapSeasons(temporadas: any[]) {
   });
   return seasonsMapped;
 }
+
+export function mapPointsDistribution(results: any[]) {
+  let totalPoints = 0;
+  let teams = results.map(item => {
+    totalPoints += parseFloat(item.points);
+    return item.Constructors[0].constructorId;
+  });
+  teams = teams.filter((v, i) => teams.indexOf(v) === i);
+  let ppt;
+  ppt = teams.map(teamItem => {
+    return (results.filter(item => item.Constructors[0].constructorId === teamItem));
+  })
+  let pd = []
+  ppt.map(item => {
+    let pointsCounter = 0;
+    item.map((item2, index) => {
+      // console.log(item2.Constructors[0].name);
+      // console.log(item2.points);
+      pointsCounter += parseFloat(item2.points);
+      if (index === (item.length - 1))
+        pd.push({
+          'constructor': item2.Constructors[0],
+          'points': pointsCounter,
+          'percentage': getPercentage(pointsCounter, totalPoints),
+        });
+    })
+  });
+  return pd;
+}
