@@ -1,4 +1,5 @@
 {
+    "main": "main.js",
     "name": "f1-analytics",
     "version": "0.0.0",
     "scripts": {
@@ -8,7 +9,9 @@
         "test": "ng test",
         "lint": "ng lint",
         "e2e": "ng e2e",
-        "heroku-postbuild": "ng build --prod"
+        "heroku-postbuild": "ng build --prod",
+        "electron": "electron .",
+        "electron-build": "ng build --prod && electron ."
     },
     "private": true,
     "dependencies": {
@@ -63,6 +66,7 @@
         "@types/jasminewd2": "~2.0.3",
         "@types/node": "^8.9.5",
         "codelyzer": "~4.5.0",
+        "electron": "^5.0.2",
         "enhanced-resolve": "^3.3.0",
         "jasmine-core": "~2.99.1",
         "jasmine-spec-reporter": "~4.2.1",
