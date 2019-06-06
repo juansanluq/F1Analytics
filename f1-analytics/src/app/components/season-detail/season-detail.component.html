@@ -1,43 +1,80 @@
 <div class="hero">
-    <app-navbar></app-navbar>
-    <div class="titulo" *ngIf="seasonExists">
-        <h1>Temporada {{parametro}} de Fórmula 1</h1>
-    </div>
+  <app-navbar></app-navbar>
+  <div class="titulo" *ngIf="seasonExists">
+    <h1>Temporada {{parametro}} de Fórmula 1</h1>
+  </div>
 </div>
 
 <div class="grid-container">
-    <div class="current-constructors">
-        <div class="titulo">Posiciones campeonato de pilotos</div>
-        <div class="constructors-table" *ngIf="seasonStandings | async as drivers else noData">
-            <table>
-                <tr>
-                    <th>#</th>
-                    <th colspan="2">Piloto</th>
-                    <th *ngIf="!mobile">Constructor</th>
-                    <th *ngIf="!mobile">Puntos</th>
-                </tr>
-                <tr class="row" *ngFor="let driver of drivers; let i=index">
-                    <td>{{i+1}}</td>
-                    <td *ngIf="mobile"> <img src="https://www.countryflags.io/{{driver.Driver.countryCode}}/shiny/16.png" alt=" ">
-                    </td>
-                    <td *ngIf="!mobile"> <img src="https://www.countryflags.io/{{driver.Driver.countryCode}}/shiny/32.png" alt=" ">
-                    </td>
-                    <td> <a [routerLink]="[ '/pilotos', driver.Driver.driverId ]"> {{driver.Driver.givenName}}
-                {{driver.Driver.familyName}} </a> </td>
-                    <td *ngIf="!mobile"> <a [routerLink]="[ '/constructores', driver.Constructors[0].constructorId ]">
-                {{driver.Constructors[0].name}} </a> </td>
-                    <td *ngIf="!mobile"> {{driver.points}} </td>
-                </tr>
-            </table>
-        </div>
-        <ng-template #noData>
-            <div class="triple-spinner"> </div>
-        </ng-template>
+  <div class="current-constructors">
+    <div class="titulo">Posiciones campeonato de pilotos</div>
+    <div class="constructors-table" *ngIf="seasonStandings | async as drivers else noData">
+      <table>
+        <tr>
+          <th>#</th>
+          <th colspan="2">Piloto</th>
+          <th *ngIf="!mobile">Constructor</th>
+          <th *ngIf="!mobile">Puntos</th>
+        </tr>
+        <tr class="row" *ngFor="let driver of drivers; let i=index">
+          <td>{{i+1}}</td>
+          <td *ngIf="mobile"> <img src="https://www.countryflags.io/{{driver.Driver.countryCode}}/shiny/16.png" alt=" ">
+          </td>
+          <td *ngIf="!mobile"> <img src="https://www.countryflags.io/{{driver.Driver.countryCode}}/shiny/32.png"
+              alt=" ">
+          </td>
+          <td> <a [routerLink]="[ '/pilotos', driver.Driver.driverId ]"> {{driver.Driver.givenName}}
+              {{driver.Driver.familyName}} </a> </td>
+          <td *ngIf="!mobile"> <a [routerLink]="[ '/constructores', driver.Constructors[0].constructorId ]">
+              {{driver.Constructors[0].name}} </a> </td>
+          <td *ngIf="!mobile"> {{driver.points}} </td>
+        </tr>
+      </table>
     </div>
-    <div class="box box-presets current-constructors chart">
-        <div class="titulo">Distribución de puntos por equipos (Campeonato de pilotos)</div>
-        <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType" [options]="pieChartOptions" [colors]="pieChartColors" [plugins]="pieChartPlugins" [legend]="pieChartLegend">
-      </canvas>
+    <ng-template #noData>
+      <div class="triple-spinner"> </div>
+    </ng-template>
+  </div>
+  <div class="box box-presets current-constructors chart">
+    <div class="titulo">Distribución de puntos por equipos (Campeonato de pilotos)</div>
+    <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"
+      [options]="pieChartOptions" [colors]="pieChartColors" [plugins]="pieChartPlugins" [legend]="pieChartLegend">
+    </canvas>
+  </div>
+  <div class="current-constructors">
+    <div class="titulo">Resultados por carrera</div>
+    <div class="constructors-table" *ngIf="seasonWins | async as records else noData">
+      <table>
+        <tr>
+          <th>#</th>
+          <th>Fecha</th>
+          <th>Carrera</th>
+          <th>Circuito</th>
+          <th colspan="2">Piloto ganador</th>
+          <th>Constructor ganador</th>
+          <th>Vueltas</th>
+          <th>Tiempo</th>
+        </tr>
+        <tr class="row" *ngFor="let record of records; let i=index">
+          <td>{{i+1}}</td>
+          <td>{{record.date}}</td>
+          <td>{{record.raceName}}</td>
+          <td><a [routerLink]="[ '/circuitos', record.Circuit.circuitId ]">{{record.Circuit.circuitName}}</a></td>
+          <td><img class="flag" src="https://www.countryflags.io/{{record.Results[0].Driver.countryCode}}/shiny/32.png">
+          </td>
+          <td><a [routerLink]="['/pilotos', record.Results[0].Driver.driverId]">{{record.Results[0].Driver.givenName}}
+              {{record.Results[0].Driver.familyName}}</a></td>
+          <td><a
+              [routerLink]="['constructores', record.Results[0].Constructor.constructorId]">{{record.Results[0].Constructor.name}}</a>
+          </td>
+          <td>{{record.Results[0].laps}}</td>
+          <td>{{record.Results[0].Time.time}}</td>
+        </tr>
+      </table>
     </div>
+    <ng-template #noData>
+      <div class="triple-spinner"> </div>
+    </ng-template>
+  </div>
 </div>
 <app-footer></app-footer>

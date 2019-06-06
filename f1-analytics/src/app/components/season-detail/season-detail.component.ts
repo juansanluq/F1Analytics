@@ -21,6 +21,7 @@ export class SeasonDetailComponent implements OnInit {
   seasonStandings: Observable<any>;
   seasonExists = false;
   pointsDistribution: Observable<any>;
+  seasonWins: Observable<any> = new Observable();
 
   public pieChartOptions: ChartOptions = {
     responsive: true,
@@ -64,6 +65,7 @@ export class SeasonDetailComponent implements OnInit {
     this.seasonStandings.subscribe(data => {
       this.seasonExists = true;
       this.seasons.getPointsDistribution(this.parametro);
+      this.seasonWins = this.seasons.getSeasonsWins(this.parametro);
     });
 
     this.pointsDistribution.subscribe(data => {
@@ -83,18 +85,15 @@ export class SeasonDetailComponent implements OnInit {
           });
         }
       });
-      console.log(leftSide);
       leftSide.map(item => {
         this.pieChartLabels.push(item.constructor.name);
         this.pieChartData.push(item.percentage);
-        console.log(rc.randomColor());
         this.pieChartColors[0].backgroundColor.push(rc.randomColor({
           luminosity: 'light',
           format: 'rgba',
           hue: 'rgba(241, 127, 66, 1)',
           alpha: 1
         }));
-        console.log(item);
       })
     });
   }
