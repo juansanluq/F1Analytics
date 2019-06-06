@@ -29,6 +29,7 @@
         "@ngrx/store-devtools": "^7.4.0",
         "@swimlane/ngx-charts": "^10.1.0",
         "@types/googlemaps": "^3.30.19",
+        "@types/jquery": "^3.3.29",
         "body-scroll-lock": "^2.6.1",
         "chart.js": "^2.8.0",
         "chartjs-plugin-annotation": "^0.5.7",

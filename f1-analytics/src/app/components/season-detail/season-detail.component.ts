@@ -7,6 +7,7 @@ import { ChartOptions, ChartType } from 'chart.js';
 import { Label } from 'ng2-charts';
 import { random_rgba } from 'src/core/utils';
 import { colorList } from 'src/app/services/utils';
+import * as rc from '../../../core/randomColor.js'
 
 @Component({
   selector: 'app-season-detail',
@@ -23,8 +24,12 @@ export class SeasonDetailComponent implements OnInit {
 
   public pieChartOptions: ChartOptions = {
     responsive: true,
+    maintainAspectRatio: false,
     legend: {
       position: 'top',
+      labels: {
+        fontSize: 20,
+      }
     },
     plugins: {
       datalabels: {
@@ -62,10 +67,33 @@ export class SeasonDetailComponent implements OnInit {
     });
 
     this.pointsDistribution.subscribe(data => {
-      data.map(item => {
+      let half_length = Math.ceil(data.length / 2);
+      let leftSide = data.splice(0, half_length);
+      let pointsCounter, percentageCounter = 0;
+      data.map((item, index) => {
+        pointsCounter += item.points;
+        percentageCounter += item.percentage;
+        if (index === (data.length - 1)) {
+          leftSide.push({
+            constructor: {
+              name: 'Otros',
+            },
+            percentage: percentageCounter,
+            points: pointsCounter
+          });
+        }
+      });
+      console.log(leftSide);
+      leftSide.map(item => {
         this.pieChartLabels.push(item.constructor.name);
         this.pieChartData.push(item.percentage);
-        this.pieChartColors[0].backgroundColor.push(colorList[Math.floor(Math.random() * colorList.length)]);
+        console.log(rc.randomColor());
+        this.pieChartColors[0].backgroundColor.push(rc.randomColor({
+          luminosity: 'light',
+          format: 'rgba',
+          hue: 'rgba(241, 127, 66, 1)',
+          alpha: 1
+        }));
         console.log(item);
       })
     });
