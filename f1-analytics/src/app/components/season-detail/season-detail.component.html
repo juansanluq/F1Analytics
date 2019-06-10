@@ -41,7 +41,7 @@
       [options]="pieChartOptions" [colors]="pieChartColors" [plugins]="pieChartPlugins" [legend]="pieChartLegend">
     </canvas>
   </div>
-  <div class="current-constructors">
+  <div class="current-constructors results">
     <div class="titulo">Resultados por carrera</div>
     <div class="constructors-table" *ngIf="seasonWins | async as records else noData">
       <table>

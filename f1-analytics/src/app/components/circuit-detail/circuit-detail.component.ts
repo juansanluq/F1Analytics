@@ -61,39 +61,13 @@ export class CircuitDetailComponent implements OnInit {
 
         this.circuitsService.getWinnersAtThisCircuit(this.circuit)
           .subscribe(results => {
+            console.log(results);
             this.results = results;
-            for (const result of this.results) {
-              result.Results[0].Driver = {
-                ...result.Results[0].Driver,
-                givenName: result.Results[0].Driver.givenName.charAt(0) + '.',
-                countryCode: this.demonymsService.getCountryCode(result.Results[0].Driver.nationality),
-              }
-            }
-
-            let gp_complete_date;
-            // Añadimos el objecto Date a las carreras que nos traemos de la API
-            for (let i = 0; i < this.results.length; i++) {
-              let gp_date = this.results[i].date.split("-");
-              let gp_year = gp_date[0];
-              let gp_month = gp_date[1];
-              let gp_day = gp_date[2];
-
-              // Hay que restarle 1 al mes, ya que al tipo Date los meses se le indican como un array index,
-              // Por lo que por ejemplo Diciembre correspondería con el índice 11
-              gp_complete_date = gp_day + ' ' + getMes(gp_month);
-              this.results[i].formattedDate = gp_complete_date;
-            }
           });
         this.circuitsService.getPolemansAtThisCircuit(this.circuit)
           .subscribe(res => {
             this.polemans = res;
-            for (const result of this.polemans) {
-              result.Results[0].Driver = {
-                ...result.Results[0].Driver,
-                givenName: result.Results[0].Driver.givenName.charAt(0) + '.',
-                countryCode: this.demonymsService.getCountryCode(result.Results[0].Driver.nationality),
-              }
-            }
+            console.log('POLE', this.polemans);
             this.polemansReady = true;
           });
       });
