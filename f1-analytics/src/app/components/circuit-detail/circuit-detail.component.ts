@@ -56,7 +56,12 @@ export class CircuitDetailComponent implements OnInit {
 
 
         this.circuitsService.getInfo(circuit)
-          .subscribe((res: any) => this.extendedInfo = res.extract);
+          .subscribe((res: any) => {
+            this.extendedInfo = {
+              'text': res.extract,
+              'url': res.content_urls.desktop.page
+            }
+          });
 
 
         this.circuitsService.getWinnersAtThisCircuit(this.circuit)

@@ -20,7 +20,8 @@
             </ng-container>
         </div>
         <div class="extended-description">
-            <p>{{extendedInfo}}</p>
+            <p>{{extendedInfo.text}}</p>
+            <div class="boton"><a href="{{extendedInfo.url}}" target="_blank">Ver mas</a></div>
         </div>
         <ng-template #onlyOneGP>
             <div class="description">
@@ -49,7 +50,7 @@
             </tr>
             <tr class="row" *ngFor="let result of results; let i = index">
                 <td>{{i + 1}}</td>
-                <td><a href="">{{result.season}} {{result.raceName}}</a></td>
+                <td>{{result.season}} {{result.raceName}}</td>
                 <td>{{result.formattedDate}}</td>
                 <td><img src="https://www.countryflags.io/{{result.Results[0].Driver.countryCode}}/shiny/32.png" title="{{result.Results[0].Driver.nationality}}"></td>
                 <td><a href="#">{{result.Results[0].Driver.givenName}} {{result.Results[0].Driver.familyName}}</a></td>
