@@ -52,6 +52,7 @@
 }
 
 .grid-container {
+  margin: 0 auto;
     @include for-desktop-up {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
@@ -139,6 +140,7 @@
     max-height: 400px;
     text-align: center;
     padding: .5rem;
+    margin-right: 2rem;
 }
 
 canvas {

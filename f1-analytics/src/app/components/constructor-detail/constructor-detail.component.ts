@@ -114,7 +114,7 @@ export class ConstructorDetailComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     window.onbeforeunload = function () { window.scrollTo(0, 0); }
-    this.resizeCharts(800, 100, 900);
+    this.resizeCharts(800, 200, 900);
 
     this.parametro = this.route.snapshot.paramMap.get('id');
     this.nationality = this.constructorsService.getNationalityByConstructorID(this.parametro);

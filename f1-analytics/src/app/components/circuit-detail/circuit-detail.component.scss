@@ -9,6 +9,23 @@
     margin: 0 auto;
 }
 
+.boton {
+    text-decoration: none;
+    background-color: $naranja;
+    padding: .5rem;
+    border: 3px solid $naranja_oscuro;
+    color: $blanco;
+    border-radius: 10px;
+    font-family: 'F1-Regular';
+    max-width: 50%;
+    margin: 0 auto;
+    a {
+        text-decoration: none;
+        color: $blanco;
+        display: block;
+    }
+}
+
 .hero {
     position: relative;
     height: 100vh;
