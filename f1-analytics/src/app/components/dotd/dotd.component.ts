@@ -52,7 +52,7 @@ export class DotdComponent implements OnInit {
           .subscribe(poles => this.polesCount = poles);
 
         this.driversService.getInfo(this.driverOTD)
-          .subscribe((info: any) => this.info = info);
+          .subscribe((info: any) => this.info = info.text);
 
         this.driversService.getImage(this.driverOTD)
           .subscribe(image => {
