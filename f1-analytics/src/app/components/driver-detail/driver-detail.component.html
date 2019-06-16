@@ -1,152 +1,162 @@
 <div class="hero">
-    <app-navbar></app-navbar>
-    <div class="titulo" *ngIf="driverSelected | async as piloto">
-        <h1>{{piloto.givenName}} {{piloto.familyName}}</h1>
-    </div>
+  <app-navbar></app-navbar>
+  <div class="titulo" *ngIf="driverSelected | async as piloto">
+    <h1>{{piloto.givenName}} {{piloto.familyName}}</h1>
+  </div>
 </div>
 <div class="contenedor">
-    <div class="header" *ngIf="driverSelected | async as piloto">
-        <h1 class="circuit-name">{{piloto.givenName}} {{piloto.familyName}}</h1>
-        <img *ngIf="driverImage | async as imagen else noImage" class="circuit-image" src="{{imagen}}">
-        <ng-template #noImage>
-            <img class="circuit-image" src="../../../assets/images/image_placeholder.png" alt="">
-        </ng-template>
+  <div class="header" *ngIf="driverSelected | async as piloto">
+    <h1 class="circuit-name">{{piloto.givenName}} {{piloto.familyName}}</h1>
+    <img *ngIf="driverImage | async as imagen else noImage" class="circuit-image" src="{{imagen}}">
+    <ng-template #noImage>
+      <img class="circuit-image" src="../../../assets/images/image_placeholder.png" alt="">
+    </ng-template>
 
-        <div class="country" *ngIf="piloto.birthPlace">
-            <img class="flag" src="https://www.countryflags.io/{{piloto.countryCode}}/shiny/64.png">
-            <div class="name"> {{piloto.birthPlace}}</div>
-        </div>
-        <div *ngIf="driverInfo | async as info else noInfo" class="description">
-            <p>{{info}}</p>
-            <div class="boton"><a href="https://ergast.com/mrd/" target="_blank">Saber más</a></div>
-        </div>
-        <ng-template #noInfo>
-            <div class="description">
-                <p>No tenemos una descripción detallada de este piloto</p>
-            </div>
-        </ng-template>
+    <div class="country" *ngIf="piloto.birthPlace">
+      <img class="flag" src="https://www.countryflags.io/{{piloto.countryCode}}/shiny/64.png">
+      <div class="name"> {{piloto.birthPlace}}</div>
     </div>
+    <div *ngIf="driverInfo | async as info else noInfo" class="description">
+      <p>{{info.text}}</p>
+      <div class="boton"><a href="{{info.url}}" target="_blank">Saber más</a></div>
+    </div>
+    <ng-template #noInfo>
+      <div class="description">
+        <p>No tenemos una descripción detallada de este piloto</p>
+      </div>
+    </ng-template>
+  </div>
 
-    <div class="box">
-        <div class="titulo">Estadísticas</div>
-        <div class="chart box-presets" *ngIf="stats | async as statistics else noData">
+  <div class="box">
+    <div class="titulo">Estadísticas</div>
+    <div class="chart box-presets" *ngIf="stats | async as statistics else noData">
 
-            <div class="record">
-                <div class="record-name">Victorias</div>
-                <div class="value">{{statistics.wins.count}} <span>({{statistics.wins.percentage}}%)</span></div>
-            </div>
-            <div class="record">
-                <div class="record-name">Podiums</div>
-                <div class="value">{{statistics.podiums.count}} <span>({{statistics.podiums.percentage}}%)</span></div>
-            </div>
-            <div class="record">
-                <div class="record-name">Pole Positions</div>
-                <div class="value">{{statistics.poles.count}} <span>({{statistics.poles.percentage}}%)</span></div>
-            </div>
-            <div class="record">
-                <div class="record-name">Campeonatos</div>
-                <div class="value">{{statistics.poles.count}} <span>({{statistics.poles.percentage}}%)</span></div>
-            </div>
-            <div class="record">
-                <div class="record-name">Mejor resultado</div>
-                <div class="value">{{statistics.bestResult}}º</div>
-            </div>
-            <div class="record">
-                <div class="record-name">Temporadas</div>
-                <div class="value">{{statistics.seasonCount}}</div>
-            </div>
-            <div class="record">
-                <div class="record-name">Carreras</div>
-                <div class="value">{{statistics.raceCount}}</div>
-            </div>
-            <div class="record">
-                <div class="record-name">Puntos conseguidos</div>
-                <div class="value">{{statistics.points.count}} <span *ngIf="!mobile">({{statistics.points.average}}
+      <div class="record">
+        <div class="record-name">Victorias</div>
+        <div class="value">{{statistics.wins.count}} <span>({{statistics.wins.percentage}}%)</span></div>
+      </div>
+      <div class="record">
+        <div class="record-name">Podiums</div>
+        <div class="value">{{statistics.podiums.count}} <span>({{statistics.podiums.percentage}}%)</span></div>
+      </div>
+      <div class="record">
+        <div class="record-name">Pole Positions</div>
+        <div class="value">{{statistics.poles.count}} <span>({{statistics.poles.percentage}}%)</span></div>
+      </div>
+      <div class="record">
+        <div class="record-name">Campeonatos</div>
+        <div class="value">{{statistics.poles.count}} <span>({{statistics.poles.percentage}}%)</span></div>
+      </div>
+      <div class="record">
+        <div class="record-name">Mejor resultado</div>
+        <div class="value">{{statistics.bestResult}}º</div>
+      </div>
+      <div class="record">
+        <div class="record-name">Temporadas</div>
+        <div class="value">{{statistics.seasonCount}}</div>
+      </div>
+      <div class="record">
+        <div class="record-name">Carreras</div>
+        <div class="value">{{statistics.raceCount}}</div>
+      </div>
+      <div class="record">
+        <div class="record-name">Puntos conseguidos</div>
+        <div class="value">{{statistics.points.count}} <span *ngIf="!mobile">({{statistics.points.average}}
             puntos/carrera)</span>
-                </div>
-            </div>
-            <div class="record">
-                <div class="record-name">Retiradas</div>
-                <div class="value">{{statistics.retirements.count}} <span>({{statistics.retirements.percentage}}%)</span> </div>
-            </div>
         </div>
-        <ng-template #noData>
-            <div class="triple-spinner"> </div>
-        </ng-template>
+      </div>
+      <div class="record">
+        <div class="record-name">Retiradas</div>
+        <div class="value">{{statistics.retirements.count}} <span>({{statistics.retirements.percentage}}%)</span> </div>
+      </div>
     </div>
-    <div class="grid-container">
-        <div class="charts-container box seasons">
-            <div class="titulo">Temporadas</div>
-            <canvas *ngIf="seasonData else noData" baseChart width="400" height="400" [datasets]="seasonChartData" [labels]="seasonChartLabels" [options]="seasonChartOptions" [colors]="seasonChartColors" legend="true" chartType="line"></canvas>
-        </div>
-        <div class="charts-container box finishing">
-            <div class="titulo">Posiciones finales</div>
-            <canvas *ngIf="fpData else noData" baseChart width="400" height="400" [datasets]="fPositionsChartData" [labels]="fPositionsChartLabels" [options]="fPositionsChartOptions" [colors]="fPositionsChartColors" legend="true" chartType="bar"></canvas>
-        </div>
-        <div class="charts-container box grid">
-            <div class="titulo">Posiciones de parrilla</div>
-            <canvas *ngIf="gpData else noData" baseChart width="400" height="400" [datasets]="gPositionsChartData" [labels]="gPositionsChartLabels" [options]="gPositionsChartOptions" [colors]="fPositionsChartColors" legend="true" chartType="bar"></canvas>
-        </div>
-        <div class="box table-container" *ngIf="wins | async as records" [ngStyle]="{'display': !winsData ? 'none' : 'block'}">
-            <div class="titulo">Victorias</div>
-            <table>
-                <tr class="main-titles">
-                    <th>#</th>
-                    <th colspan="2">Carrera</th>
-                    <th>Constructor</th>
-                </tr>
-                <ng-container *ngFor="let item of records; let i=index">
-                    <tr class="row" [ngStyle]="{'border-top': item.firstWinInSeason ? '3px solid #CE6D39' : '1px solid #F17F42'}">
-                        <td>{{i + 1}}</td>
-                        <td><a href="#">{{ item.season }} {{item.raceName}}</a></td>
-                        <td> Ronda {{item.round}}</td>
-                        <td><a href="#">{{item.constructor}}</a></td>
-                    </tr>
-                </ng-container>
-            </table>
-        </div>
-
-        <div class="box table-container" *ngIf="poles | async as records" [ngStyle]="{'display': !polesData ? 'none' : 'block'}">
-            <div class="titulo">Pole Positions</div>
-            <table>
-                <tr class="main-titles">
-                    <th>#</th>
-                    <th colspan="2">Carrera</th>
-                    <th>Constructor</th>
-                </tr>
-                <ng-container *ngFor="let item of records; let i=index">
-                    <tr class="row" [ngStyle]="{'border-top': item.firstWinInSeason ? '3px solid #CE6D39' : '1px solid #F17F42'}">
-                        <td>{{i + 1}}</td>
-                        <td><a href="#">{{ item.season }} {{item.raceName}}</a></td>
-                        <td> Ronda {{item.round}}</td>
-                        <td><a href="#">{{item.constructor}}</a></td>
-                    </tr>
-                </ng-container>
-            </table>
-        </div>
-
-
-        <div class="box table-container colspan-2" *ngIf="teamMates | async as mates" [ngStyle]="{'display': !teamMatesData ? 'none' : 'block'}">
-            <div class="titulo">Equipos y compañeros</div>
-            <table>
-                <tr class="main-titles">
-                    <th>Temporada</th>
-                    <th>Compañero</th>
-                    <th>Equipo</th>
-                </tr>
-                <ng-container *ngFor="let item of mates; let i=index">
-                    <tr class="row">
-                        <td>{{item.season}}</td>
-                        <td>
-                            <div *ngFor="let piloto of item.teamMates"> <a [routerLink]="[ '/pilotos', piloto.driverId ]">{{piloto.givenName}} {{piloto.familyName}}</a>
-                            </div>
-                        </td>
-                        <td><a [routerLink]="[ '/constructores', item.constructor.constructorId ]">{{item.constructor.name}}</a>
-                        </td>
-                    </tr>
-                </ng-container>
-            </table>
-        </div>
+    <ng-template #noData>
+      <div class="triple-spinner"> </div>
+    </ng-template>
+  </div>
+  <div class="grid-container">
+    <div class="charts-container box seasons">
+      <div class="titulo">Temporadas</div>
+      <canvas *ngIf="seasonData else noData" baseChart width="400" height="400" [datasets]="seasonChartData"
+        [labels]="seasonChartLabels" [options]="seasonChartOptions" [colors]="seasonChartColors" legend="true"
+        chartType="line"></canvas>
     </div>
+    <div class="charts-container box finishing">
+      <div class="titulo">Posiciones finales</div>
+      <canvas *ngIf="fpData else noData" baseChart width="400" height="400" [datasets]="fPositionsChartData"
+        [labels]="fPositionsChartLabels" [options]="fPositionsChartOptions" [colors]="fPositionsChartColors"
+        legend="true" chartType="bar"></canvas>
+    </div>
+    <div class="charts-container box grid">
+      <div class="titulo">Posiciones de parrilla</div>
+      <canvas *ngIf="gpData else noData" baseChart width="400" height="400" [datasets]="gPositionsChartData"
+        [labels]="gPositionsChartLabels" [options]="gPositionsChartOptions" [colors]="fPositionsChartColors"
+        legend="true" chartType="bar"></canvas>
+    </div>
+    <div class="box table-container" *ngIf="wins | async as records"
+      [ngStyle]="{'display': !winsData ? 'none' : 'block'}">
+      <div class="titulo">Victorias</div>
+      <table>
+        <tr class="main-titles">
+          <th>#</th>
+          <th colspan="2">Carrera</th>
+          <th>Constructor</th>
+        </tr>
+        <ng-container *ngFor="let item of records; let i=index">
+          <tr class="row" [ngStyle]="{'border-top': item.firstWinInSeason ? '3px solid #CE6D39' : '1px solid #F17F42'}">
+            <td>{{i + 1}}</td>
+            <td><a href="#">{{ item.season }} {{item.raceName}}</a></td>
+            <td> Ronda {{item.round}}</td>
+            <td><a href="#">{{item.constructor}}</a></td>
+          </tr>
+        </ng-container>
+      </table>
+    </div>
+
+    <div class="box table-container" *ngIf="poles | async as records"
+      [ngStyle]="{'display': !polesData ? 'none' : 'block'}">
+      <div class="titulo">Pole Positions</div>
+      <table>
+        <tr class="main-titles">
+          <th>#</th>
+          <th colspan="2">Carrera</th>
+          <th>Constructor</th>
+        </tr>
+        <ng-container *ngFor="let item of records; let i=index">
+          <tr class="row" [ngStyle]="{'border-top': item.firstWinInSeason ? '3px solid #CE6D39' : '1px solid #F17F42'}">
+            <td>{{i + 1}}</td>
+            <td><a href="#">{{ item.season }} {{item.raceName}}</a></td>
+            <td> Ronda {{item.round}}</td>
+            <td><a href="#">{{item.constructor}}</a></td>
+          </tr>
+        </ng-container>
+      </table>
+    </div>
+
+
+    <div class="box table-container colspan-2" *ngIf="teamMates | async as mates"
+      [ngStyle]="{'display': !teamMatesData ? 'none' : 'block'}">
+      <div class="titulo">Equipos y compañeros</div>
+      <table>
+        <tr class="main-titles">
+          <th>Temporada</th>
+          <th>Compañero</th>
+          <th>Equipo</th>
+        </tr>
+        <ng-container *ngFor="let item of mates; let i=index">
+          <tr class="row">
+            <td>{{item.season}}</td>
+            <td>
+              <div *ngFor="let piloto of item.teamMates"> <a
+                  [routerLink]="[ '/pilotos', piloto.driverId ]">{{piloto.givenName}} {{piloto.familyName}}</a>
+              </div>
+            </td>
+            <td><a [routerLink]="[ '/constructores', item.constructor.constructorId ]">{{item.constructor.name}}</a>
+            </td>
+          </tr>
+        </ng-container>
+      </table>
+    </div>
+  </div>
 </div>
 <app-footer></app-footer>

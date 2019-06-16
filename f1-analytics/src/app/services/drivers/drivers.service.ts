@@ -102,9 +102,18 @@ export class DriversService {
       .subscribe((res: any) => {
         if (res.type === 'disambiguation') {
           this.http.get('https://es.wikipedia.org/api/rest_v1/page/summary/' + searchTerm + '_(piloto)')
-            .subscribe((data: any) => subject.next(data.extract));
+            .subscribe((data: any) => {
+              subject.next({
+                'text': res.extract,
+                'url': res.content_urls.desktop.page,
+              });
+            });
+        } else {
+          subject.next({
+            'text': res.extract,
+            'url': res.content_urls.desktop.page,
+          });
         }
-        subject.next(res.extract);
       });
     return subject;
   }

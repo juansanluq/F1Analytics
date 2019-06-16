@@ -1,89 +1,98 @@
 <div class="hero">
-    <app-navbar></app-navbar>
-    <div class="contenido-hero">
-        <h1>Fórmula 1 Analytics</h1>
-        <div class="slogan">
-            <h3 class="slogan-content">"¿Mi mayor error? Pienso que aún no lo he cometido..."</h3>
-            <h3 class="slogan-author">Ayrton Senna, 1991</h3>
-        </div>
+  <app-navbar></app-navbar>
+  <div class="contenido-hero">
+    <h1>Fórmula 1 Analytics</h1>
+    <div class="slogan">
+      <h3 class="slogan-content">"¿Mi mayor error? Pienso que aún no lo he cometido..."</h3>
+      <h3 class="slogan-author">Ayrton Senna, 1991</h3>
     </div>
+  </div>
 </div>
 <div class="contenedor">
-    <div class="box-container">
-        <div *ngIf="lastGPready" class="box">
-            <div class="gp-name">{{this.lastGP.raceName}}</div>
-            <div class="circuit-container">
-                <img src="https://www.countryflags.io/{{this.lastGP.Circuit.Location.countryCode}}/shiny/32.png">
-                <div class="circuit-name">{{this.lastGP.Circuit.circuitName}}</div>
-            </div>
-            <div class="round">Round {{this.lastGP.round}} {{this.lastGP.date}}</div>
-            <div class="results">
-                Results
-                <table>
-                    <tbody>
-                        <tr>
-                            <td>1st</td>
-                            <td><img src="https://www.countryflags.io/{{this.lastGP.Results[0].Driver.countryCode}}/shiny/32.png"></td>
-                            <td><a href="https://www.racing-statistics.com/en/drivers/lewis-hamilton">{{this.lastGP.Results[0].Driver.givenName}} {{this.lastGP.Results[0].Driver.familyName}}</a></td>
-                            <td class="secundary">{{this.lastGP.Results[0].Driver.code}}</td>
-                        </tr>
-                        <tr>
-                            <td>2nd</td>
-                            <td><img src="https://www.countryflags.io/{{this.lastGP.Results[1].Driver.countryCode}}/shiny/32.png"></td>
-                            <td><a href="https://www.racing-statistics.com/en/drivers/lewis-hamilton">{{this.lastGP.Results[1].Driver.givenName}} {{this.lastGP.Results[1].Driver.familyName}}</a></td>
-                            <td class="secundary">{{this.lastGP.Results[1].Driver.code}}</td>
-                        </tr>
-                        <tr>
-                            <td>3rd</td>
-                            <td><img src="https://www.countryflags.io/{{this.lastGP.Results[2].Driver.countryCode}}/shiny/32.png"></td>
-                            <td><a href="https://www.racing-statistics.com/en/drivers/lewis-hamilton">{{this.lastGP.Results[2].Driver.givenName}} {{this.lastGP.Results[2].Driver.familyName}}</a></td>
-                            <td class="secundary">{{this.lastGP.Results[2].Driver.code}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="boton-container">
-                <a href="#" class="boton">Ver más</a>
-            </div>
-        </div>
-        <div class="box info">
-            <div class="gp-name">Bienvenido a Fórmula 1 Analytics</div>
-            <div class="contenido">
-                <p>El lugar donde encontrar y comparar todos los datos de Fórmula 1 relacionados con carreras de Fórmula 1, pilotos, constructores / equipos, circuitos, temporadas y mucho más.</p>
-                <p>No importa que estés buscando los resultados de cualquier Gran Premio de la historia de este deporte o que quieras comparar las carreras de tus pilotos favoritos <span>¡Aquí lo tienes todo!</span></p>
-            </div>
-            <div class="next-gp-container">
-                <h3 *ngIf="!this.nextGPready else loaded">Siguiente evento: <span>No data</span></h3>
-                <ng-template #loaded>
-                    <h3>Siguiente evento: <span>{{this.nextGP.raceName}}</span></h3>
-                    <div class="countdown">
-                        <div class="countdown-box">
-                            <div class="counter">{{days}}</div>
-                            <div class="label">DIAS</div>
-                        </div>
-                        <div class="countdown-box">
-                            <div class="counter">{{hours}}</div>
-                            <div class="label">HORAS</div>
-                        </div>
-                        <div class="countdown-box">
-                            <div class="counter">{{minutes}}</div>
-                            <div class="label">MINUTOS</div>
-                        </div>
-                        <div class="countdown-box">
-                            <div class="counter">{{seconds}}</div>
-                            <div class="label">SEGUNDOS</div>
-                        </div>
-                    </div>
-                </ng-template>
-            </div>
-        </div>
+  <div class="box-container">
+    <div *ngIf="lastGPready" class="box">
+      <div class="gp-name">{{this.lastGP.raceName}}</div>
+      <div class="circuit-container">
+        <img src="https://www.countryflags.io/{{this.lastGP.Circuit.Location.countryCode}}/shiny/32.png">
+        <div class="circuit-name">{{this.lastGP.Circuit.circuitName}}</div>
+      </div>
+      <div class="round">Round {{this.lastGP.round}} {{this.lastGP.date}}</div>
+      <div class="results">
+        Resultados
+        <table>
+          <tbody>
+            <tr>
+              <td>1st</td>
+              <td><img src="https://www.countryflags.io/{{this.lastGP.Results[0].Driver.countryCode}}/shiny/32.png">
+              </td>
+              <td><a
+                  href="https://www.racing-statistics.com/en/drivers/lewis-hamilton">{{this.lastGP.Results[0].Driver.givenName}}
+                  {{this.lastGP.Results[0].Driver.familyName}}</a></td>
+              <td class="secundary">{{this.lastGP.Results[0].Driver.code}}</td>
+            </tr>
+            <tr>
+              <td>2nd</td>
+              <td><img src="https://www.countryflags.io/{{this.lastGP.Results[1].Driver.countryCode}}/shiny/32.png">
+              </td>
+              <td><a
+                  href="https://www.racing-statistics.com/en/drivers/lewis-hamilton">{{this.lastGP.Results[1].Driver.givenName}}
+                  {{this.lastGP.Results[1].Driver.familyName}}</a></td>
+              <td class="secundary">{{this.lastGP.Results[1].Driver.code}}</td>
+            </tr>
+            <tr>
+              <td>3rd</td>
+              <td><img src="https://www.countryflags.io/{{this.lastGP.Results[2].Driver.countryCode}}/shiny/32.png">
+              </td>
+              <td><a
+                  href="https://www.racing-statistics.com/en/drivers/lewis-hamilton">{{this.lastGP.Results[2].Driver.givenName}}
+                  {{this.lastGP.Results[2].Driver.familyName}}</a></td>
+              <td class="secundary">{{this.lastGP.Results[2].Driver.code}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-    <div class="box-container">
-        <app-dotd class="box info"></app-dotd>
+    <div class="box info">
+      <div class="gp-name">Bienvenido a Fórmula 1 Analytics</div>
+      <div class="contenido">
+        <p>El lugar donde encontrar y comparar todos los datos de Fórmula 1 relacionados con carreras de Fórmula 1,
+          pilotos, constructores / equipos, circuitos, temporadas y mucho más.</p>
+        <p>No importa que estés buscando los resultados de cualquier Gran Premio de la historia de este deporte o que
+          quieras comparar las carreras de tus pilotos favoritos <span>¡Aquí lo tienes todo!</span></p>
+      </div>
+      <div class="next-gp-container">
+        <h3 *ngIf="!this.nextGPready else loaded">Siguiente evento: <span>No data</span></h3>
+        <ng-template #loaded>
+          <h3>Siguiente evento: <span>{{this.nextGP.raceName}}</span></h3>
+          <div class="countdown">
+            <div class="countdown-box">
+              <div class="counter">{{days}}</div>
+              <div class="label">DIAS</div>
+            </div>
+            <div class="countdown-box">
+              <div class="counter">{{hours}}</div>
+              <div class="label">HORAS</div>
+            </div>
+            <div class="countdown-box">
+              <div class="counter">{{minutes}}</div>
+              <div class="label">MINUTOS</div>
+            </div>
+            <div class="countdown-box">
+              <div class="counter">{{seconds}}</div>
+              <div class="label">SEGUNDOS</div>
+            </div>
+          </div>
+        </ng-template>
+      </div>
     </div>
-    <div class="box-container">
-        <app-news class="box info"></app-news>
-    </div>
+  </div>
+  <div class="box-container">
+    <app-dotd class="box info"></app-dotd>
+  </div>
+  <div class="box-container">
+    <app-news class="box info"></app-news>
+  </div>
 </div>
 <app-footer></app-footer>
-<ngx-spinner class="loading" bdColor="rgba(51, 51, 51, 0.8)" size="large" color="#934d4d" type="ball-8bits"></ngx-spinner>
+<ngx-spinner class="loading" bdColor="rgba(51, 51, 51, 0.8)" size="large" color="#934d4d" type="ball-8bits">
+</ngx-spinner>
