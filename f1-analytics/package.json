@@ -43,7 +43,7 @@
         "ngx-spinner": "^7.1.4",
         "ngx-toastr": "^10.0.4",
         "normalize.css": "^8.0.1",
-        "papaparse": "^4.6.3",
+        "papaparse": "^5.2.0",
         "path": "^0.12.7",
         "puppeteer": "^1.14.0",
         "request": "^2.88.0",
