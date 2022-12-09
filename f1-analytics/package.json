@@ -36,7 +36,7 @@
         "cheerio": "^1.0.0-rc.3",
         "core-js": "^2.5.4",
         "countries-data": "^1.0.1",
-        "express": "^4.16.4",
+        "express": "^4.17.3",
         "ng-simple-slideshow": "^1.2.9",
         "ng2-charts": "^2.2.3",
         "ngx-device-detector": "^1.3.5",
